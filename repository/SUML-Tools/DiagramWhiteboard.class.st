@@ -69,6 +69,7 @@ DiagramWhiteboard >> update [
 			relation view fitIntoDiagram:self ]].
 
 	self addAllMorphs: (self boxMorphs difference: submorphs ). 
+	self boxMorphs do: #adjustPosition.
 	self relationships do: #updateView.
 	self boxMorphs do: [:classBoxMorph | classBoxMorph updateBounds  ].
 	self bounds: self fullBounds.
