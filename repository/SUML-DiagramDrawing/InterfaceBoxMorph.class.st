@@ -36,6 +36,12 @@ InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph withEmph
 ]
 
 { #category : #'as yet unclassified' }
+InterfaceBoxMorph >> adjustPosition [
+	(self position = boxModel position)
+		ifTrue:[self position: owner position + boxModel position]
+]
+
+{ #category : #'as yet unclassified' }
 InterfaceBoxMorph >> boxModel: aBoxDescription [
 	boxModel := aBoxDescription.
 	

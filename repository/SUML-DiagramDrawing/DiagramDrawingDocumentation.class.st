@@ -12,7 +12,7 @@ DiagramDrawingDocumentation >> boxdescriptioncode [
 	interfaceBox instanceMethods: #('relationshipsCode' 'creationAndDefinitionCode' 'creationCode' 'definitionCode' 'descriptionCodeForBoxEdition' 'variableNameForDescriptionCode' 'descriptionCode' 'writeDefinitionDescriptionOn:' 'writeDescription:withValue:on:' 'writeRelationshipsDescriptionOn:' 'writePositioningDescriptionOn:' ).
 	interfaceBox classMethods: #('selectorsAsStrings:' 'named:' 'newNamed:' ).
 	"Positioning"
-	interfaceBox position: 365 @ 104.
+	interfaceBox position: 432 @ 30.
 	classBox := ClassBox named: 'ClassBox'.
 	classBox instanceVariables: #('instanceVariables' 'classInstanceVariables' 'classVariables' ).
 	classBox instanceMethods: #('definitionCode' 'descriptionCode' 'descriptionCodeForBoxEdition' 'writeDefinitionDescriptionOn:' ).
@@ -22,9 +22,7 @@ DiagramDrawingDocumentation >> boxdescriptioncode [
 	traitBox := ClassBox named: 'TraitBox'.
 	traitBox classMethods: #('fromTrait:' ).
 	"Positioning"
-	traitBox position: 108 @ 226.
-	"Relationships"
-	interfaceBox hasLotsOf: classBox labeledAs: 'classBox'.
+	traitBox position: 89 @ 177.
 	"Relationships"
 	classBox inheritsFrom: interfaceBox.
 	"Relationships"
