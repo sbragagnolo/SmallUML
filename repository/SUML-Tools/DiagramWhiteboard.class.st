@@ -2,30 +2,35 @@ Class {
 	#name : #DiagramWhiteboard,
 	#superclass : #Morph,
 	#instVars : [
-		'classBoxes',
-		'model'
+		'model',
+		'diagramNodes'
 	],
 	#category : #'SUML-Tools'
 }
 
-{ #category : #accessing }
-DiagramWhiteboard >> boxMorphFor: aClassBoxDescription [ 
-	^classBoxes at: aClassBoxDescription ifAbsentPut: aClassBoxDescription view
-]
-
-{ #category : #accessing }
-DiagramWhiteboard >> boxMorphs [
-	^ self boxes collect:[:boxDesc | (self boxMorphFor: boxDesc) boxModel: boxDesc  ]
-]
-
-{ #category : #accessing }
-DiagramWhiteboard >> boxes [
-	^self diagram boxes 
+{ #category : #'as yet unclassified' }
+DiagramWhiteboard >> connections [
+	^self submorphs inject: OrderedCollection new into:[:rels :box | rels union: box connections ].
 ]
 
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> diagram [
 	^self model model
+]
+
+{ #category : #accessing }
+DiagramWhiteboard >> diagramNodeMorphFor: aDiagramNodeDescription [
+	^diagramNodes at: aDiagramNodeDescription ifAbsentPut: aDiagramNodeDescription view
+]
+
+{ #category : #accessing }
+DiagramWhiteboard >> diagramNodeMorphs [
+	^ self diagramNodes collect:[:boxDesc | (self diagramNodeMorphFor: boxDesc) diagramNode: boxDesc  ]
+]
+
+{ #category : #accessing }
+DiagramWhiteboard >> diagramNodes [
+	^self model diagramNodes
 ]
 
 { #category : #accessing }
@@ -49,29 +54,24 @@ DiagramWhiteboard >> model [
 DiagramWhiteboard >> model: anObject [
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
-	classBoxes := Dictionary new.
+	diagramNodes := Dictionary new.
 	model := anObject.
 	self update.
 ]
 
 { #category : #'as yet unclassified' }
-DiagramWhiteboard >> relationships [
-	^self submorphs inject: OrderedCollection new into:[:rels :box | rels union: box connections ].
-]
-
-{ #category : #'as yet unclassified' }
 DiagramWhiteboard >> update [
 	self removeAllMorphs.
-	classBoxes := Dictionary new.
-	self boxMorphs" do: [:classBoxMorph | classBoxMorph updateRelationships  ]".
-	classBoxes keysAndValuesDo: [:classBoxDescription :classBoxMorph | 
-		(classBoxDescription relations difference: (classBoxMorph relations)) do:[:relation | 
+	diagramNodes := Dictionary new.
+	self diagramNodeMorphs" do: [:classBoxMorph | classBoxMorph updateRelationships  ]".
+	diagramNodes keysAndValuesDo: [:classBoxDescription :classBoxMorph | 
+		(classBoxDescription relations difference: (classBoxMorph connections)) do:[:relation | 
 			relation view fitIntoDiagram:self ]].
 
-	self addAllMorphs: (self boxMorphs difference: submorphs ). 
-	self boxMorphs do: #adjustPosition.
-	self relationships do: #updateView.
-	self boxMorphs do: [:classBoxMorph | classBoxMorph updateBounds  ].
+	self addAllMorphs: (self diagramNodeMorphs difference: submorphs ). 
+	self diagramNodeMorphs do: #adjustPosition.
+	self connections do: #updateView.
+	self diagramNodeMorphs do: [:classBoxMorph | classBoxMorph updateBounds  ].
 	self bounds: self fullBounds.
 
 	
@@ -80,7 +80,7 @@ DiagramWhiteboard >> update [
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> update: aParameter [
 	(aParameter == #view) 
-		ifTrue:[self update].
+		ifTrue:[self update.].
 
 ]
 
@@ -91,7 +91,7 @@ DiagramWhiteboard >> updateDescriptionCode [
 
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> updateRelationships [
-	self relationships do:[:rel | rel fitIntoDiagram: self].
-	self relationships do: #updateView.
-	self boxMorphs do: #updateBounds.
+	self connections do:[:rel | rel fitIntoDiagram: self].
+	self connections do: #updateView.
+	self diagramNodeMorphs do: #updateBounds.
 ]

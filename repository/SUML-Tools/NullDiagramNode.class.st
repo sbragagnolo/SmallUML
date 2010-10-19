@@ -1,10 +1,10 @@
 Class {
-	#name : #NullDescription,
+	#name : #NullDiagramNode,
 	#superclass : #Object,
 	#category : #'SUML-Tools'
 }
 
 { #category : #accessing }
-NullDescription >> descriptionCodeForBoxEdition [
+NullDiagramNode >> descriptionCodeForEdition [
 	^String empty 
 ]

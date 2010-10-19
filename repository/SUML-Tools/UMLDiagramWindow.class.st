@@ -21,7 +21,7 @@ UMLDiagramWindow >> acceptContents: contents [
 UMLDiagramWindow >> createView [ 
 	| diagramCode |
 	diagramCode  := (PluggableShoutEditorMorph 
-		on: (DiagramWorkspace new model: model selectedDiagramModel) 
+		on: (DiagramWorkspace new model: model diagramListModel) 
 		text: #descriptionCode 
 		accept: #acceptContents:from:
 		readSelection: nil 
@@ -29,9 +29,9 @@ UMLDiagramWindow >> createView [
 
 diagram := DiagramWhiteboard new. 
 diagram clipSubmorphs: true.
-diagram model: model selectedDiagramModel.
+diagram model: model.
 self addMorph: diagram frame: (0@0 corner: 1@0.8).
-self addMorph: self diagramsList frame: (0@0.8 corner: 0.25@1).
+self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0.8 corner: 0.25@1).
 self addMorph: self descriptionsList frame: (0.25@0.8 corner: 0.5@1).
 self addMorph: diagramCode frame: (0.5@0.8 corner: 1@1).
 
@@ -45,7 +45,7 @@ UMLDiagramWindow >> descriptionCode [
 { #category : #'as yet unclassified' }
 UMLDiagramWindow >> descriptionsList [
 	^PluggableListMorph new
-		on: self model selectedDiagramModel
+		on: self model diagramListModel
 		list: #list
 		selected: #selectedIndex
 		changeSelected: #selectedIndex:
@@ -82,5 +82,5 @@ UMLDiagramWindow >> model: aModel [
 
 { #category : #accessing }
 UMLDiagramWindow >> selectedDescriptionModel [
-	^self model selectedDiagramModel 
+	^self model diagramListModel 
 ]

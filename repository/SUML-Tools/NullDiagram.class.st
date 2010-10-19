@@ -5,16 +5,6 @@ Class {
 }
 
 { #category : #accessing }
-NullDiagram >> boxMorphs [
-	^#()
-]
-
-{ #category : #accessing }
-NullDiagram >> boxes [
-	^#()
-]
-
-{ #category : #accessing }
 NullDiagram >> classBoxes [
 	^#()
 ]
@@ -22,6 +12,11 @@ NullDiagram >> classBoxes [
 { #category : #accessing }
 NullDiagram >> descriptionCodeOf: aClassDescription [
 	^String empty
+]
+
+{ #category : #accessing }
+NullDiagram >> diagramNodes [
+	^#()
 ]
 
 { #category : #'as yet unclassified' }

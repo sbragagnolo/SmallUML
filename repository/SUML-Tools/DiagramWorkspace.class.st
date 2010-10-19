@@ -9,7 +9,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 DiagramWorkspace >> acceptContents: aText from: anEditor [
-	self model clearRelationshipsOfSelectedBoxDescription.
+	self model clearRelationshipsOfSelectedDiagramNode.
 	anEditor selectAll;  doIt.
 	self model acceptContents: aText .
 	self acceptContents: aText.
@@ -22,7 +22,7 @@ DiagramWorkspace >> bindingOf: aString [
 
 { #category : #accessing }
 DiagramWorkspace >> descriptionCode [
-	^self model descriptionCode 
+	^self model selectedDescriptionCode 
 ]
 
 { #category : #'as yet unclassified' }
@@ -42,6 +42,7 @@ DiagramWorkspace >> model [
 
 { #category : #accessing }
 DiagramWorkspace >> model: anObject [
+self halt.
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
 	model := anObject.
@@ -50,7 +51,7 @@ DiagramWorkspace >> model: anObject [
 
 { #category : #'as yet unclassified' }
 DiagramWorkspace >> update: aParameter [
-	(aParameter == #descriptionCode)
+	(aParameter = #descriptionCode)
 		ifTrue:[self acceptContents: model selectedDescriptionCode].
 	self changed: aParameter
 ]

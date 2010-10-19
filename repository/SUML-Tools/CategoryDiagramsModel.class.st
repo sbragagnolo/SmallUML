@@ -2,14 +2,15 @@ Class {
 	#name : #CategoryDiagramsModel,
 	#superclass : #UMLToolModel,
 	#instVars : [
-		'selectedDiagramModel'
+		'selectedDiagramModel',
+		'diagrams'
 	],
 	#category : #'SUML-Tools'
 }
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> changed [
-	self selectedDiagramModel model: self selectedDiagram.
+	self diagramListModel model: self selectedDiagram.
 	super changed.
 ]
 
@@ -17,10 +18,10 @@ CategoryDiagramsModel >> changed [
 CategoryDiagramsModel >> changed: aParameter [
 	(aParameter == #selectedIndex)
 		ifTrue:[
-			self selectedDiagramModel model: self selectedDiagram.
-			self selectedDiagramModel changed: #list.
-			self selectedDiagramModel changed: #descriptionCode.
-			self selectedDiagramModel changed: #view.
+			self diagramListModel model: self selectedDiagramModel.
+"			self diagramListModel changed: #list."
+			self diagramListModel changed: #descriptionCode.
+			self changed: #view.
 			self changed: #relabel].
 	super changed: aParameter 
 ]
@@ -50,6 +51,16 @@ CategoryDiagramsModel >> deleteDiagram [
 ]
 
 { #category : #'as yet unclassified' }
+CategoryDiagramsModel >> diagramListModel [
+	^selectedDiagramModel ifNil:[selectedDiagramModel := UMLDiagramListModel new diagramsHolder: self model; model: (self selectedDiagramModel)]
+]
+
+{ #category : #accessing }
+CategoryDiagramsModel >> diagramNodes [
+	^self selectedDiagram diagramNodes 
+]
+
+{ #category : #'as yet unclassified' }
 CategoryDiagramsModel >> exportDiagramAsWorkspace [
 	Workspace new saveString: self selectedDiagram descriptionCode toFile: self selectedDiagram name, '.ws' 
 ]
@@ -61,7 +72,7 @@ CategoryDiagramsModel >> labelString [
 
 { #category : #accessing }
 CategoryDiagramsModel >> list [
-	^self model diagrams
+	^diagrams ifNil:[ diagrams:= self model diagrams]
 ]
 
 { #category : #'as yet unclassified' }
@@ -96,7 +107,7 @@ CategoryDiagramsModel >> renameDiagram [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> saveDiagramAsPNG [
-	PNGReadWriter putForm: (DiagramWhiteboard new model: self selectedDiagramModel) imageForm onFileNamed: self selectedDiagram name, '.png'.
+	PNGReadWriter putForm: (DiagramWhiteboard new model: self diagramListModel) imageForm onFileNamed: self selectedDiagram name, '.png'.
 
 ]
 
@@ -105,7 +116,13 @@ CategoryDiagramsModel >> selectedDiagram [
 	^ self list at: self selectedIndex ifAbsent:[NullDiagram new]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 CategoryDiagramsModel >> selectedDiagramModel [
-	^selectedDiagramModel ifNil:[selectedDiagramModel := (DiagramModel new model: self selectedDiagram; diagramsHolder: self model) ]
+	^self selectedDiagram modelForDiagramsHolder: self model
+]
+
+{ #category : #'as yet unclassified' }
+CategoryDiagramsModel >> update: aParameter [
+	super update: aParameter.
+	self diagramListModel changed: #descriptionCode.
 ]
