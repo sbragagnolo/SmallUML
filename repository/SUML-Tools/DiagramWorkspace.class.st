@@ -42,7 +42,6 @@ DiagramWorkspace >> model [
 
 { #category : #accessing }
 DiagramWorkspace >> model: anObject [
-self halt.
 	model ifNotNil: [model removeDependent: self].
 	anObject ifNotNil: [anObject addDependent: self].
 	model := anObject.

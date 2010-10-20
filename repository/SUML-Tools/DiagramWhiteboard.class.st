@@ -53,7 +53,7 @@ DiagramWhiteboard >> model [
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> model: anObject [
 	model ifNotNil: [model removeDependent: self].
-	anObject ifNotNil: [anObject addDependent: self].
+	anObject ifNotNil: [.anObject addDependent: self].
 	diagramNodes := Dictionary new.
 	model := anObject.
 	self update.

@@ -56,7 +56,7 @@ UMLDiagramListModel >> changed: aParameter [
 			self changed: #descriptionCode.].
 	(aParameter = #view)
 		ifTrue:[
-			self model changed].
+			self diagramsHolder changed: #view].
 		super changed: aParameter 
 ]
 
