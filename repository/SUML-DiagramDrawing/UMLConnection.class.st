@@ -64,7 +64,7 @@ UMLConnection >> dettachFromConnectionPoints [
 { #category : #'as yet unclassified' }
 UMLConnection >> fitIntoDiagram: aDiagram [
 	self isConnected ifTrue:[self dettachFromConnectionPoints].
-	(aDiagram boxMorphFor: target originBox ) connectTo: (aDiagram boxMorphFor: target destinationBox) using: self.
+	(aDiagram diagramNodeMorphFor: target originDiagramNode ) connectTo: (aDiagram diagramNodeMorphFor: target destinationDiagramNode) using: self.
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,8 +84,7 @@ UMLConnection >> isConnected [
 
 { #category : #accessing }
 UMLConnection >> labelText: aByteString [ 
-
-	label:=  (TransformationMorph new asFlexOf: (ImageMorph fromString: ' ',aByteString,' ' font: (TextFontReference toFont: ((StrikeFont familyName: 'Arial' size: 14)) ) font ) ).
+	label:=  (TransformationMorph new asFlexOf: (ImageMorph fromString: ' ',aByteString,' ' font: (TextFontReference toFont: ((StrikeFont familyName: #Arial size: 14)) ) font ) ).
 	self addMorph: label.
 	label position: label position + (15 @ -10).
 ]

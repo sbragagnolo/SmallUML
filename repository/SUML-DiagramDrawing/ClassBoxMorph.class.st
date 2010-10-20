@@ -16,14 +16,14 @@ ClassBoxMorph >> addBoxesToContainer [
 ]
 
 { #category : #'as yet unclassified' }
-ClassBoxMorph >> boxModel: aBoxDescription [
-	super boxModel: aBoxDescription.	
-	self updateVariables.
+ClassBoxMorph >> defaultBorderStyle [ 
+	^BorderStyle thinGray
 ]
 
 { #category : #'as yet unclassified' }
-ClassBoxMorph >> defaultBorderStyle [ 
-	^BorderStyle thinGray
+ClassBoxMorph >> diagramNode: aBoxDescription [
+	super diagramNode: aBoxDescription.	
+	self updateVariables.
 ]
 
 { #category : #'as yet unclassified' }
@@ -35,8 +35,8 @@ ClassBoxMorph >> initializeBoundingBox [
 { #category : #accessing }
 ClassBoxMorph >> updateVariables [ 
 	variablesBox   removeAllMorphs.
-	self addTextMorphFor: boxModel instanceVariables into: variablesBox.
-	self addTextMorphFor: boxModel classInstanceVariables into: variablesBox  withEmphasis: {TextEmphasis underlined . TextEmphasis italic}.
-	self addTextMorphFor: boxModel classVariables into: variablesBox  withEmphasis: {TextEmphasis underlined}.
+	self addTextMorphFor: diagramNode instanceVariables into: variablesBox.
+	self addTextMorphFor: diagramNode classInstanceVariables into: variablesBox  withEmphasis: {TextEmphasis underlined . TextEmphasis italic}.
+	self addTextMorphFor: diagramNode classVariables into: variablesBox  withEmphasis: {TextEmphasis underlined}.
 
 ]

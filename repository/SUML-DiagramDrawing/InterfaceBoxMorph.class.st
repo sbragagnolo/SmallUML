@@ -1,13 +1,9 @@
 Class {
 	#name : #InterfaceBoxMorph,
-	#superclass : #Morph,
-	#traits : 'TConnectableShape',
-	#classTraits : 'TConnectableShape classTrait',
+	#superclass : #DiagramNodeMorph,
 	#instVars : [
-		'container',
 		'methodsBox',
 		'boundingBox',
-		'boxModel',
 		'titleBox'
 	],
 	#category : #'SUML-DiagramDrawing'
@@ -15,7 +11,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph class >> forBox: aBox [
-	^self new boxModel: aBox 
+	^self new diagramNode: aBox 
 ]
 
 { #category : #'as yet unclassified' }
@@ -36,48 +32,17 @@ InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph withEmph
 ]
 
 { #category : #'as yet unclassified' }
-InterfaceBoxMorph >> adjustPosition [
-	(self position = boxModel position)
-		ifTrue:[self position: owner position + boxModel position]
-]
-
-{ #category : #'as yet unclassified' }
-InterfaceBoxMorph >> boxModel: aBoxDescription [
-	boxModel := aBoxDescription.
-	
-	boxModel ifNotNil: [boxModel removeDependent: self].
-	aBoxDescription ifNotNil: [aBoxDescription addDependent: self].
-	
-	self updateTitle.
-	self updateMethods.
-	self position: self position.
-	self updateBounds.
-]
-
-{ #category : #'as yet unclassified' }
-InterfaceBoxMorph >> connectTo: anotherBox using: aConnection [
-	| origin destination |
-	origin := SingleConnectionPoint new.
-	destination := SingleConnectionPoint new.
-	self connectableBoundingBox addConnectionPoint: origin thatConnectsTo: anotherBox.
-	anotherBox connectableBoundingBox addConnectionPoint: destination thatConnectsTo:  self.
-	aConnection from: origin to: destination.
-	self connectableBoundingBox addMorph: aConnection.
-
-]
-
-{ #category : #'as yet unclassified' }
-InterfaceBoxMorph >> connectableBoundingBox [
+InterfaceBoxMorph >> connectableBounds [
 	^boundingBox 
 ]
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> connectionBorderNear: anotherClassBox [
-	self top > anotherClassBox bottom ifTrue:[^self connectableBoundingBox topBorder].
-	self bottom < anotherClassBox top ifTrue:[^self connectableBoundingBox bottomBorder].
-	self left > anotherClassBox right ifTrue:[^self connectableBoundingBox leftBorder].
-	self right < anotherClassBox left ifTrue:[^self connectableBoundingBox rightBorder].
-	^self connectableBoundingBox leftBorder
+	self top > anotherClassBox bottom ifTrue:[^self connectableBounds topBorder].
+	self bottom < anotherClassBox top ifTrue:[^self connectableBounds bottomBorder].
+	self left > anotherClassBox right ifTrue:[^self connectableBounds leftBorder].
+	self right < anotherClassBox left ifTrue:[^self connectableBounds rightBorder].
+	^self connectableBounds leftBorder
 
 ]
 
@@ -96,7 +61,15 @@ InterfaceBoxMorph >> defaultBorderStyle [
 
 { #category : #accessing }
 InterfaceBoxMorph >> descriptionCode [ 
-	^boxModel descriptionCode 
+	^diagramNode descriptionCode 
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBoxMorph >> diagramNode: aDiagramNode [
+	super diagramNode: aDiagramNode.
+	self updateTitle.
+	self updateMethods.
+	self updateBounds.
 ]
 
 { #category : #'as yet unclassified' }
@@ -109,11 +82,6 @@ InterfaceBoxMorph >> formattedText: aText [
 	^aText addAttribute: (TextFontReference toFont: (StrikeFont familyName: 'Arial' size: self fontSize)); 
 		yourself.
 		
-]
-
-{ #category : #'dragging-dropping' }
-InterfaceBoxMorph >> handlesMouseDown: evt [
-	^true
 ]
 
 { #category : #'as yet unclassified' }
@@ -153,23 +121,10 @@ InterfaceBoxMorph >> insideBorderStyle [
 	^ borderStyle
 ]
 
-{ #category : #'dragging-dropping' }
-InterfaceBoxMorph >> justDroppedInto: aMorph event: evt [
-	boxModel position: self position - owner position .
-	owner updateRelationships.
-	self updateBounds.
-
-]
-
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> listFrom: aCollection [
 	^self formattedText: (aCollection asOrderedCollection joinUsing: String crlf) asText 
 		
-]
-
-{ #category : #'dragging-dropping' }
-InterfaceBoxMorph >> mouseDown: evt [
-	evt hand grabMorph: self
 ]
 
 { #category : #'as yet unclassified' }
@@ -193,16 +148,6 @@ InterfaceBoxMorph >> newText [
 		borderColor: Color transparent;
 		color: Color white;
 		readOnly: true
-]
-
-{ #category : #private }
-InterfaceBoxMorph >> position [
-	^ owner ifNil:[ boxModel position ] ifNotNil:[ super position]
-]
-
-{ #category : #accessing }
-InterfaceBoxMorph >> relations [ 
-	^self connections collect:[:conn | conn target]
 ]
 
 { #category : #private }
@@ -232,10 +177,9 @@ InterfaceBoxMorph >> update: aParameter [
 		ifTrue: [self updateMethods].
 	(aParameter == #title)
 		ifTrue: [self updateTitle].
-	(aParameter == #position)
-		ifTrue: [self position: boxModel position + owner position. owner updateDescriptionCode.].
 	(aParameter == #title)
 		ifTrue: [self updateTitle].	
+	super update: aParameter.
 	self updateBounds.
 	 
 ]
@@ -254,14 +198,14 @@ InterfaceBoxMorph >> updateBounds [
 { #category : #accessing }
 InterfaceBoxMorph >> updateMethods [ 
 	methodsBox removeAllMorphs. 	
-	self addTextMorphFor: boxModel instanceMethods into: methodsBox.
-	self addTextMorphFor: boxModel classMethods into: methodsBox withEmphasis: {TextEmphasis underlined}.
+	self addTextMorphFor: diagramNode instanceMethods into: methodsBox.
+	self addTextMorphFor: diagramNode classMethods into: methodsBox withEmphasis: {TextEmphasis underlined}.
 
 ]
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> updateRelationships [
-	self removeAllMorphsIn:  (self connections reject:[:subMorph | boxModel relations includes: subMorph target ]).
+	self removeAllMorphsIn:  (self connections reject:[:subMorph | diagramNode relations includes: subMorph target ]).
 		
 		
 		
@@ -270,11 +214,6 @@ InterfaceBoxMorph >> updateRelationships [
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> updateTitle [  
 	titleBox removeAllMorphs.
-	titleBox addMorph: ((self textMorphFor:  {boxModel boxTitle} withEmphasis:  {TextAlignment centered  . TextEmphasis bold })    ).
+	titleBox addMorph: ((self textMorphFor:  {diagramNode boxTitle} withEmphasis:  {TextAlignment centered  . TextEmphasis bold })    ).
 
-]
-
-{ #category : #'as yet unclassified' }
-InterfaceBoxMorph >> wantsToBeDroppedInto: aMorph [
-	^aMorph isKindOf: DiagramWhiteboard 
 ]
