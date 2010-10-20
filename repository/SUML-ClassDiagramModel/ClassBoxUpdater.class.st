@@ -1,8 +1,8 @@
 Class {
 	#name : #ClassBoxUpdater,
 	#superclass : #ClassBox,
-	#traits : 'TBoxUpdater',
-	#classTraits : 'TBoxUpdater classTrait',
+	#traits : 'TDiagramNodeUpdater',
+	#classTraits : 'TDiagramNodeUpdater classTrait',
 	#instVars : [
 		'realBox'
 	],
@@ -20,23 +20,50 @@ ClassBoxUpdater >> initializeFrom: anObject [
 	self position: anObject position.
 ]
 
+{ #category : #'as yet unclassified' }
+ClassBoxUpdater >> printString [ 
+	^self realDiagramNode printString 
+]
+
 { #category : #accessing }
-ClassBoxUpdater >> realBox [
+ClassBoxUpdater >> realDiagramNode [
 	^ realBox
 ]
 
 { #category : #'as yet unclassified' }
-ClassBoxUpdater >> relationBetweenRealClassBoxes: aRelation [
-	^(aRelation  from: aRelation originBox realBox to: aRelation destinationBox realBox )
+ClassBoxUpdater >> realDiagramNode: anObject [
+	realBox := anObject.
+	self initializeFrom: anObject 
 ]
 
 { #category : #'as yet unclassified' }
-ClassBoxUpdater >> updateBoxDefinition [ 
-	self realBox instanceMethods: self instanceMethods.
-	self realBox classMethods: self classMethods.
-	self realBox instanceVariables: self instanceVariables.
-	self realBox classInstanceVariables: self classInstanceVariables.
-	self realBox classVariables: self classVariables.
-	self realBox position: self position.
+ClassBoxUpdater >> relationBetweenRealClassBoxes: aRelation [
+	^(aRelation  from: aRelation originDiagramNode realDiagramNode to: aRelation destinationDiagramNode realDiagramNode )
+]
+
+{ #category : #'as yet unclassified' }
+ClassBoxUpdater >> relationBetweenRealDiagramNodes: aRelation [
+	^(aRelation  from: aRelation originDiagramNode realDiagramNode to: aRelation destinationDiagramNode realDiagramNode )
+]
+
+{ #category : #'as yet unclassified' }
+ClassBoxUpdater >> update [
+	"The real class box isn't updated directly because the relations have to be administrated'"
+	self updateDefinition.
+
+	(self realRelationships difference: self realDiagramNode relations) do: [:relation | self realDiagramNode addRelationship: (self relationBetweenRealDiagramNodes: relation)].
+	(self realDiagramNode relations difference: self realRelationships) do: [:relation | self realDiagramNode removeRelationship: relation].
+
+	
+]
+
+{ #category : #'as yet unclassified' }
+ClassBoxUpdater >> updateDefinition [ 
+	self realDiagramNode instanceMethods: self instanceMethods.
+	self realDiagramNode classMethods: self classMethods.
+	self realDiagramNode instanceVariables: self instanceVariables.
+	self realDiagramNode classInstanceVariables: self classInstanceVariables.
+	self realDiagramNode classVariables: self classVariables.
+	self realDiagramNode position: self position.
 
 ]

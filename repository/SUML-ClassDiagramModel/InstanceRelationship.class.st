@@ -19,5 +19,5 @@ InstanceRelationship >> oneToMany: aBoolean [
 
 { #category : #'as yet unclassified' }
 InstanceRelationship >> writeDescriptionOn: aStream [
-	aStream nextPutAll: self originBox variableNameForDescriptionCode , ' ', self selector , self destinationBox variableNameForDescriptionCode , ' labeledAs: ''', self label , '''.'.
+	aStream nextPutAll: self originDiagramNode variableNameForDescriptionCode , ' ', self selector , self destinationDiagramNode variableNameForDescriptionCode , ' labeledAs: ''', self label , '''.'.
 ]

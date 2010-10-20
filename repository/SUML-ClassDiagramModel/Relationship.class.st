@@ -41,7 +41,7 @@ Relationship class >> useTraitRelationshipFrom: aClassBox to: anotherClassBox [
 
 { #category : #'as yet unclassified' }
 Relationship >> = anotherRelation [
-	^(self class = anotherRelation class) and:[self originBox = anotherRelation originBox and:[self destinationBox = anotherRelation destinationBox  and:[self label = anotherRelation label and:[self oneToMany = anotherRelation oneToMany ]] ]]
+	^(self class = anotherRelation class) and:[self originDiagramNode = anotherRelation originDiagramNode and:[self destinationDiagramNode = anotherRelation destinationDiagramNode  and:[self label = anotherRelation label and:[self oneToMany = anotherRelation oneToMany ]] ]]
 ]
 
 { #category : #'as yet unclassified' }
@@ -51,11 +51,11 @@ Relationship >> arrow [
 
 { #category : #'as yet unclassified' }
 Relationship >> connects: aBox [
-	^self destinationBox = aBox or:[self originBox = aBox ]
+	^self destinationDiagramNode = aBox or:[self originDiagramNode = aBox ]
 ]
 
 { #category : #accessing }
-Relationship >> destinationBox [
+Relationship >> destinationDiagramNode [
 	^ classBoxDestination
 ]
 
@@ -67,7 +67,7 @@ Relationship >> from: aClassBox to: aClassBox2 [
 
 { #category : #'as yet unclassified' }
 Relationship >> hash [
-	^(self class hash bitXor: ((self originBox hash bitXor: (self destinationBox hash bitXor: self oneToMany hash)) bitXor: self label hash))
+	^(self class hash bitXor: ((self originDiagramNode hash bitXor: (self destinationDiagramNode hash bitXor: self oneToMany hash)) bitXor: self label hash))
 ]
 
 { #category : #accessing }
@@ -86,7 +86,7 @@ Relationship >> oneToMany [
 ]
 
 { #category : #accessing }
-Relationship >> originBox [
+Relationship >> originDiagramNode [
 	^ classBoxOrigin
 ]
 
@@ -97,5 +97,5 @@ Relationship >> view [
 
 { #category : #'as yet unclassified' }
 Relationship >> writeDescriptionOn: aStream [
-	aStream nextPutAll: self originBox variableNameForDescriptionCode , ' ', self selector , self destinationBox variableNameForDescriptionCode, '.'.
+	aStream nextPutAll: self originDiagramNode variableNameForDescriptionCode , ' ', self selector , self destinationDiagramNode variableNameForDescriptionCode, '.'.
 ]

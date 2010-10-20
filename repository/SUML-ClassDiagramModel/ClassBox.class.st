@@ -61,8 +61,8 @@ ClassBox >> descriptionCode [
 ]
 
 { #category : #'description code' }
-ClassBox >> descriptionCodeForBoxEdition [ 
-	^super descriptionCodeForBoxEdition, self relationshipsCode
+ClassBox >> descriptionCodeForEdition [ 
+	^super descriptionCodeForEdition, self relationshipsCode
 ]
 
 { #category : #relations }
