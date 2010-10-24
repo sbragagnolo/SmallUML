@@ -27,6 +27,11 @@ DiagramNode >> addRelationship: aRelationship [
 	self relations add: aRelationship.
 ]
 
+{ #category : #'as yet unclassified' }
+DiagramNode >> connectTo: anotherNode using: aRelationship [
+	self addRelationship: (aRelationship from: self to: anotherNode )
+]
+
 { #category : #'description code' }
 DiagramNode >> creationAndDefinitionCode [ 
 	^self creationCode , self definitionCode 

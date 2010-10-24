@@ -71,6 +71,11 @@ Diagram >> descriptionCodeOf: aDiagramNode [
 ]
 
 { #category : #accessing }
+Diagram >> diagramNodeFor: anObject [
+	^self diagramNodes detect:[:node | node object = anObject ]
+]
+
+{ #category : #accessing }
 Diagram >> diagramNodes [
 	^diagramNodes ifNil:[diagramNodes := OrderedCollection new]
 ]
