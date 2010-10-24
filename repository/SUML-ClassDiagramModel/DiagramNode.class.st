@@ -74,7 +74,7 @@ DiagramNode >> name: anObject [
 
 { #category : #drawing }
 DiagramNode >> position [
-	^position ifNil:[0@0]
+	^position" ifNil:[0@0]"
 ]
 
 { #category : #drawing }
