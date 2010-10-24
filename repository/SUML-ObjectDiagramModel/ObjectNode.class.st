@@ -13,6 +13,23 @@ ObjectNode class >> for: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+ObjectNode >> = anotherObject [
+	^(self class = anotherObject class) and:[ self object = anotherObject object]
+]
+
+{ #category : #'as yet unclassified' }
+ObjectNode >> connectToReferencesWithin: aDiagram [
+	self variableNames
+		do:[:variableName |
+			| newObjectNode |
+			 (self variableNamed: variableName)
+				ifNotNil:[
+					self connectTo: (aDiagram diagramNodeFor:  (self variableNamed: variableName)) using: (AssociationRelationship new label: variableName ).
+					(aDiagram diagramNodeFor:  (self variableNamed: variableName)) position: self position + ((50 @ 50) * (self variableNames indexOf: variableName )).]
+					 ]
+]
+
+{ #category : #'as yet unclassified' }
 ObjectNode >> descriptionCodeForEdition [ 
 	^super descriptionCodeForEdition , self relationshipsCode 
 ]
@@ -23,15 +40,8 @@ ObjectNode >> hasA: anotherClassBox labeledAs: aLabel [
 ]
 
 { #category : #'as yet unclassified' }
-ObjectNode >> nestedObjectNodes [
-	^ self object class instVarNames
-		inject: OrderedCollection new
-		into: [ :objectNodes :instVarName | 
-			| newObjectNode |
-			(self object instVarNamed: instVarName)
-				ifNotNil:[
-					newObjectNode := (ObjectNode for: (self object instVarNamed: instVarName)) name: instVarName.
-					  newObjectNode withNestedObjectNodes union: objectNodes ] ]
+ObjectNode >> hash [
+	^self object hash
 ]
 
 { #category : #accessing }
@@ -55,13 +65,16 @@ ObjectNode >> updaterClass [
 ]
 
 { #category : #'as yet unclassified' }
-ObjectNode >> view [
-	^ObjectNodeMorph for: self
+ObjectNode >> variableNamed: aVariableName [
+	^self object instVarNamed: aVariableName 
 ]
 
 { #category : #'as yet unclassified' }
-ObjectNode >> withNestedObjectNodes [
-	^(OrderedCollection with: self)
-		addAll: self nestedObjectNodes;
-		yourself 
+ObjectNode >> variableNames [ 
+	^self object class instVarNames
+]
+
+{ #category : #'as yet unclassified' }
+ObjectNode >> view [
+	^ObjectNodeMorph for: self
 ]
