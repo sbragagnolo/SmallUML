@@ -11,8 +11,8 @@ Class {
 { #category : #positioning }
 DiagramWhiteboard >> availablePositions [
 	^ (self positionedDiagramNodes 
-		ifEmpty: [ Set with: "self center" 200@200 ] 
-		ifNotEmpty: [self positionedDiagramNodes	inject: OrderedCollection new into:[:points :node | points union: (self fourNeighborsFor: node position) ]
+		ifEmpty: [ Set with: "self center" 50@50 ] 
+		ifNotEmpty: [self positionedDiagramNodes	inject: OrderedCollection new into:[:points :node | points union: (self neighborsFor: node position) ]
 			])
 			 select:[:point | self diagramNodes allSatisfy: [:node | node position ~= point]]
 ]
@@ -47,24 +47,12 @@ DiagramWhiteboard >> displayString [
 	^self name
 ]
 
-{ #category : #positioning }
-DiagramWhiteboard >> fourNeighborsFor: aPoint [ 
-|delta|
-delta := 200.
-
-	^ Array with: aPoint + (delta @ 0)
-		with: aPoint + (0 @ delta)
-		with: aPoint - (delta @ 0)
-		with: aPoint - (0 @ delta)
-
-]
-
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> initialize [
 	super initialize.
 	self fillStyle: Color white.
 	self dropEnabled: true.
-	self extent: 200@200
+	self extent: 500@500
 ]
 
 { #category : #'as yet unclassified' }
@@ -78,6 +66,18 @@ DiagramWhiteboard >> model: anObject [
 	anObject ifNotNil: [.anObject addDependent: self].
 	diagramNodes := Dictionary new.
 	model := anObject.
+
+]
+
+{ #category : #positioning }
+DiagramWhiteboard >> neighborsFor: aPoint [ 
+|delta|
+delta := 150.
+
+	^ (Array with: aPoint + (delta @ 0)
+		with: aPoint + (0 @ delta)
+		with: aPoint - (delta @ 0)
+		with: aPoint - (0 @ delta)) select:[:point | self containsPoint: point + self position]
 
 ]
 
@@ -117,7 +117,7 @@ DiagramWhiteboard >> update [
 	self diagramNodeMorphs do: #adjustPosition.
 	self connections do: #updateView.
 	self diagramNodeMorphs do: [:classBoxMorph | classBoxMorph updateBounds  ].
-	self bounds: self fullBounds.
+	owner ifNil:[self bounds: self fullBounds] ifNotNil:[self bounds: owner bounds].
 
 	
 ]
