@@ -8,6 +8,15 @@ Class {
 	#category : #'SUML-Tools'
 }
 
+{ #category : #positioning }
+DiagramWhiteboard >> availablePositions [
+	^ (self positionedDiagramNodes 
+		ifEmpty: [ Set with: "self center" 200@200 ] 
+		ifNotEmpty: [self positionedDiagramNodes	inject: OrderedCollection new into:[:points :node | points union: (self fourNeighborsFor: node position) ]
+			])
+			 select:[:point | self diagramNodes allSatisfy: [:node | node position ~= point]]
+]
+
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> connections [
 	^self submorphs inject: OrderedCollection new into:[:rels :box | rels union: box connections ].
@@ -38,11 +47,24 @@ DiagramWhiteboard >> displayString [
 	^self name
 ]
 
+{ #category : #positioning }
+DiagramWhiteboard >> fourNeighborsFor: aPoint [ 
+|delta|
+delta := 200.
+
+	^ Array with: aPoint + (delta @ 0)
+		with: aPoint + (0 @ delta)
+		with: aPoint - (delta @ 0)
+		with: aPoint - (0 @ delta)
+
+]
+
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> initialize [
 	super initialize.
 	self fillStyle: Color white.
 	self dropEnabled: true.
+	self extent: 200@200
 ]
 
 { #category : #'as yet unclassified' }
@@ -56,13 +78,36 @@ DiagramWhiteboard >> model: anObject [
 	anObject ifNotNil: [.anObject addDependent: self].
 	diagramNodes := Dictionary new.
 	model := anObject.
-	self update.
+
+]
+
+{ #category : #'as yet unclassified' }
+DiagramWhiteboard >> positionDiagramNodes [
+|bannedPositions|
+bannedPositions := Set new.
+	self diagramNodes do:[:node |
+		node position ifNil:[
+			self positionNode: node.
+"			[((self positionedDiagramNodes reject:[:n | n = node]) anySatisfy: [:n| n view intersects: node view bounds])] whileTrue:
+				[bannedPositions add: node position.
+						self positionNode: node]"]]
+]
+
+{ #category : #positioning }
+DiagramWhiteboard >> positionNode: aNode [
+	aNode position: self availablePositions anyOne.
+]
+
+{ #category : #positioning }
+DiagramWhiteboard >> positionedDiagramNodes [
+	^self diagramNodes select:[:node | node position notNil]
 ]
 
 { #category : #'as yet unclassified' }
 DiagramWhiteboard >> update [
 	self removeAllMorphs.
 	diagramNodes := Dictionary new.
+	self positionDiagramNodes.
 	self diagramNodeMorphs" do: [:classBoxMorph | classBoxMorph updateRelationships  ]".
 	diagramNodes keysAndValuesDo: [:classBoxDescription :classBoxMorph | 
 		(classBoxDescription relations difference: (classBoxMorph connections)) do:[:relation | 
