@@ -72,7 +72,7 @@ Diagram >> descriptionCodeOf: aDiagramNode [
 
 { #category : #accessing }
 Diagram >> diagramNodeFor: anObject [
-	^self diagramNodes detect:[:node | node object = anObject ]
+	^self diagramNodes detect:[:node | node object = anObject ] ifNone:[nil]
 ]
 
 { #category : #accessing }
@@ -88,6 +88,11 @@ Diagram >> diagramNodes: someDiagramNodes [
 { #category : #accessing }
 Diagram >> displayString [
 	^self name
+]
+
+{ #category : #accessing }
+Diagram >> includesDiagramNodeFor: anObject [
+	^(self diagramNodeFor: anObject ) notNil
 ]
 
 { #category : #accessing }
