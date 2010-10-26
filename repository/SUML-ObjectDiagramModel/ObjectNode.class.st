@@ -65,6 +65,11 @@ ObjectNode >> realDiagramNode [
 	^self
 ]
 
+{ #category : #'as yet unclassified' }
+ObjectNode >> resetConnections [
+	self relations: Set new.
+]
+
 { #category : #accessing }
 ObjectNode >> updaterClass [
 	^ObjectNodeUpdater 
