@@ -22,10 +22,8 @@ ObjectNode >> connectToReferencesWithin: aDiagram [
 	self variableNames
 		do:[:variableName |
 			| newObjectNode |
-			 (self variableNamed: variableName)
-				ifNotNil:[
 					self connectTo: (aDiagram diagramNodeFor:  (self variableNamed: variableName)) using: (AssociationRelationship new label: variableName ).
-					"(aDiagram diagramNodeFor:  (self variableNamed: variableName)) position: self position + ((50 @ 50) * (self variableNames indexOf: variableName ))".]
+					"(aDiagram diagramNodeFor:  (self variableNamed: variableName)) position: self position + ((50 @ 50) * (self variableNames indexOf: variableName ))".
 					 ]
 ]
 
@@ -42,6 +40,14 @@ ObjectNode >> hasA: anotherClassBox labeledAs: aLabel [
 { #category : #'as yet unclassified' }
 ObjectNode >> hash [
 	^self object hash
+]
+
+{ #category : #'as yet unclassified' }
+ObjectNode >> label [
+|stream|
+stream := WriteStream on:''.
+self object printOn: stream.
+^stream contents
 ]
 
 { #category : #accessing }
