@@ -62,7 +62,8 @@ DiagramNodeMorph >> relations [
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> update: aParameter [
 	(aParameter == #position)
-		ifTrue: [self position: diagramNode position + owner position. owner updateDescriptionCode.].
+		ifTrue: [self position: diagramNode position.
+				owner ifNotNil:[ self position: self position + owner position. owner updateDescriptionCode].].
 ]
 
 { #category : #'as yet unclassified' }

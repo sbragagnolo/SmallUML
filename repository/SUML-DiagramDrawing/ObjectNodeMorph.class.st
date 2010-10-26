@@ -3,7 +3,8 @@ Class {
 	#superclass : #DiagramNodeMorph,
 	#instVars : [
 		'innerReferencesGuide',
-		'connectableBounds'
+		'connectableBounds',
+		'label'
 	],
 	#category : #'SUML-DiagramDrawing'
 }
@@ -21,6 +22,8 @@ ObjectNodeMorph >> connectableBounds [
 { #category : #accessing }
 ObjectNodeMorph >> diagramNode: anObjectNode [ 
 	super diagramNode: anObjectNode.
+	self updateLabel.
+
 	self updateLayout.
 ]
 
@@ -59,8 +62,20 @@ ObjectNodeMorph >> updateBounds [
 	
 ]
 
+{ #category : #accessing }
+ObjectNodeMorph >> updateLabel [
+	label ifNotNil:[self removeMorph: label].
+	label := StringMorph new contents: diagramNode label; color: Color white.
+	self addMorph: label.
+]
+
 { #category : #'as yet unclassified' }
 ObjectNodeMorph >> updateLayout [
-	self connectableBounds updateLayout.
+	
+	container extent: (label width + 10) asPoint.
+	label center: self center.
 	container center: self center.
+	self extent: container extent.
+	innerReferencesGuide extent: container extent.
+	self connectableBounds updateLayout.
 ]
