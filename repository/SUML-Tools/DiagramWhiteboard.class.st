@@ -117,8 +117,8 @@ DiagramWhiteboard >> update [
 	self diagramNodeMorphs do: #adjustPosition.
 	self connections do: #updateView.
 	self diagramNodeMorphs do: [:classBoxMorph | classBoxMorph updateBounds  ].
-	owner ifNil:[self bounds: self fullBounds] ifNotNil:[self bounds: owner bounds].
-
+	"owner ifNil:[self bounds: self fullBounds] ifNotNil:[self bounds: owner bounds].
+"
 	
 ]
 
