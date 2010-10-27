@@ -46,7 +46,7 @@ ObjectNode >> hash [
 ObjectNode >> label [
 |stream|
 stream := WriteStream on:''.
-self object printOn: stream.
+stream nextPutAll: self object printString.
 ^stream contents
 ]
 
