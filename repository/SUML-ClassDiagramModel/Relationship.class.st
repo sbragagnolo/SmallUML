@@ -2,9 +2,9 @@ Class {
 	#name : #Relationship,
 	#superclass : #Object,
 	#instVars : [
-		'classBoxOrigin',
-		'classBoxDestination',
-		'label'
+		'label',
+		'from',
+		'to'
 	],
 	#category : #'SUML-ClassDiagramModel'
 }
@@ -50,19 +50,19 @@ Relationship >> arrow [
 ]
 
 { #category : #'as yet unclassified' }
-Relationship >> connects: aBox [
-	^self destinationDiagramNode = aBox or:[self originDiagramNode = aBox ]
+Relationship >> connects: aDiagramNode [
+	^self destinationDiagramNode = aDiagramNode or:[self originDiagramNode = aDiagramNode ]
 ]
 
 { #category : #accessing }
 Relationship >> destinationDiagramNode [
-	^ classBoxDestination
+	^ to
 ]
 
 { #category : #accessing }
-Relationship >> from: aClassBox to: aClassBox2 [ 
-	classBoxOrigin := aClassBox.
-	classBoxDestination := aClassBox2 
+Relationship >> from: aDiagramNode to: aDiagramNode2 [
+	from := aDiagramNode.
+	to := aDiagramNode2
 ]
 
 { #category : #'as yet unclassified' }
@@ -87,7 +87,7 @@ Relationship >> oneToMany [
 
 { #category : #accessing }
 Relationship >> originDiagramNode [
-	^ classBoxOrigin
+	^ from
 ]
 
 { #category : #'as yet unclassified' }
