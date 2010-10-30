@@ -74,18 +74,18 @@ DiagramDrawingDocumentation >> inheritanceforConnection [
 	handledConnection instanceVariables: #('handles' ).
 	handledConnection instanceMethods: #('handleForEvent:' 'click:' 'addHandles' 'endPointHandles' 'endPointHandles:' 'interiorHandleForEvent:' 'initializeInteraction' 'removeHandles' 'initialize' 'handleForPosition:addAllowed:' 'dragHandleStarted:' 'interiorHandleForPosition:addAllowed:' 'handles' 'dragHandleStoped:' ).
 	"Positioning"
-	handledConnection position: 10 @ 530.
+	handledConnection position: 10 @ 702.
 	uMLConnection := ClassBox named: 'UMLConnection'.
 	uMLConnection instanceVariables: #('label' 'cardinality' ).
 	uMLConnection instanceMethods: #('clipSubmorphs' 'fitIntoDiagram:' 'goesRight' 'updateTailVertex' 'dettachFromConnectionPoints' 'connectionPoints' 'isConnected' 'updateLabel' 'step' 'labelText:' 'updateHeadVertex' 'stepTime' 'goesLeft' 'target:' ).
 	uMLConnection classMethods: #('newTraitsUse' 'fromRelation:forDiagram:' 'newInstanceUse' 'newImplementationAssociation' 'newInstanceAssociation' 'newInheritanceAssociation' ).
 	"Positioning"
-	uMLConnection position: 233 @ 530.
+	uMLConnection position: 233 @ 702.
 	referenceConnection := ClassBox named: 'ReferenceConnection'.
 	referenceConnection instanceMethods: #('updateLabel' 'connectionPoints:' 'initialize' ).
 	referenceConnection classMethods: #('newReference' ).
 	"Positioning"
-	referenceConnection position: 10 @ 906.
+	referenceConnection position: 10 @ 1118.
 	"Relationships"
 	handledConnection inheritsFrom: connection.
 	"Relationships"
