@@ -62,11 +62,6 @@ ObjectNodeMorph >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-ObjectNodeMorph >> step [
-	self updateLayout 
-]
-
-{ #category : #'as yet unclassified' }
 ObjectNodeMorph >> updateBounds [
 	
 ]

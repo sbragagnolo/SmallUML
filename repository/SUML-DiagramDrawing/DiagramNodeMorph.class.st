@@ -28,12 +28,7 @@ DiagramNodeMorph >> diagramNode: aDiagramNode [
 	diagramNode  ifNotNil: [diagramNode  removeDependent: self].
 	aDiagramNode ifNotNil: [aDiagramNode addDependent: self].
 	
-	self position: self position.
-]
-
-{ #category : #'dragging-dropping' }
-DiagramNodeMorph >> handlesMouseDown: evt [
-	^true
+	self position: (aDiagramNode position ifNil:[0@0]).
 ]
 
 { #category : #'dragging-dropping' }
@@ -60,10 +55,21 @@ DiagramNodeMorph >> relations [
 ]
 
 { #category : #'as yet unclassified' }
+DiagramNodeMorph >> step [
+	self updateLayout .
+]
+
+{ #category : #'as yet unclassified' }
 DiagramNodeMorph >> update: aParameter [
 	(aParameter == #position)
 		ifTrue: [self position: diagramNode position.
 				owner ifNotNil:[ self position: self position + owner position. owner updateDescriptionCode].].
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> updateLayout [
+
+	self connectableBounds updateLayout.
 ]
 
 { #category : #'as yet unclassified' }
