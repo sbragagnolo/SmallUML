@@ -37,6 +37,16 @@ CategoryDiagramsModel >> createDiagram [
 ]
 
 { #category : #'as yet unclassified' }
+CategoryDiagramsModel >> createInheritanceDiagram [
+	|className|
+	className := self request: 'Root Class for the inheritance diagram' default: ''.
+	self model addDiagram: (ClassDiagram inheritanceFor: (Smalltalk at: className asSymbol) ).
+	self selectedIndex: self list size.
+	self changed: #list.
+	
+]
+
+{ #category : #'as yet unclassified' }
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
 	self changed: #list.
@@ -83,7 +93,8 @@ CategoryDiagramsModel >> listMenu: aMenu shifted: aBoolean [
 		('rename diagram'	renameDiagram)
 		)].
 	aMenu addLine.
-	aMenu addList: #(('add new diagram'	createDiagram)).
+	aMenu addList: #(('add diagram'	createDiagram)).
+	aMenu addList: #(('add inheritance diagram' createInheritanceDiagram)).
 	aMenu addLine.
 	aMenu addList: #(
 		('save diagram as PNG' saveDiagramAsPNG)

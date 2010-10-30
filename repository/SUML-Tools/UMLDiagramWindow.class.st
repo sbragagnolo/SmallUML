@@ -19,18 +19,22 @@ UMLDiagramWindow >> acceptContents: contents [
 
 { #category : #'as yet unclassified' }
 UMLDiagramWindow >> createView [ 
-	| diagramCode |
+	| diagramCode scrollPane|
 	diagramCode  := (PluggableShoutEditorMorph 
 		on: (DiagramWorkspace new model: model diagramListModel) 
 		text: #descriptionCode 
 		accept: #acceptContents:from:
 		readSelection: nil 
 		menu: #codePaneMenu:shifted:).
-
+scrollPane := ScrollPane new.
 diagram := DiagramWhiteboard new. 
-diagram clipSubmorphs: true.
+diagram extent: 1000@2000.
+diagram clipSubmorphs: false.
 diagram model: model.
-self addMorph: diagram frame: (0@0 corner: 1@0.8).
+diagram update.
+scrollPane scroller addMorph: diagram.
+
+self addMorph: scrollPane frame: (0@0 corner: 1@0.8).
 self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0.8 corner: 0.25@1).
 self addMorph: self descriptionsList frame: (0.25@0.8 corner: 0.5@1).
 self addMorph: diagramCode frame: (0.5@0.8 corner: 1@1).
