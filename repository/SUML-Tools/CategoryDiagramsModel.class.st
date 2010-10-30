@@ -16,6 +16,7 @@ CategoryDiagramsModel >> changed [
 
 { #category : #accessing }
 CategoryDiagramsModel >> changed: aParameter [
+	(aParameter = #list) ifTrue:[diagrams:= self model diagrams].
 	(aParameter == #selectedIndex)
 		ifTrue:[
 			self diagramListModel model: self selectedDiagramModel.
@@ -49,6 +50,7 @@ CategoryDiagramsModel >> createInheritanceDiagram [
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
+	
 	self changed: #list.
 	(self list notEmpty and:[ self selectedIndex > 1]) 
 		ifTrue: [self selectedIndex: self selectedIndex -1].
