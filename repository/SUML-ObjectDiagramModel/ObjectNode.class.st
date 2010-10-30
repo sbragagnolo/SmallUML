@@ -22,7 +22,7 @@ ObjectNode >> connectToReferencesWithin: aDiagram [
 	self variableNames
 		do:[:variableName |
 			| newObjectNode |
-					self connectTo: (aDiagram diagramNodeFor:  (self variableNamed: variableName)) using: (AssociationRelationship new label: variableName ).
+					self connectTo: (aDiagram diagramNodeFor:  (self variableNamed: variableName)) using: (ReferenceRelationship new label: variableName ).
 					"(aDiagram diagramNodeFor:  (self variableNamed: variableName)) position: self position + ((50 @ 50) * (self variableNames indexOf: variableName ))".
 					 ]
 ]
