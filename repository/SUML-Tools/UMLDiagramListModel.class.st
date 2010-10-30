@@ -14,7 +14,6 @@ Class {
 UMLDiagramListModel >> acceptContents: aText [ 
 	"The binding actually has an Updater"
 	self bindingOfSelectedDiagramNode update.
-	self selectedDiagram saveDescriptionIn: self diagramsHolder.
 	self changed: #list.
 	self changed: #descriptionCode.
 	self changed: #view.
@@ -49,6 +48,8 @@ UMLDiagramListModel >> changed [
 
 { #category : #'as yet unclassified' }
 UMLDiagramListModel >> changed: aParameter [
+	((aParameter = #position) or:[(aParameter = #descriptionCode)]) 
+		ifTrue: [self selectedDiagram saveDescriptionIn: self diagramsHolder.]. 
 	(aParameter ~= #descriptionCode)
 		ifTrue:[self model changed: aParameter].
 	((aParameter = #selectedIndex) or:[aParameter = #position])
