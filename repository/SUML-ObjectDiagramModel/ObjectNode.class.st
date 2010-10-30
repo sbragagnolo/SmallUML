@@ -71,6 +71,11 @@ ObjectNode >> resetConnections [
 ]
 
 { #category : #accessing }
+ObjectNode >> subject [
+	^object
+]
+
+{ #category : #accessing }
 ObjectNode >> updaterClass [
 	^ObjectNodeUpdater 
 ]
