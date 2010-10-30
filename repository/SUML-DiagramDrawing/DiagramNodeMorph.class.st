@@ -28,7 +28,7 @@ DiagramNodeMorph >> diagramNode: aDiagramNode [
 	diagramNode  ifNotNil: [diagramNode  removeDependent: self].
 	aDiagramNode ifNotNil: [aDiagramNode addDependent: self].
 	
-	self position: (aDiagramNode position ifNil:[0@0]).
+	self position: (self position ifNil:[0@0]).
 ]
 
 { #category : #'dragging-dropping' }
