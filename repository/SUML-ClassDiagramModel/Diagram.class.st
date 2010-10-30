@@ -10,6 +10,11 @@ Class {
 	#category : #'SUML-ClassDiagramModel'
 }
 
+{ #category : #'as yet unclassified' }
+Diagram class >> inheritanceFor: aClass [
+	^(InheritanceDiagramBuilder new buildForClass: aClass ) name: 'Inheritance for ', aClass name
+]
+
 { #category : #adding }
 Diagram >> addDiagramNode: aDiagramNode [
 	self diagramNodes add: aDiagramNode.
@@ -72,7 +77,7 @@ Diagram >> descriptionCodeOf: aDiagramNode [
 
 { #category : #accessing }
 Diagram >> diagramNodeFor: anObject [
-	^self diagramNodes detect:[:node | node object = anObject ] ifNone:[nil]
+	^self diagramNodes detect:[:node | node subject = anObject ] ifNone:[nil]
 ]
 
 { #category : #accessing }

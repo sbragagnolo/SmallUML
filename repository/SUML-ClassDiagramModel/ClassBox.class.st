@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'instanceVariables',
 		'classInstanceVariables',
-		'classVariables'
+		'classVariables',
+		'targetClass'
 	],
 	#category : #'SUML-ClassDiagramModel'
 }
@@ -14,6 +15,7 @@ ClassBox class >> fromClass: aClass [
 	aClass isBehavior ifFalse:[self error: aClass name asString , ' is not a Class'].
 	^(self 
 		newNamed: aClass name asString )
+			targetClass: aClass;
 			instanceVariables: (aClass instVarNames);
 			instanceMethods: (self selectorsAsStrings: aClass selectors);
 			classInstanceVariables: (aClass class instVarNames);
@@ -115,6 +117,16 @@ ClassBox >> instanceVariables: anObject [
 { #category : #relations }
 ClassBox >> isATypeOf: aTypeBox [
 	self implements: aTypeBox 
+]
+
+{ #category : #accessing }
+ClassBox >> subject [
+	^targetClass
+]
+
+{ #category : #accessing }
+ClassBox >> targetClass: anObject [
+	targetClass := anObject
 ]
 
 { #category : #relations }
