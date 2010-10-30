@@ -69,5 +69,5 @@ InheritanceDiagramBuilder >> nextPositionAtLevel: aLevel willBe: aPosition [
 { #category : #'as yet unclassified' }
 InheritanceDiagramBuilder >> yPositionForLevel: aLevel [
 	(aLevel = 0) ifTrue:[^10].
-	 ^((classesPerLevel at: aLevel - 1) inject: 0 into:[:maxHeight :aClass | maxHeight max: (ClassBox fromClass: aClass) view height]) + 30 + (self yPositionForLevel: aLevel - 1).
+	 ^((classesPerLevel at: aLevel - 1) inject: 0 into:[:maxHeight :aClass | maxHeight max: (ClassBox fromClass: aClass) view fullBounds height]) + 30 + (self yPositionForLevel: aLevel - 1).
 ]
