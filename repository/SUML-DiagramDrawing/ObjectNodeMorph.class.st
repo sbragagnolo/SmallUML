@@ -28,15 +28,24 @@ ObjectNodeMorph >> diagramNode: anObjectNode [
 ]
 
 { #category : #'as yet unclassified' }
+ObjectNodeMorph >> drawOn: aCanvas [
+
+	aCanvas asBalloonCanvas
+			aaLevel: 4;
+			drawOval: (bounds insetBy: self extent) color: self color
+				borderWidth: 1 borderColor: Color black.
+]
+
+{ #category : #'as yet unclassified' }
 ObjectNodeMorph >> initialize [ 
 	super initialize.
-	self color: Color transparent.
-	self borderColor: Color transparent.
+	self color: Color lightGray.
+	self borderColor: Color black.
 	self extent: 40+(self connections size* 0.1)@40+(self connections size* 0.1).
 	
 	container:= CircleMorph new.
-	container color: Color gray.
-	container borderColor: Color black.
+	container color: Color transparent.
+	container borderColor: Color transparent.
 	container extent: self extent.
 	container center: self center.
 	
@@ -72,7 +81,7 @@ ObjectNodeMorph >> updateLabel [
 { #category : #'as yet unclassified' }
 ObjectNodeMorph >> updateLayout [
 	
-	container extent: (label width + 10) asPoint.
+	container extent: ((label width + 10) max: 30) asPoint.
 	label center: self center.
 	container center: self center.
 	self extent: container extent.
