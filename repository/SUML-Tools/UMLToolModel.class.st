@@ -64,5 +64,5 @@ UMLToolModel >> selectedIndex: anIndex [
 { #category : #accessing }
 UMLToolModel >> update: anObject [ 
 	super update: anObject.
-	self changed: #list.
+	(anObject ~= #descriptionCode) ifTrue: [self changed: #list.]
 ]

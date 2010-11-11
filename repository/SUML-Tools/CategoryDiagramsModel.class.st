@@ -136,7 +136,8 @@ CategoryDiagramsModel >> selectedDiagramModel [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> update: aParameter [
-	super update: aParameter.
+	
 	(aParameter = #view) ifTrue:[self changed: #view].
 	self diagramListModel changed: #descriptionCode.
+	super update: aParameter.
 ]
