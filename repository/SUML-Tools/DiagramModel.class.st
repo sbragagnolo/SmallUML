@@ -1,6 +1,9 @@
 Class {
 	#name : #DiagramModel,
 	#superclass : #UMLToolModel,
+	#instVars : [
+		'bindings'
+	],
 	#category : #'SUML-Tools'
 }
 
@@ -9,9 +12,14 @@ DiagramModel >> bindingErrorBecauseOf: aVariable [
 	self subclassResponsibility 
 ]
 
+{ #category : #'as yet unclassified' }
+DiagramModel >> bindingOf: aString [
+	^bindings associationAt: aString ifAbsent:[self error: (self model bindingErrorBecauseOf: aString ) ].
+]
+
 { #category : #'menu-options' }
 DiagramModel >> checkBoxName: aBoxName [
-	(bindings values anySatisfy: [:box | box name = aBoxName ]) ifTrue:[self error: 'There already exists a box named ', aBoxName ].
+	(bindings values anySatisfy: [:box | box name = aBoxName ]) ifTrue:[self error: 'There already exists a diagram node named ', aBoxName ].
 	^aBoxName 
 ]
 
@@ -19,11 +27,22 @@ DiagramModel >> checkBoxName: aBoxName [
 DiagramModel >> deleteNode [
 	self model removeDiagramNode: self selectedDiagramNode .
 	self selectedIndex: self selectedIndex -1.
-	self halt.
 	self changed: #selectedIndex.
 	self changed: #view.
 	self changed: #descriptionCode.
 
+]
+
+{ #category : #'as yet unclassified' }
+DiagramModel >> hasBindingOf: aString [
+	^(bindings notNil and: [bindings includesKey: aString])
+]
+
+{ #category : #binding }
+DiagramModel >> initializeBindings [
+	bindings := Dictionary new.
+	self list do:[:de |
+		bindings at: de variableNameForDescriptionCode put:  (de updaterClass new realDiagramNode: de)]
 ]
 
 { #category : #'as yet unclassified' }

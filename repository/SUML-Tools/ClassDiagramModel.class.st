@@ -65,7 +65,8 @@ ClassDiagramModel >> createClassBoxFromClass [
 
 { #category : #'menu-options' }
 ClassDiagramModel >> createClassBoxFromClass: aClass [
-	aClass ifNotNil: [ self model addDiagramNode: (ClassBox fromClass: aClass )]
+	aClass ifNotNil: [ self model addDiagramNode: (ClassBox fromClass: aClass )].
+	self changed.
 ]
 
 { #category : #'menu-options' }

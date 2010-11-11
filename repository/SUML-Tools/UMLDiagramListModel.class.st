@@ -22,9 +22,7 @@ UMLDiagramListModel >> acceptContents: aText [
 
 { #category : #binding }
 UMLDiagramListModel >> bindingOf: aString [
-	^bindings associationAt: aString ifAbsent:[self error: (self model bindingErrorBecauseOf: aString ) ].
-
-	
+	^self model bindingOf: aString 
 ]
 
 { #category : #binding }
@@ -88,7 +86,7 @@ UMLDiagramListModel >> diagramsHolder: anObject [
 
 { #category : #binding }
 UMLDiagramListModel >> hasBindingOf: aString [
-	^(bindings notNil and: [bindings includesKey: aString])
+	^self model hasBindingOf: aString 
 ]
 
 { #category : #'as yet unclassified' }
@@ -96,11 +94,9 @@ UMLDiagramListModel >> initialize [
 	selectedIndex := 1.
 ]
 
-{ #category : #binding }
-UMLDiagramListModel >> initializeBindings [
-	bindings := Dictionary new.
-	self list do:[:de |
-		bindings at: de variableNameForDescriptionCode put:  (de updaterClass new realDiagramNode: de)]
+{ #category : #accessing }
+UMLDiagramListModel >> initializeBindings [ 
+	self model initializeBindings 
 ]
 
 { #category : #accessing }
@@ -174,6 +170,7 @@ UMLDiagramListModel >> update: aParameter [
 				
 				self changed: #list. 
 				self changed: #descriptionCode].
+	super update: aParameter.
 	self initializeBindings.
 ]
 
