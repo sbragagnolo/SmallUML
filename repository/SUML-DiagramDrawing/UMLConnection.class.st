@@ -124,10 +124,11 @@ label ifNotNil:[
     label angle: angle .
     newPosition := self tailConnectionPoint position roundTo: 0.1.
     normalizedDirection :=(((self curveInfoNearest: (self tailConnectionPoint center)) tangent)) normalized roundTo: 0.1.
-	self goesRight ifTrue:[xOffset:= -25] ifFalse:[25].
-    newPosition := newPosition +( normalizedDirection * 40) - (xOffset@labelOffset).
+    newPosition := newPosition +( normalizedDirection * 50 * (label width / 100)) - (0@labelOffset).
 
 	label center: newPosition.
+"	self goesRight ifTrue:[xOffset:= 25] ifFalse:[xOffset := -25].
+	label left: label left + xOffset."
     label comeToFront. 
     ].
 self target oneToMany ifTrue:[
