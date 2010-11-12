@@ -32,8 +32,9 @@ CategoryDiagramsModel >> createDiagram [
 	|diagramName|
 	diagramName := self request: 'Diagram Name' default: ''.
 	self model addDiagram: (ClassDiagram new name: diagramName).
-	self selectedIndex: self list size.
 	self changed: #list.
+	self selectedIndex: self list size.
+	
 	
 ]
 

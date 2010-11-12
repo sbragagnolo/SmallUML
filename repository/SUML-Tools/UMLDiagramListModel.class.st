@@ -48,7 +48,7 @@ UMLDiagramListModel >> changed [
 UMLDiagramListModel >> changed: aParameter [
 	((aParameter = #position) or:[(aParameter = #descriptionCode)]) 
 		ifTrue: [self selectedDiagram saveDescriptionIn: self diagramsHolder.]. 
-	(aParameter ~= #descriptionCode)
+	((aParameter ~= #descriptionCode) and:[(aParameter  ~= #list)]) 
 		ifTrue:[self model changed: aParameter].
 	((aParameter = #selectedIndex) or:[aParameter = #position])
 		ifTrue:[
@@ -157,6 +157,7 @@ UMLDiagramListModel >> selectedIndex: anIndex [
 
 { #category : #accessing }
 UMLDiagramListModel >> update: aParameter [
+	(aParameter = #list) ifTrue:[self changed: #list].
 	(aParameter = #descriptionCode)
 		ifTrue:[self changed: #descriptionCode].
 
