@@ -9,6 +9,13 @@ ClassDiagramModel >> bindingErrorBecauseOf: aVariable [
 	^'No class description associated with the variable: ', aVariable 
 ]
 
+{ #category : #'as yet unclassified' }
+ClassDiagramModel >> changed [
+	super changed.
+	self changed: #descriptionCode.
+	self changed: #view.
+]
+
 { #category : #'menu-options' }
 ClassDiagramModel >> chooseClassFromCategory [
 	| dialog choice |

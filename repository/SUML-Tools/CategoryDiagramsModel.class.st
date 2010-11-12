@@ -10,28 +10,34 @@ Class {
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> changed [
-	self diagramListModel model: self selectedDiagram.
+	self diagramListModel model: self selectedDiagramModel.
 	super changed.
 ]
 
 { #category : #accessing }
 CategoryDiagramsModel >> changed: aParameter [
-	(aParameter = #list) ifTrue:[diagrams:= self model diagrams].
+
+	(aParameter = #list) ifTrue:[ "diagrams:= self model diagrams"].
+
+	self diagramListModel model: self selectedDiagramModel.
 	(aParameter == #selectedIndex)
 		ifTrue:[
-			self diagramListModel model: self selectedDiagramModel.
+			
 "			self diagramListModel changed: #list."
 			self diagramListModel changed: #descriptionCode.
 			self changed: #view.
 			self changed: #relabel].
+
 	super changed: aParameter 
 ]
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> createDiagram [
-	|diagramName|
+	|diagramName newDiagram |
 	diagramName := self request: 'Diagram Name' default: ''.
-	self model addDiagram: (ClassDiagram new name: diagramName).
+	newDiagram:= (ClassDiagram new name: diagramName).
+	self model addDiagram: newDiagram .
+	diagrams add: newDiagram.
 	self changed: #list.
 	self selectedIndex: self list size.
 	
@@ -51,7 +57,7 @@ CategoryDiagramsModel >> createInheritanceDiagram [
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
-	
+	diagrams remove: self selectedDiagram.
 	self changed: #list.
 	(self list notEmpty and:[ self selectedIndex > 1]) 
 		ifTrue: [self selectedIndex: self selectedIndex -1].
@@ -139,6 +145,7 @@ CategoryDiagramsModel >> selectedDiagramModel [
 CategoryDiagramsModel >> update: aParameter [
 	
 	(aParameter = #view) ifTrue:[self changed: #view].
+	(aParameter = #descriptionCode) ifTrue:[self changed: #list].
 	self diagramListModel changed: #descriptionCode.
 	super update: aParameter.
 ]

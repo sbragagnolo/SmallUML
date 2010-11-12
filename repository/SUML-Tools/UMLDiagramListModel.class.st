@@ -47,7 +47,9 @@ UMLDiagramListModel >> changed [
 { #category : #'as yet unclassified' }
 UMLDiagramListModel >> changed: aParameter [
 	((aParameter = #position) or:[(aParameter = #descriptionCode)]) 
-		ifTrue: [self selectedDiagram saveDescriptionIn: self diagramsHolder.]. 
+		ifTrue: [
+				self selectedDiagram saveDescriptionIn: self diagramsHolder. 
+				self changed: #list]. 
 	((aParameter ~= #descriptionCode) and:[(aParameter  ~= #list)]) 
 		ifTrue:[self model changed: aParameter].
 	((aParameter = #selectedIndex) or:[aParameter = #position])
@@ -56,7 +58,7 @@ UMLDiagramListModel >> changed: aParameter [
 	(aParameter = #view)
 		ifTrue:[
 			self diagramsHolder changed: #view].
-		super changed: aParameter 
+	super changed: aParameter 
 ]
 
 { #category : #'as yet unclassified' }
