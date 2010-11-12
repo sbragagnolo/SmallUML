@@ -5,13 +5,15 @@ Class {
 	#classTraits : 'TConnectableShape classTrait',
 	#instVars : [
 		'container',
-		'diagramNode'
+		'diagramNode',
+		'dragEventHandler'
 	],
 	#category : #'SUML-DiagramDrawing'
 }
 
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> adjustPosition [
+
 	(self position = diagramNode position)
 		ifTrue:[self position: owner position + diagramNode position]
 ]
@@ -28,7 +30,13 @@ DiagramNodeMorph >> diagramNode: aDiagramNode [
 	diagramNode  ifNotNil: [diagramNode  removeDependent: self].
 	aDiagramNode ifNotNil: [aDiagramNode addDependent: self].
 	
-	self position: (self position ifNil:[0@0]).
+	self position: diagramNode position
+]
+
+{ #category : #'dragging-dropping' }
+DiagramNodeMorph >> initialize [ 
+	super initialize.
+	dragEventHandler  := DraggingEventHandler new passenger: self.
 ]
 
 { #category : #'dragging-dropping' }
@@ -41,12 +49,17 @@ DiagramNodeMorph >> justDroppedInto: aMorph event: evt [
 
 { #category : #'dragging-dropping' }
 DiagramNodeMorph >> mouseDown: evt [
-	evt hand grabMorph: self
+	dragEventHandler startHandleDrag: evt
 ]
 
-{ #category : #private }
-DiagramNodeMorph >> position [
-	^ owner ifNil:[ diagramNode position ] ifNotNil:[ super position]
+{ #category : #'dragging-dropping' }
+DiagramNodeMorph >> mouseMove: evt [
+	dragEventHandler handleMove: evt
+]
+
+{ #category : #'dragging-dropping' }
+DiagramNodeMorph >> mouseUp: evt [
+	dragEventHandler stopHandleDrag: evt
 ]
 
 { #category : #accessing }
@@ -74,5 +87,5 @@ DiagramNodeMorph >> updateLayout [
 
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> wantsToBeDroppedInto: aMorph [
-	^aMorph isKindOf: DiagramWhiteboard  
+	^aMorph isKindOf: DiagramWhiteboard 
 ]
