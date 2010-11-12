@@ -74,13 +74,13 @@ DiagramNode >> name: anObject [
 
 { #category : #drawing }
 DiagramNode >> position [
-	^position" ifNil:[0@0]"
+	^position ifNil:[0@0]
 ]
 
 { #category : #drawing }
 DiagramNode >> position: aPoint [ 
 	position:= aPoint.
-	self changed: #position
+	self changed: #position.
 ]
 
 { #category : #'as yet unclassified' }
