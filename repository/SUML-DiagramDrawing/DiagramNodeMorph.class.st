@@ -54,7 +54,8 @@ DiagramNodeMorph >> mouseDown: evt [
 
 { #category : #'dragging-dropping' }
 DiagramNodeMorph >> mouseMove: evt [
-	dragEventHandler handleMove: evt
+	dragEventHandler handleMove: evt.
+	self connectableBounds updateConnectionsLabel
 ]
 
 { #category : #'dragging-dropping' }

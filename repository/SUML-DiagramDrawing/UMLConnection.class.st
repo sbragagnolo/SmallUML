@@ -106,12 +106,6 @@ UMLConnection >> target: aRelationship [
 	
 ]
 
-{ #category : #'gaucho-created' }
-UMLConnection >> updateHeadVertex [
-	super updateHeadVertex.
-	self updateLabel.
-]
-
 { #category : #other }
 UMLConnection >> updateLabel [
 | angle newPosition normalizedDirection labelOffset |
@@ -124,29 +118,23 @@ UMLConnection >> updateLabel [
     (labelOffset > Float pi) ifTrue: [labelOffset := (Float pi * 2) - labelOffset].
     labelOffset := (labelOffset \\ Float pi) - (Float halfPi).
     labelOffset > 0 ifTrue: [labelOffset := labelOffset - Float halfPi].
-    labelOffset := 10 + (((labelOffset sin + 1)* 30) rounded).
+    labelOffset := 10 + (((labelOffset sin + 1)* 30) roundTo:0.1).
 
 label ifNotNil:[
     label angle: angle .
-
-    newPosition := self tailConnectionPoint position.
+    newPosition := self tailConnectionPoint position roundTo: 0.1.
     normalizedDirection :=(((self curveInfoNearest: (self tailConnectionPoint center)) tangent)) normalized roundTo: 0.1.
     newPosition := newPosition +( normalizedDirection * 40) - (0@labelOffset).
-    label center: newPosition.
+
+	label center: newPosition.
     label comeToFront. 
     ].
 self target oneToMany ifTrue:[
 	cardinality ifNil:[cardinality:= StringMorph new contents:'*'. self addMorph: cardinality].
 	cardinality ifNotNil:[
-		  newPosition := self headConnectionPoint position.
+		  newPosition := self headConnectionPoint position roundTo: 0.1.
  		  normalizedDirection :=(((self curveInfoNearest: (self headConnectionPoint center)) tangent)) normalized roundTo: 0.1.
 		  newPosition := newPosition -( normalizedDirection * 40) - (0@(10 + labelOffset)).
 cardinality position: newPosition  ]
 ]
-]
-
-{ #category : #'gaucho-created' }
-UMLConnection >> updateTailVertex [
-	super updateTailVertex.
-	self updateLabel.
 ]
