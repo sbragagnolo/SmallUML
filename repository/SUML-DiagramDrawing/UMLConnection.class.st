@@ -108,7 +108,7 @@ UMLConnection >> target: aRelationship [
 
 { #category : #other }
 UMLConnection >> updateLabel [
-| angle newPosition normalizedDirection labelOffset |
+| angle newPosition normalizedDirection labelOffset xOffset |
 
     angle:= ((self headConnectionPoint center y - self tailConnectionPoint center y) arcTan: (self tailConnectionPoint  center x - self headConnectionPoint center x) ) .
     self goesRight ifTrue:[angle := angle + Float pi ].
@@ -124,7 +124,8 @@ label ifNotNil:[
     label angle: angle .
     newPosition := self tailConnectionPoint position roundTo: 0.1.
     normalizedDirection :=(((self curveInfoNearest: (self tailConnectionPoint center)) tangent)) normalized roundTo: 0.1.
-    newPosition := newPosition +( normalizedDirection * 40) - (0@labelOffset).
+	self goesRight ifTrue:[xOffset:= -25] ifFalse:[25].
+    newPosition := newPosition +( normalizedDirection * 40) - (xOffset@labelOffset).
 
 	label center: newPosition.
     label comeToFront. 
