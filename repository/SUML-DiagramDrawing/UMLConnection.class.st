@@ -136,7 +136,7 @@ self target oneToMany ifTrue:[
 	cardinality ifNotNil:[
 		  newPosition := self headConnectionPoint position roundTo: 0.1.
  		  normalizedDirection :=(((self curveInfoNearest: (self headConnectionPoint center)) tangent)) normalized roundTo: 0.1.
-		  newPosition := newPosition -( normalizedDirection * 40) - (0@(10 + labelOffset)).
+		  newPosition := newPosition -( normalizedDirection * 30) - (0@(10 + labelOffset)).
 cardinality position: newPosition  ]
 ]
 ]
