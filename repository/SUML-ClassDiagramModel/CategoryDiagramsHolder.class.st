@@ -13,7 +13,7 @@ CategoryDiagramsHolder class >> addDiagram: aDiagram [
 CategoryDiagramsHolder class >> diagrams [
 	| diagramHolder |
 	diagramHolder := self new.
-	^ (self methodsInCategory: 'diagrams') collect: [ :selector | (diagramHolder perform: selector) category: self category ]
+	^ ((self methodsInCategory: 'diagrams') collect: [ :selector | (diagramHolder perform: selector) category: self category ]) asOrderedCollection 
 ]
 
 { #category : #'as yet unclassified' }
