@@ -16,13 +16,9 @@ CategoryDiagramsModel >> changed [
 
 { #category : #accessing }
 CategoryDiagramsModel >> changed: aParameter [
-
-	(aParameter = #list) ifTrue:[ "diagrams:= self model diagrams"].
-
-	self diagramListModel model: self selectedDiagramModel.
 	(aParameter == #selectedIndex)
 		ifTrue:[
-			
+			self diagramListModel model: self selectedDiagramModel.
 "			self diagramListModel changed: #list."
 			self diagramListModel changed: #descriptionCode.
 			self changed: #view.
