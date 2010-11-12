@@ -41,7 +41,7 @@ DiagramNodeMorph >> initialize [
 
 { #category : #'dragging-dropping' }
 DiagramNodeMorph >> justDroppedInto: aMorph event: evt [
-	diagramNode position: self position - owner position .
+	diagramNode position: self position.
 	owner updateRelationships.
 	self updateBounds.
 
@@ -77,7 +77,7 @@ DiagramNodeMorph >> step [
 DiagramNodeMorph >> update: aParameter [
 	(aParameter == #position)
 		ifTrue: [self position: diagramNode position.
-				owner ifNotNil:[ self position: self position + owner position. owner updateDescriptionCode].].
+				owner ifNotNil:[ owner updateDescriptionCode].].
 ]
 
 { #category : #'as yet unclassified' }
