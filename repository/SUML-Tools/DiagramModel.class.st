@@ -27,9 +27,10 @@ DiagramModel >> checkBoxName: aBoxName [
 DiagramModel >> deleteNode [
 	self model removeDiagramNode: self selectedDiagramNode .
 	self selectedIndex: self selectedIndex -1.
+	self changed: #descriptionCode.
 	self changed: #selectedIndex.
 	self changed: #view.
-	self changed: #descriptionCode.
+	
 
 ]
 
@@ -55,6 +56,8 @@ DiagramModel >> list [
 { #category : #'as yet unclassified' }
 DiagramModel >> model: aModel [
 	super model: aModel.
+	model ifNotNil: [model removeDependent: self].
+	aModel ifNotNil: [aModel addDependent: self].
 
 ]
 

@@ -42,9 +42,11 @@ CategoryDiagramsModel >> createDiagram [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> createInheritanceDiagram [
-	|className|
+	|className newDiagram |
 	className := self request: 'Root Class for the inheritance diagram' default: ''.
-	self model addDiagram: (ClassDiagram inheritanceFor: (Smalltalk at: className asSymbol) ).
+	newDiagram := (ClassDiagram inheritanceFor: (Smalltalk at: className asSymbol) ).
+	self model addDiagram: newDiagram.
+	diagrams add: newDiagram.
 	self selectedIndex: self list size.
 	self changed: #list.
 	

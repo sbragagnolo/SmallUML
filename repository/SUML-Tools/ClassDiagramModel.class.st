@@ -81,7 +81,7 @@ ClassDiagramModel >> createInterfaceBox [
 	| interfaceName |
 	interfaceName := self request: 'Interface / Type Name' default: ''.
 	self checkBoxName: interfaceName .
-	self model addDiagramNode: (InterfaceBox new boxTitle: interfaceName).
+	self model addDiagramNode: (InterfaceBox newNamed: interfaceName).
 	self changed.
 ]
 
