@@ -3,8 +3,7 @@ Class {
 	#superclass : #DiagramNode,
 	#instVars : [
 		'classMethods',
-		'instanceMethods',
-		'boxTitle'
+		'instanceMethods'
 	],
 	#category : #'SUML-ClassDiagramModel'
 }
