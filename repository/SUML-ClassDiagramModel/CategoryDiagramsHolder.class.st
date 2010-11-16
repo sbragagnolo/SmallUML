@@ -6,7 +6,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsHolder class >> addDiagram: aDiagram [
-	^aDiagram saveDescriptionIn: self
+	^aDiagram category: self category;  saveDescriptionIn: self
 ]
 
 { #category : #accessing }
