@@ -27,12 +27,13 @@ UMLDiagramWindow >> createView [
 		readSelection: nil 
 		menu: #codePaneMenu:shifted:).
 scrollPane := ScrollPane new.
-diagram := DiagramWhiteboard new . 
+diagram := SUMLDiagramWhiteboard new . 
 diagram extent: 1000@2000.
 diagram clipSubmorphs: false.
 diagram model: model.
 diagram update.
 scrollPane scroller addMorph: diagram.
+diagram position: 0@0.
 
 self addMorph: scrollPane frame: (0@0 corner: 1@0.8).
 self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0.8 corner: 0.25@1).

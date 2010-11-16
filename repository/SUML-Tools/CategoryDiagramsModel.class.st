@@ -9,6 +9,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+CategoryDiagramsModel >> addDiagram: aDiagram [
+	self model addDiagram: aDiagram.
+	diagrams add: aDiagram.
+]
+
+{ #category : #'as yet unclassified' }
 CategoryDiagramsModel >> changed [
 	self diagramListModel model: self selectedDiagramModel.
 	super changed.
@@ -32,8 +38,7 @@ CategoryDiagramsModel >> createDiagram [
 	|diagramName newDiagram |
 	diagramName := self request: 'Diagram Name' default: ''.
 	newDiagram:= (ClassDiagram new name: diagramName).
-	self model addDiagram: newDiagram .
-	diagrams add: newDiagram.
+	self addDiagram: newDiagram .
 	self changed: #list.
 	self selectedIndex: self list size.
 	
@@ -116,7 +121,7 @@ CategoryDiagramsModel >> renameDiagram [
 	diagramName ifNotNil: [currentDiagram := self selectedDiagram.
 	self deleteDiagram.
 	currentDiagram name: diagramName.
-	self model addDiagram: currentDiagram.
+	self addDiagram: currentDiagram.
 	self changed: #list.
 	self changed: #selectedIndex.
 	self changed.]
@@ -125,7 +130,7 @@ CategoryDiagramsModel >> renameDiagram [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> saveDiagramAsPNG [
-	PNGReadWriter putForm: (DiagramWhiteboard new model: self diagramListModel) imageForm onFileNamed: self selectedDiagram name, '.png'.
+	PNGReadWriter putForm: ((SUMLDiagramWhiteboard new model: self diagramListModel) update) imageForm onFileNamed: self selectedDiagram name, '.png'.
 
 ]
 
