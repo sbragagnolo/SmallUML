@@ -91,7 +91,7 @@ UMLConnection >> labelText: aByteString [
 
 { #category : #'stepping and presenter' }
 UMLConnection >> step [
-	self updateView 
+	self updateView .
 ]
 
 { #category : #testing }
@@ -102,7 +102,7 @@ UMLConnection >> stepTime [
 { #category : #'view of a model or target' }
 UMLConnection >> target: aRelationship [
 	aRelationship label ifNotNil:[self labelText: aRelationship label].
-	target:= aRelationship 
+	target:= aRelationship.
 	
 ]
 

@@ -43,7 +43,7 @@ ObjectNodeMorph >> initialize [
 	self borderColor: Color black.
 	self extent: 40+(self connections size* 0.1)@40+(self connections size* 0.1).
 	
-	container:= CircleMorph new.
+	container:= EllipseMorph new.
 	container color: Color transparent.
 	container borderColor: Color transparent.
 	container extent: self extent.
@@ -75,8 +75,7 @@ ObjectNodeMorph >> updateLabel [
 
 { #category : #'as yet unclassified' }
 ObjectNodeMorph >> updateLayout [
-	
-	container extent: ((label width + 10) max: 30) asPoint.
+	container extent: ((((label width + 10) max: 50) ) @ (label height + 20)).
 	label center: self center.
 	container center: self center.
 	self extent: container extent.
