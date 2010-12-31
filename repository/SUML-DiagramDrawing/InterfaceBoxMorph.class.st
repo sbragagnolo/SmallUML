@@ -70,6 +70,7 @@ InterfaceBoxMorph >> diagramNode: aDiagramNode [
 	self updateTitle.
 	self updateMethods.
 	self updateBounds.
+	
 ]
 
 { #category : #'as yet unclassified' }
@@ -189,9 +190,9 @@ InterfaceBoxMorph >> updateBounds [
 	self bounds: container fullBounds.
 	self extent: self extent + (7@0).
 	boundingBox ifNil: [self initializeBoundingBox. ].
-	
-	boundingBox updateView.
+
 	boundingBox updateLayout.
+		boundingBox updateView.
 	
 ]
 

@@ -56,6 +56,11 @@ UMLConnection >> connectionPoints [
 ]
 
 { #category : #'as yet unclassified' }
+UMLConnection >> destinationDiagramNodeMorphIn: aDiagram [
+	^(aDiagram diagramNodeMorphFor: target destinationDiagramNode )
+]
+
+{ #category : #'as yet unclassified' }
 UMLConnection >> dettachFromConnectionPoints [
 	self headConnectionPoint dettachFrom: self.
 	self tailConnectionPoint dettachFrom: self.
@@ -64,7 +69,9 @@ UMLConnection >> dettachFromConnectionPoints [
 { #category : #'as yet unclassified' }
 UMLConnection >> fitIntoDiagram: aDiagram [
 	self isConnected ifTrue:[self dettachFromConnectionPoints].
-	(aDiagram diagramNodeMorphFor: target originDiagramNode ) connectTo: (aDiagram diagramNodeMorphFor: target destinationDiagramNode) using: self.
+
+	(self originDiagramNodeMorphIn: aDiagram ) connectTo: (self destinationDiagramNodeMorphIn: aDiagram ) using: self.
+	"self updateView."
 ]
 
 { #category : #'as yet unclassified' }
@@ -89,14 +96,22 @@ UMLConnection >> labelText: aByteString [
 	label position: label position + (15 @ -10).
 ]
 
-{ #category : #'stepping and presenter' }
-UMLConnection >> step [
+{ #category : #accessing }
+UMLConnection >> mouseUp: evt [
 	self updateView .
+	self changed.
+	self updateLabel.
 ]
 
-{ #category : #testing }
-UMLConnection >> stepTime [ 
-	^10
+{ #category : #'as yet unclassified' }
+UMLConnection >> originDiagramNodeMorphIn: aDiagram [
+	^(aDiagram diagramNodeMorphFor: target originDiagramNode )
+]
+
+{ #category : #'as yet unclassified' }
+UMLConnection >> step [
+	
+	
 ]
 
 { #category : #'view of a model or target' }

@@ -24,6 +24,11 @@ DiagramNodeMorph >> connections [
 ]
 
 { #category : #'as yet unclassified' }
+DiagramNodeMorph >> diagramNode [
+	^diagramNode 
+]
+
+{ #category : #'as yet unclassified' }
 DiagramNodeMorph >> diagramNode: aDiagramNode [
 	diagramNode  := aDiagramNode.
 	
@@ -33,39 +38,25 @@ DiagramNodeMorph >> diagramNode: aDiagramNode [
 	self position: diagramNode position
 ]
 
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> dragEventHandler [ 
+	^dragEventHandler 
+]
+
 { #category : #'dragging-dropping' }
 DiagramNodeMorph >> initialize [ 
 	super initialize.
 	dragEventHandler  := DraggingEventHandler new passenger: self.
 ]
 
-{ #category : #'dragging-dropping' }
-DiagramNodeMorph >> justDroppedInto: aMorph event: evt [
-	diagramNode position: self position.
-	owner updateRelationships.
-	self updateBounds.
-
-]
-
-{ #category : #'dragging-dropping' }
-DiagramNodeMorph >> mouseDown: evt [
-	dragEventHandler startHandleDrag: evt
-]
-
-{ #category : #'dragging-dropping' }
-DiagramNodeMorph >> mouseMove: evt [
-	dragEventHandler handleMove: evt.
-	self connectableBounds updateConnectionsLabel
-]
-
-{ #category : #'dragging-dropping' }
-DiagramNodeMorph >> mouseUp: evt [
-	dragEventHandler stopHandleDrag: evt
-]
-
 { #category : #accessing }
 DiagramNodeMorph >> relations [ 
 	^self connections collect:[:conn | conn target]
+]
+
+{ #category : #updating }
+DiagramNodeMorph >> resetBoundings [
+	self connectableBounds resetConnectionPoints
 ]
 
 { #category : #'as yet unclassified' }
@@ -84,9 +75,4 @@ DiagramNodeMorph >> update: aParameter [
 DiagramNodeMorph >> updateLayout [
 
 	self connectableBounds updateLayout.
-]
-
-{ #category : #'as yet unclassified' }
-DiagramNodeMorph >> wantsToBeDroppedInto: aMorph [
-	^aMorph isKindOf: DiagramWhiteboard 
 ]
