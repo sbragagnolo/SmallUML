@@ -101,7 +101,7 @@ InterfaceBox >> usesTrait: aTraitBox [
 
 { #category : #drawing }
 InterfaceBox >> view [
-	^(InterfaceBoxMorph forBox: self)
+	^InterfaceBoxMorph forBox: self
 ]
 
 { #category : #'description code' }

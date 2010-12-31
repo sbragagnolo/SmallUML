@@ -120,6 +120,11 @@ Diagram >> printString [
 	^self displayString 
 ]
 
+{ #category : #'as yet unclassified' }
+Diagram >> relationships [
+	^self diagramNodes inject: Set new into:[:relations :node | relations union: node relations ]
+]
+
 { #category : #accessing }
 Diagram >> removeDiagramNode: aDiagramNode [
 	self diagramNodes remove: aDiagramNode.

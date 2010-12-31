@@ -10,10 +10,13 @@ CategoryDiagramsHolder class >> addDiagram: aDiagram [
 ]
 
 { #category : #accessing }
+CategoryDiagramsHolder class >> diagramNamed: aName [
+	^ (self new perform: aName asSymbol ) category: self category 
+]
+
+{ #category : #accessing }
 CategoryDiagramsHolder class >> diagrams [
-	| diagramHolder |
-	diagramHolder := self new.
-	^ ((self methodsInCategory: 'diagrams') collect: [ :selector | (diagramHolder perform: selector) category: self category ]) asOrderedCollection 
+	^ ((self methodsInCategory: 'diagrams') collect: [ :selector | self diagramNamed: selector]) asOrderedCollection 
 ]
 
 { #category : #'as yet unclassified' }

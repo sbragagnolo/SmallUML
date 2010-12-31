@@ -11,36 +11,36 @@ DiagramModelDocumentation >> inheritanceforRelationship [
 	relationship instanceVariables: #('label' 'from' 'to' ).
 	relationship instanceMethods: #('originDiagramNode' 'arrow' 'from:to:' 'connects:' 'oneToMany' 'label' 'destinationDiagramNode' 'view' 'label:' ).
 	"Positioning"
-	relationship position: 259 @ 7.
+	relationship position: 267 @ 62.
 	implementationRelationship := ClassBox named: 'ImplementationRelationship'.
 	implementationRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	implementationRelationship position: 10 @ 408.
+	implementationRelationship position: 463 @ 393.
 	inheritanceRelationship := ClassBox named: 'InheritanceRelationship'.
 	inheritanceRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	inheritanceRelationship position: 208 @ 408.
+	inheritanceRelationship position: 38 @ 354.
 	instanceRelationship := ClassBox named: 'InstanceRelationship'.
 	instanceRelationship instanceVariables: #('oneToMany' ).
 	instanceRelationship instanceMethods: #('oneToMany' 'oneToMany:' ).
 	"Positioning"
-	instanceRelationship position: 383 @ 408.
+	instanceRelationship position: 850 @ 453.
 	associationRelationship := ClassBox named: 'AssociationRelationship'.
 	associationRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	associationRelationship position: 274 @ 610.
+	associationRelationship position: 934 @ 111.
 	referenceRelationship := ClassBox named: 'ReferenceRelationship'.
 	referenceRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	referenceRelationship position: 279 @ 788.
+	referenceRelationship position: 650 @ 112.
 	useRelationship := ClassBox named: 'UseRelationship'.
 	useRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	useRelationship position: 613 @ 602.
+	useRelationship position: 1061 @ 292.
 	useTraitRelationship := ClassBox named: 'UseTraitRelationship'.
 	useTraitRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	useTraitRelationship position: 544 @ 408.
+	useTraitRelationship position: 251 @ 406.
 	"Relationships"
 	implementationRelationship inheritsFrom: relationship.
 	"Relationships"
@@ -74,42 +74,42 @@ DiagramModelDocumentation >> structureofaDiagram [
 	diagramNode instanceMethods: #('connectTo:using:' 'removeRelationship:' 'definitionCode' 'addRelationship:' 'removeRelationshipsWith:name' ).
 	diagramNode classMethods: #('named:' ).
 	"Positioning"
-	diagramNode position: 522 @ 35.
+	diagramNode position: 358 @ 67.
 	objectNode := ClassBox named: 'ObjectNode'.
 	objectNode instanceVariables: #('object' ).
 	objectNode instanceMethods: #('object:' 'updaterClass' 'object' 'hash' 'subject' 'variableNames' 'hasA:labeledAs:' '=' 'label' 'resetConnections' 'view' 'variableNamed:' 'descriptionCodeForEdition' 'connectToReferencesWithin:' 'realDiagramNode' ).
 	objectNode classMethods: #('for:' ).
 	"Positioning"
-	objectNode position: 299 @ 322.
+	objectNode position: 225 @ 353.
 	interfaceBox := ClassBox named: 'InterfaceBox'.
 	interfaceBox instanceVariables: #('classMethods' 'instanceMethods' ).
 	interfaceBox instanceMethods: #('updaterClass' 'openDescriptionCode' 'instanceMethods:' 'instanceMethods' 'methods' 'boxTitle' 'classMethods' 'height' 'usesTrait:' 'descriptionCode' 'boxTitle:' 'isATypeOf:' 'classMethods:' 'view' 'inheritsFrom:' 'realDiagramNode' 'writeDescription:withValue:on:' 'writeDefinitionDescriptionOn:' ).
 	interfaceBox classMethods: #('selectorsAsStrings:' 'newNamed:' ).
 	"Positioning"
-	interfaceBox position: 628 @ 317.
+	interfaceBox position: 476 @ 350.
 	traitBox := ClassBox named: 'TraitBox'.
 	traitBox instanceMethods: #('view' ).
 	traitBox classMethods: #('fromTrait:' ).
 	"Positioning"
-	traitBox position: 1058 @ 317.
+	traitBox position: 782 @ 340.
 	classBox := ClassBox named: 'ClassBox'.
 	classBox instanceVariables: #('instanceVariables' 'classInstanceVariables' 'classVariables' 'targetClass' ).
 	classBox instanceMethods: #('instanceMethods' 'classVariables' 'implements:' 'height' 'subject' 'classInstanceVariables' 'instanceVariables:' 'classMethods:' 'variables' 'instanceVariables' 'updaterClass' 'instanceMethods:' 'classMethods' 'classInstanceVariables:' 'hasA:labeledAs:' 'targetClass:' 'usesLotsOf:labeledAs:' 'descriptionCode' 'usesA:labeledAs:' 'view' 'isATypeOf:' 'descriptionCodeForEdition' 'inheritsFrom:' 'hasLotsOf:labeledAs:' 'classVariables:' 'writeDefinitionDescriptionOn:' ).
 	classBox classMethods: #('fromClass:' ).
 	"Positioning"
-	classBox position: 886 @ 421.
+	classBox position: 954 @ 404.
 	diagram := ClassBox named: 'Diagram'.
 	diagram instanceVariables: #('category' 'name' 'description' ).
 	diagram instanceMethods: #('removeDiagramNode:' 'diagramNodeFor:' 'addDiagramNode:' 'diagramNodes:' 'includesDiagramNodeFor:' 'diagramNodes' 'description:' ).
 	diagram classMethods: #('inheritanceFor:' ).
 	"Positioning"
-	diagram position: 150 @ 23.
+	diagram position: 32 @ 57.
 	relationship := ClassBox named: 'Relationship'.
 	relationship instanceVariables: #('label' ).
 	relationship instanceMethods: #('originDiagramNode' 'arrow' 'from:to:' 'connects:' 'oneToMany' 'label' 'destinationDiagramNode' 'label:' ).
 	relationship classMethods: #('associationRelationshipFrom:to:labeledAs:' 'implementationRelationshipFrom:to:' 'inheritanceRelationshipFrom:to:' 'from:to:' 'useRelationshipFrom:to:labeledAs:' 'useTraitRelationshipFrom:to:' ).
 	"Positioning"
-	relationship position: 935 @ 25.
+	relationship position: 926 @ 58.
 	"Relationships"
 	diagramNode hasLotsOf: relationship labeledAs: 'relations'.
 	"Relationships"
