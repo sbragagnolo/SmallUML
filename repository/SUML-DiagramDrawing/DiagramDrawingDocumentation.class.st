@@ -10,11 +10,11 @@ DiagramDrawingDocumentation >> connectableShapes [
 	interfaceBoxMorph := ClassBox named: 'InterfaceBoxMorph'.
 	interfaceBoxMorph instanceMethods: #('connectableBoundingBox' ).
 	"Positioning"
-	interfaceBoxMorph position: 203 @ 293.
+	interfaceBoxMorph position: 143 @ 314.
 	connectableShape := TraitBox named: 'ConnectableShape'.
 	connectableShape instanceMethods: #('connectableBoundingBox' 'connectTo:using:' 'connections' 'connectionBorderNear:' ).
 	"Positioning"
-	connectableShape position: 129 @ 82.
+	connectableShape position: 43 @ 57.
 	"Relationships"
 	interfaceBoxMorph usesTrait: connectableShape.
 	d := (ClassDiagram new name: 'Connectable Shapes') addDiagramNode: interfaceBoxMorph;
@@ -36,18 +36,18 @@ DiagramDrawingDocumentation >> inheritanceforConnection [
 	handledConnection instanceVariables: #('handles' ).
 	handledConnection instanceMethods: #('handleForEvent:' 'click:' 'addHandles' 'endPointHandles' 'endPointHandles:' 'interiorHandleForEvent:' 'initializeInteraction' 'removeHandles' 'initialize' 'handleForPosition:addAllowed:' 'dragHandleStarted:' 'interiorHandleForPosition:addAllowed:' 'handles' 'dragHandleStoped:' ).
 	"Positioning"
-	handledConnection position: 14 @ 906.
+	handledConnection position: 455 @ 1016.
 	uMLConnection := ClassBox named: 'UMLConnection'.
 	uMLConnection instanceVariables: #('label' 'cardinality' ).
 	uMLConnection instanceMethods: #('clipSubmorphs' 'fitIntoDiagram:' 'goesRight' 'dettachFromConnectionPoints' 'connectionPoints' 'isConnected' 'updateLabel' 'step' 'labelText:' 'stepTime' 'goesLeft' 'target:' ).
 	uMLConnection classMethods: #('newTraitsUse' 'fromRelation:forDiagram:' 'newInstanceUse' 'newImplementationAssociation' 'newInstanceAssociation' 'newInheritanceAssociation' ).
 	"Positioning"
-	uMLConnection position: 245 @ 851.
+	uMLConnection position: 466 @ 596.
 	referenceConnection := ClassBox named: 'ReferenceConnection'.
 	referenceConnection instanceMethods: #('updateLabel' 'connectionPoints:' 'initialize' ).
 	referenceConnection classMethods: #('newReference' ).
 	"Positioning"
-	referenceConnection position: 699 @ 873.
+	referenceConnection position: 678 @ 742.
 	"Relationships"
 	handledConnection inheritsFrom: connection.
 	"Relationships"
