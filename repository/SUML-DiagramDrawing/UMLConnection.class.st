@@ -110,7 +110,7 @@ UMLConnection >> mouseDown: evt [
 	menu addStayUpItem.
 	menu target: (RelationshipManager for: target).
 	menu add: 'Delete' action: #delete.
-	menu add: 'Rename label' action: #rename.
+	self target label ifNotNil:[menu add: 'Rename label' action: #rename].
 	menu popUpInWorld.]
 ]
 
