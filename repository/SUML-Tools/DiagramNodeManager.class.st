@@ -5,6 +5,31 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+DiagramNodeManager >> addClassInstanceVariables [
+	self diagramNode classInstanceVariables: #('(Add class instance variables here)').
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeManager >> addClassMethods [
+	self diagramNode classMethods: #('(Add class methods here)').
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeManager >> addClassVariables [
+	self diagramNode classVariables: #('(Add class variables here)').
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeManager >> addInstanceMethods [
+	self diagramNode instanceMethods: #('(Add instance methods here)').
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeManager >> addInstanceVariables [
+	self diagramNode instanceVariables: #('(Add instance variables here)').
+]
+
+{ #category : #'as yet unclassified' }
 DiagramNodeManager >> browse [
 	|aClass|
 	aClass := Smalltalk at: self diagramNode name asSymbol.

@@ -11,6 +11,11 @@ DiagramNodeEventHandler >> handleMove: evt [
 	self passenger updateConnections
 ]
 
+{ #category : #'as yet unclassified' }
+DiagramNodeEventHandler >> handlesKeyboard: aKeyboardEvent [ 
+	^false
+]
+
 { #category : #'events-accessing' }
 DiagramNodeEventHandler >> handlesMouseOver: aMouseMoveEvent [ 
 	^false

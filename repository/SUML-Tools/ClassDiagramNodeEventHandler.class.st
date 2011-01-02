@@ -60,6 +60,8 @@ ClassDiagramNodeEventHandler >> showActionsMenu [
 	menu add: 'Rename' action: #rename.
 	Smalltalk at: self passenger diagramNode name asSymbol 
 		ifPresent:[:class | menu add: 'Browse' action: #browse.].
-
+	menu addLine.
+	self passenger addBoxMenuTo: menu.
+	
 	menu popUpInWorld.
 ]
