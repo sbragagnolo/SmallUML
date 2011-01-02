@@ -28,7 +28,8 @@ CategoryDiagramsModel >> changed: aParameter [
 "			self diagramListModel changed: #list."
 			self diagramListModel changed: #descriptionCode.
 			self changed: #view.
-			self changed: #relabel].
+			"self changed: #relabel"
+			self changed: #diagram].
 
 	super changed: aParameter 
 ]
