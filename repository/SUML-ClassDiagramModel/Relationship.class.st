@@ -30,8 +30,8 @@ Relationship class >> inheritanceRelationshipFrom: aClassBox to: anotherClassBox
 ]
 
 { #category : #creation }
-Relationship class >> useRelationshipFrom: aClassBox to: anotherClassBox labeledAs: aLabel [
-	^(UseRelationship from: aClassBox to: anotherClassBox) label: aLabel  
+Relationship class >> useRelationshipFrom: aClassBox to: anotherClassBox [
+	^(UseRelationship from: aClassBox to: anotherClassBox) 
 ]
 
 { #category : #creation }
@@ -88,6 +88,11 @@ Relationship >> oneToMany [
 { #category : #accessing }
 Relationship >> originDiagramNode [
 	^ from
+]
+
+{ #category : #'as yet unclassified' }
+Relationship >> removeFromDiagram [ 
+	self originDiagramNode removeRelationship: self.
 ]
 
 { #category : #'as yet unclassified' }

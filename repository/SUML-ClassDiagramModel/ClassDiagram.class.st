@@ -8,3 +8,8 @@ Class {
 ClassDiagram >> addNewClassDescriptionNamed: aClassName [
 	self addDiagramNode: (ClassBox new boxTitle: aClassName )
 ]
+
+{ #category : #'as yet unclassified' }
+ClassDiagram >> notify: aByteString at: aSmallInteger in: aReadStream [ 
+	
+]

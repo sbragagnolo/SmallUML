@@ -25,6 +25,7 @@ DiagramNode >> addDependent: aDependent [
 { #category : #relations }
 DiagramNode >> addRelationship: aRelationship [ 
 	self relations add: aRelationship.
+	self changed: #view
 ]
 
 { #category : #'as yet unclassified' }
@@ -109,7 +110,8 @@ DiagramNode >> relationshipsCode [
 
 { #category : #relations }
 DiagramNode >> removeRelationship: aRelationship [ 
-	self relations remove: aRelationship 
+	self relations remove: aRelationship.
+	self changed: #view
 ]
 
 { #category : #'as yet unclassified' }

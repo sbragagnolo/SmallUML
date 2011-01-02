@@ -135,13 +135,13 @@ ClassBox >> updaterClass [
 ]
 
 { #category : #relations }
-ClassBox >> usesA: anotherClassBox labeledAs: aLabel [
-	self addRelationship: (Relationship useRelationshipFrom: self to: anotherClassBox labeledAs: aLabel)
+ClassBox >> usesA: anotherClassBox [ 
+	self addRelationship: (Relationship useRelationshipFrom: self to: anotherClassBox)
 ]
 
 { #category : #relations }
-ClassBox >> usesLotsOf: anotherClassBox labeledAs: aLabel [
-	self addRelationship: ((Relationship useRelationshipFrom: self to: anotherClassBox labeledAs: aLabel) oneToMany: true)
+ClassBox >> usesLotsOf: anotherClassBox [ 
+	self addRelationship: ((Relationship useRelationshipFrom: self to: anotherClassBox) oneToMany: true)
 ]
 
 { #category : #drawing }
