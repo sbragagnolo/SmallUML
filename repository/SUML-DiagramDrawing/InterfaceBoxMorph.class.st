@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'methodsBox',
 		'boundingBox',
-		'titleBox'
+		'titleBox',
+		'instanceMethods',
+		'classMethods'
 	],
 	#category : #'SUML-DiagramDrawing'
 }
@@ -15,20 +17,35 @@ InterfaceBoxMorph class >> forBox: aBox [
 ]
 
 { #category : #'as yet unclassified' }
+InterfaceBoxMorph >> addBoxMenuTo: aMenu [
+	instanceMethods ifNil:[aMenu add: 'Add Instance Methods' action: #addInstanceMethods].
+	classMethods ifNil:[aMenu add: 'Add Class Methods' action: #addClassMethods]
+]
+
+{ #category : #'private - layout' }
 InterfaceBoxMorph >> addBoxesToContainer [
 	methodsBox := self newRectangle.
 	titleBox := self newRectangle cellPositioning:  #topCenter.
-	container addMorph: methodsBox ; addMorph: titleBox.
+	container addMorph: methodsBox ; addMorph: titleBox. 
 ]
 
 { #category : #accessing }
-InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph [
-	^aCollectionOfStrings ifNotEmpty: [ aMorph addMorph: (self textMorphFor: aCollectionOfStrings) ] ifEmpty: [nil]
+InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph property: aString [
+	|textMorph|
+	textMorph := (self textMorphFor: aCollectionOfStrings modifying: aString).
+	^aCollectionOfStrings ifNotEmpty: [ aMorph addMorph: textMorph. textMorph  ] ifEmpty: [nil]
 ]
 
 { #category : #accessing }
-InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph withEmphasis: anEmphasis [ 
-	^aCollectionOfStrings ifNotEmpty: [ aMorph addMorph: (self textMorphFor: aCollectionOfStrings withEmphasis: anEmphasis ) ] ifEmpty: [nil]
+InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph property: aString withEmphasis: anEmphasis [ 
+	|textMorph|
+	textMorph := (self textMorphFor: aCollectionOfStrings modifying: aString withEmphasis: anEmphasis ).
+	^aCollectionOfStrings ifNotEmpty: [ aMorph addMorph: textMorph. textMorph ] ifEmpty: [nil]
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBoxMorph >> arrayFromText: aTextEditor [
+	^aTextEditor text asString subStrings: {Character cr. Character lf }
 ]
 
 { #category : #'as yet unclassified' }
@@ -154,19 +171,47 @@ InterfaceBoxMorph >> newText [
 	^ (self textMorphClass new)
 		borderWidth: 0;
 		borderColor: Color transparent;
-		color: Color white;
-		readOnly: true
+		color: Color transparent;
+		readOnly: true;
+		width: self width -10
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBoxMorph >> saveClassMethods [
+	self diagramNode classMethods: ( self arrayFromText: classMethods )
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBoxMorph >> saveInstanceMethods [
+	self diagramNode instanceMethods: ( self arrayFromText: instanceMethods )
 ]
 
 { #category : #private }
 InterfaceBoxMorph >> textMorphClass [ 
 "was UpdaterTextMorph "
-	^NewTextMorph    
+	^TransparentNewTextMorph    
 ]
 
 { #category : #accessing }
-InterfaceBoxMorph >> textMorphFor: aCollection [
-	^self newText text: (self listFrom: aCollection ); fitToParagraph .
+InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString [
+	^ (self newText)
+		text: (self listFrom: aCollection);
+		width: 1000; "an absurd initial width, it will adjust with the following message"
+		fitToParagraph;
+		onAcceptSend: ('save',aString) asSymbol to: self;
+		onEscapeSend: #updateDescriptionText to: self 
+]
+
+{ #category : #accessing }
+InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString withEmphasis: someEmphasis [
+	| aText |
+	aText := self listFrom: aCollection.
+	someEmphasis do: [ :emph | aText addAttribute: emph ].
+	^ (self newText)
+		text: aText;
+		fitToParagraph;
+		onAcceptSend: ('save',aString) asSymbol to: self;
+		onEscapeSend: #changed to: self
 ]
 
 { #category : #accessing }
@@ -194,6 +239,7 @@ InterfaceBoxMorph >> update: aParameter [
 
 { #category : #'private - layout' }
 InterfaceBoxMorph >> updateBounds [
+	instanceMethods fitToParagraph.
 	self bounds: container fullBounds.
 	self extent: self extent + (7@0).
 	boundingBox ifNil: [self initializeBoundingBox. ].
@@ -204,10 +250,15 @@ InterfaceBoxMorph >> updateBounds [
 ]
 
 { #category : #accessing }
+InterfaceBoxMorph >> updateDescriptionText [
+	self updateMethods 
+]
+
+{ #category : #accessing }
 InterfaceBoxMorph >> updateMethods [ 
 	methodsBox removeAllMorphs. 	
-	self addTextMorphFor: diagramNode instanceMethods into: methodsBox.
-	self addTextMorphFor: diagramNode classMethods into: methodsBox withEmphasis: {TextEmphasis underlined}.
+	instanceMethods := self addTextMorphFor: diagramNode instanceMethods into: methodsBox property: 'InstanceMethods'.
+	classMethods := self addTextMorphFor: diagramNode classMethods into: methodsBox property: 'ClassMethods' withEmphasis: {TextEmphasis underlined}.
 
 ]
 

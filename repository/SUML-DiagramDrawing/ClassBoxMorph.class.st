@@ -2,41 +2,73 @@ Class {
 	#name : #ClassBoxMorph,
 	#superclass : #InterfaceBoxMorph,
 	#instVars : [
-		'variablesBox'
+		'variablesBox',
+		'instanceVariables',
+		'classVariables',
+		'classInstanceVariables'
 	],
 	#category : #'SUML-DiagramDrawing'
 }
 
 { #category : #'as yet unclassified' }
+ClassBoxMorph >> addBoxMenuTo: aMenu [
+	instanceVariables ifNil:[aMenu add: 'Add Instance Variables' action: #addInstanceVariables].
+	classInstanceVariables ifNil:[aMenu add: 'Add Class Instance Variables' action: #addClassInstanceVariables].
+	classVariables ifNil:[aMenu add: 'Add Class Variables' action: #addClassVariables].
+	super addBoxMenuTo: aMenu.
+]
+
+{ #category : #'private - layout' }
 ClassBoxMorph >> addBoxesToContainer [
 	methodsBox := self newRectangle.
 	titleBox := self newRectangle cellPositioning:  #topCenter.
 	variablesBox := self newRectangle. 
-	container addMorph: methodsBox ; addMorph: variablesBox; addMorph: titleBox.
+	container addMorph: methodsBox ; addMorph: variablesBox; addMorph: titleBox. 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 ClassBoxMorph >> defaultBorderStyle [ 
 	^BorderStyle thinGray
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ClassBoxMorph >> diagramNode: aBoxDescription [
 	super diagramNode: aBoxDescription.	
 	self updateVariables.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 ClassBoxMorph >> initializeBoundingBox [
 	super initializeBoundingBox.
 	boundingBox fillStyle: Color veryLightGray  .
 ]
 
+{ #category : #updating }
+ClassBoxMorph >> saveClassInstanceVariables [
+	self diagramNode classInstanceVariables:( self arrayFromText: classInstanceVariables)
+]
+
+{ #category : #updating }
+ClassBoxMorph >> saveClassVariables [
+	self diagramNode classVariables:( self arrayFromText: classVariables)
+]
+
+{ #category : #updating }
+ClassBoxMorph >> saveInstanceVariables [
+	self diagramNode instanceVariables:( self arrayFromText: instanceVariables)
+]
+
+{ #category : #accessing }
+ClassBoxMorph >> updateDescriptionText [ 
+	super updateDescriptionText.
+	self updateVariables.
+]
+
 { #category : #accessing }
 ClassBoxMorph >> updateVariables [ 
 	variablesBox   removeAllMorphs.
-	self addTextMorphFor: diagramNode instanceVariables into: variablesBox.
-	self addTextMorphFor: diagramNode classInstanceVariables into: variablesBox  withEmphasis: {TextEmphasis underlined . TextEmphasis italic}.
-	self addTextMorphFor: diagramNode classVariables into: variablesBox  withEmphasis: {TextEmphasis underlined}.
+	instanceVariables := self addTextMorphFor: diagramNode instanceVariables into: variablesBox property: 'InstanceVariables'.
+	classInstanceVariables := self addTextMorphFor: diagramNode classInstanceVariables into: variablesBox  property: 'ClassInstanceVariables' withEmphasis: {TextEmphasis underlined . TextEmphasis italic}.
+	classVariables := self addTextMorphFor: diagramNode classVariables into: variablesBox  property: 'ClassVariables'  withEmphasis: {TextEmphasis underlined}.
 
 ]

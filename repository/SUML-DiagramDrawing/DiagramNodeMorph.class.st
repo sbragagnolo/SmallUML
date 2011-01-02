@@ -71,7 +71,7 @@ DiagramNodeMorph >> resetBoundings [
 
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> step [
-	"self updateLayout ."
+	"self updateLayout; updateBounds "
 ]
 
 { #category : #'as yet unclassified' }
@@ -80,7 +80,8 @@ DiagramNodeMorph >> update: aParameter [
 		ifTrue: [self position: diagramNode position.
 				owner ifNotNil:[ owner updateDescriptionCode].].
 	(aParameter = #view)
-		ifTrue: [owner ifNotNil:[owner update]].
+		ifTrue: [self updateLayout.
+				owner ifNotNil:[owner update]].
 ]
 
 { #category : #'as yet unclassified' }
