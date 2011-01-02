@@ -84,6 +84,11 @@ UMLConnection >> goesRight [
 	^self headConnectionPoint left  > self tailConnectionPoint left
 ]
 
+{ #category : #'as yet unclassified' }
+UMLConnection >> handlesMouseDown: evt [
+	^true
+]
+
 { #category : #testing }
 UMLConnection >> isConnected [
 	^self headConnectionPoint notNil
@@ -94,6 +99,19 @@ UMLConnection >> labelText: aByteString [
 	label:=  (TransformationMorph new asFlexOf: (ImageMorph fromString: ' ',aByteString,' ' font: (TextFontReference toFont: ((StrikeFont familyName: #Arial size: 14)) ) font ) ).
 	self addMorph: label.
 	label position: label position + (15 @ -10).
+]
+
+{ #category : #'as yet unclassified' }
+UMLConnection >> mouseDown: evt [
+	| menu |
+	evt yellowButtonPressed
+		ifTrue:[ menu := MenuMorph new.
+	menu addTitle: 'Relationship'.
+	menu addStayUpItem.
+	menu target: (RelationshipManager for: target).
+	menu add: 'Delete' action: #delete.
+	menu add: 'Rename label' action: #rename.
+	menu popUpInWorld.]
 ]
 
 { #category : #accessing }

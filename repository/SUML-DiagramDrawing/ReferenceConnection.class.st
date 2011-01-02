@@ -17,6 +17,10 @@ ReferenceConnection >> center [
 ]
 
 { #category : #'as yet unclassified' }
+ReferenceConnection >> mouseDown: evt [
+]
+
+{ #category : #'as yet unclassified' }
 ReferenceConnection >> updateLabel [
 | angle newPosition normalizedDirection labelOffset xOffset objectNode|
 

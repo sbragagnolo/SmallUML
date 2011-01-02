@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'container',
 		'diagramNode',
-		'dragEventHandler'
+		'diagramEventHandler'
 	],
 	#category : #'SUML-DiagramDrawing'
 }
@@ -39,14 +39,24 @@ DiagramNodeMorph >> diagramNode: aDiagramNode [
 ]
 
 { #category : #'as yet unclassified' }
-DiagramNodeMorph >> dragEventHandler [ 
-	^dragEventHandler 
+DiagramNodeMorph >> eventHandler [ 
+	^diagramEventHandler 
 ]
 
 { #category : #'dragging-dropping' }
 DiagramNodeMorph >> initialize [ 
 	super initialize.
-	dragEventHandler  := DraggingEventHandler new passenger: self.
+	diagramEventHandler  := DiagramNodeEventHandler new passenger: self.
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> keyDown: evt [
+	self eventHandler keyDown: evt.
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> mouseDown: evt [
+	self eventHandler mouseDown: evt
 ]
 
 { #category : #accessing }
@@ -61,14 +71,21 @@ DiagramNodeMorph >> resetBoundings [
 
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> step [
-	self updateLayout .
+	"self updateLayout ."
 ]
 
 { #category : #'as yet unclassified' }
 DiagramNodeMorph >> update: aParameter [
-	(aParameter == #position)
+	(aParameter = #position)
 		ifTrue: [self position: diagramNode position.
 				owner ifNotNil:[ owner updateDescriptionCode].].
+	(aParameter = #view)
+		ifTrue: [owner ifNotNil:[owner update]].
+]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> updateConnections [ 
+	self connectableBounds updateConnections.
 ]
 
 { #category : #'as yet unclassified' }

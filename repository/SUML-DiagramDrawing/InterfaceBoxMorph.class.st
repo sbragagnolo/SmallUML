@@ -88,6 +88,8 @@ InterfaceBoxMorph >> formattedText: aText [
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> initialize [
 	super initialize.
+	diagramEventHandler := ClassDiagramNodeEventHandler new passenger: self.
+	
 	self clipSubmorphs: false.
 	container:= self newRectangle 
 		color: Color transparent; 
