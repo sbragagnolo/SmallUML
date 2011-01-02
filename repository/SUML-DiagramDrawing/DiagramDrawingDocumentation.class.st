@@ -5,31 +5,6 @@ Class {
 }
 
 { #category : #diagrams }
-DiagramDrawingDocumentation >> boxdescriptioncode [
-	| d interfaceBox classBox |
-	interfaceBox := ClassBox named: 'InterfaceBox'.
-	interfaceBox instanceVariables: #('classMethods' 'relations' ).
-	interfaceBox classInstanceVariables: #('l' ).
-	interfaceBox instanceMethods: #('relationshipsCode' 'creationAndDefinitionCode' 'creationCode' 'definitionCode' 'descriptionCodeForBoxEdition' 'variableNameForDescriptionCode' 'descriptionCode' 'writeDefinitionDescriptionOn:' 'writeDescription:withValue:on:' 'writeRelationshipsDescriptionOn:' 'writePositioningDescriptionOn:' ).
-	interfaceBox classMethods: #('selectorsAsStrings:' 'named:' 'newNamed:' ).
-	"Positioning"
-	interfaceBox position: 691 @ 76.
-	classBox := ClassBox named: 'ClassBox'.
-	classBox instanceVariables: #('lalala' 'classVariables' ).
-	classBox instanceMethods: #('definitionCode' 'descriptionCode' 'descriptionCodeForBoxEdition' 'writeDefinitionDescriptionOn:' ).
-	classBox classMethods: #('fromClass:' ).
-	"Positioning"
-	classBox position: 202 @ 130.
-	"Relationships"
-	interfaceBox hasA: classBox labeledAs: 'blah'.
-	"Relationships"
-	classBox inheritsFrom: interfaceBox.
-	d := (ClassDiagram new name: 'Box description code') addDiagramNode: interfaceBox;
-				 addDiagramNode: classBox.
-	^ d
-]
-
-{ #category : #diagrams }
 DiagramDrawingDocumentation >> connectableShapes [
 	| d interfaceBoxMorph connectableShape |
 	interfaceBoxMorph := ClassBox named: 'InterfaceBoxMorph'.
