@@ -35,10 +35,11 @@ diagram update.
 scrollPane scroller addMorph: diagram.
 diagram position: 0@0.
 
-self addMorph: scrollPane frame: (0@0 corner: 1@0.8).
-self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0.8 corner: 0.25@1).
-self addMorph: self descriptionsList frame: (0.25@0.8 corner: 0.5@1).
-self addMorph: diagramCode frame: (0.5@0.8 corner: 1@1).
+
+self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0 corner: 0.15@1).
+self addMorph: scrollPane frame: (0.15@0 corner: 1@01).
+"self addMorph: self descriptionsList frame: (0.25@0.8 corner: 0.5@1).
+self addMorph: diagramCode frame: (0.5@0.8 corner: 1@1)."
 
 ]
 
