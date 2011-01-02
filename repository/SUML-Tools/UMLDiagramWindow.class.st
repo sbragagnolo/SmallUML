@@ -19,13 +19,8 @@ UMLDiagramWindow >> acceptContents: contents [
 
 { #category : #'as yet unclassified' }
 UMLDiagramWindow >> createView [ 
-	| diagramCode scrollPane|
-	diagramCode  := (PluggableShoutEditorMorph 
-		on: (DiagramWorkspace new model: model diagramListModel) 
-		text: #descriptionCode 
-		accept: #acceptContents:from:
-		readSelection: nil 
-		menu: #codePaneMenu:shifted:).
+	|  scrollPane|
+
 scrollPane := ScrollPane new.
 diagram := SUMLDiagramWhiteboard new . 
 diagram extent: 1000@2000.
@@ -38,9 +33,6 @@ diagram position: 0@0.
 
 self addMorph: (self diagramsList addDependent: diagram; yourself)frame: (0@0 corner: 0.15@1).
 self addMorph: scrollPane frame: (0.15@0 corner: 1@01).
-"self addMorph: self descriptionsList frame: (0.25@0.8 corner: 0.5@1).
-self addMorph: diagramCode frame: (0.5@0.8 corner: 1@1)."
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -81,7 +73,7 @@ UMLDiagramWindow >> diagramsList [
 { #category : #'as yet unclassified' }
 UMLDiagramWindow >> model: aModel [
 	super model: aModel.
-	self setLabel: model diagramName.
+	self setLabel: model diagramName. 
 
 
 ]
