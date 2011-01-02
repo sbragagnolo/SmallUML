@@ -52,12 +52,6 @@ SUMLDiagramWhiteboard >> showActionsMenu [
 	menu add: 'Import Trait' action: #createTraitBoxFromTrait.
 	menu add: 'Import Trait from ', self diagram category action: #createTraitBoxFromCategory.
 
-	menu addLine.
-	menu addLine.  "extra lines ignored"
-	menu add: 'peaches' action: #peaches.
-	menu addLine.
-	menu add: 'pears' action: #pears.
-	menu addLine.
 	menu popUpInWorld.
 ]
 
