@@ -9,7 +9,8 @@ Class {
 
 { #category : #accessing }
 ClassDiagramNodeEventHandler class >> relationshipBuilder [
-	^RelationshipBuilder ifNil:[ self resetRelationshipBuilder ]
+	RelationshipBuilder ifNil:[ self resetRelationshipBuilder ].
+	^RelationshipBuilder 
 	
 ]
 
