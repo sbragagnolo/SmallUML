@@ -74,6 +74,11 @@ InterfaceBoxMorph >> diagramNode: aDiagramNode [
 ]
 
 { #category : #'as yet unclassified' }
+InterfaceBoxMorph >> doubleClick: evt [
+	self eventHandler doubleClick: evt
+]
+
+{ #category : #'as yet unclassified' }
 InterfaceBoxMorph >> fontSize [
 	^13
 ]
