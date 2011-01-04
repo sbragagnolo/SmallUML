@@ -13,7 +13,7 @@ Class {
 RelationshipGraphicBuilder >> addToRelationship: aDiagramNodeMorph from: aDiagramNodeEventHandler event: evt [
 	origin 
 		ifNil:[origin := aDiagramNodeMorph.
-			originIndicatorMorph :=  (CircleMorph new borderWidth: 0; color: (Color red copy alpha: 0.5); center: evt position).
+			originIndicatorMorph :=  (CircleMorph new borderWidth: 0; color: (Color red alpha: 0.5); center: evt position).
 			aDiagramNodeMorph owner addMorph: originIndicatorMorph  ]
 		ifNotNil: [destination := aDiagramNodeMorph.
 				self createRelationship.

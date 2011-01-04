@@ -124,7 +124,7 @@ CategoryDiagramsModel >> renameDiagram [
 	currentDiagram name: diagramName.
 	self addDiagram: currentDiagram.
 	self changed: #list.
-	self changed: #selectedIndex.
+	self selectedIndex: (self list indexOf: currentDiagram).
 	self changed.]
 	
 ]
