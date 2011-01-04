@@ -143,3 +143,9 @@ Diagram >> saveDescriptionIn: aDiagramHolderClass [
 	aDiagramHolderClass compile: descriptionCodeAsMethod classified: 'diagrams'
 	
 ]
+
+{ #category : #'as yet unclassified' }
+Diagram >> updateFromModel [
+	(self diagramNodes select: [ :diagramNode | diagramNode mapsToModel ])
+		do: [ :diagramNode | diagramNode updateFromModel. self relateDiagramNode: diagramNode ]
+]
