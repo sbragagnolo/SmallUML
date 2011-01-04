@@ -13,11 +13,6 @@ InterfaceBox class >> newNamed: aByteString [
 	^self new boxTitle: aByteString 
 ]
 
-{ #category : #'as yet unclassified' }
-InterfaceBox class >> selectorsAsStrings: selectors [
-	^selectors collect:[:selector | selector asString]
-]
-
 { #category : #accessing }
 InterfaceBox >> boxTitle [
 	^ self name
@@ -72,6 +67,11 @@ InterfaceBox >> isATypeOf: aTypeBox [
 	self implements: aTypeBox 
 ]
 
+{ #category : #'as yet unclassified' }
+InterfaceBox >> mapsToModel [ 
+	^false
+]
+
 { #category : #drawing }
 InterfaceBox >> methods [
 	^ self instanceMethods asOrderedCollection 
@@ -87,6 +87,17 @@ InterfaceBox >> openDescriptionCode [
 { #category : #accessing }
 InterfaceBox >> realDiagramNode [
 	^self
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBox >> relateIfPossibleTo: aDiagramNode [
+	
+	
+]
+
+{ #category : #'as yet unclassified' }
+InterfaceBox >> selectorsAsStrings: selectors [
+	^selectors collect:[:selector | selector asString]
 ]
 
 { #category : #'as yet unclassified' }

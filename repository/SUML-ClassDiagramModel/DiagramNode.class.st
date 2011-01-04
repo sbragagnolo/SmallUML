@@ -23,8 +23,9 @@ DiagramNode >> addDependent: aDependent [
 ]
 
 { #category : #relations }
-DiagramNode >> addRelationship: aRelationship [ 
-	self relations add: aRelationship.
+DiagramNode >> addRelationship: aRelationship [
+	(self relations includes: aRelationship)
+		ifFalse: [ self relations add: aRelationship ].
 	self changed: #view
 ]
 

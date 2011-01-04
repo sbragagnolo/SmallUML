@@ -9,6 +9,12 @@ ClassDiagram class >> inheritanceFor: aClass [
 	^(InheritanceDiagramBuilder new buildForClass: aClass ) name: 'Inheritance for ', aClass name
 ]
 
+{ #category : #'as yet unclassified' }
+ClassDiagram >> addDiagramNode: aDiagramNode [
+	super addDiagramNode: aDiagramNode.
+	self relateDiagramNode: aDiagramNode.
+]
+
 { #category : #adding }
 ClassDiagram >> addNewClassDescriptionNamed: aClassName [
 	self addDiagramNode: (ClassBox new boxTitle: aClassName )

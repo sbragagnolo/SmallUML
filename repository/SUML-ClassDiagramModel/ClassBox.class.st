@@ -16,11 +16,7 @@ ClassBox class >> fromClass: aClass [
 	^(self 
 		newNamed: aClass name asString )
 			targetClass: aClass;
-			instanceVariables: (aClass instVarNames);
-			instanceMethods: (self selectorsAsStrings: aClass selectors);
-			classInstanceVariables: (aClass class instVarNames);
-			classVariables: (aClass class classVarNames);
-			classMethods: (self selectorsAsStrings: aClass class selectors)
+			updateFromModel.
 ]
 
 { #category : #accessing }
@@ -119,6 +115,39 @@ ClassBox >> isATypeOf: aTypeBox [
 	self implements: aTypeBox 
 ]
 
+{ #category : #'as yet unclassified' }
+ClassBox >> mapsToModel [ 
+	^self model notNil
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> model [
+	^targetClass ifNil:[Smalltalk at: self name asSymbol ifPresent:[:class | targetClass := class ]]
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> relateIfPossibleTo: aDiagramNode [
+	(self mapsToModel and:[aDiagramNode mapsToModel]) ifFalse:[^self].
+	aDiagramNode relateIfPossibleToClass: self.
+	
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> relateIfPossibleToClass: aClassBox [
+	(self model superclass = aClassBox model) ifTrue:[
+		self inheritsFrom: aClassBox].
+	(aClassBox model superclass = self model) ifTrue:[
+		aClassBox inheritsFrom: self].
+	
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> relateIfPossibleToTrait: aTraitBox [
+	(self model traitCompositionIncludes: aTraitBox model) ifTrue:[
+		self usesTrait: aTraitBox].
+	
+]
+
 { #category : #accessing }
 ClassBox >> subject [
 	^targetClass
@@ -127,6 +156,16 @@ ClassBox >> subject [
 { #category : #accessing }
 ClassBox >> targetClass: anObject [
 	targetClass := anObject
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> updateFromModel [
+	self
+		instanceVariables: self model instVarNames;
+		instanceMethods: (self selectorsAsStrings: self model selectors);
+		classInstanceVariables: self model class instVarNames;
+		classVariables: self model class classVarNames;
+		classMethods: (self selectorsAsStrings: self model class selectors)
 ]
 
 { #category : #relations }

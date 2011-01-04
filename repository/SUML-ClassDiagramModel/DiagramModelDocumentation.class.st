@@ -24,19 +24,19 @@ DiagramModelDocumentation >> inheritanceforRelationship [
 	instanceRelationship instanceVariables: #('oneToMany' ).
 	instanceRelationship instanceMethods: #('oneToMany' 'oneToMany:' ).
 	"Positioning"
-	instanceRelationship position: 850 @ 453.
+	instanceRelationship position: 736.0 @ 114.
 	associationRelationship := ClassBox named: 'AssociationRelationship'.
 	associationRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	associationRelationship position: 934 @ 111.
+	associationRelationship position: 726.0 @ 434.
 	referenceRelationship := ClassBox named: 'ReferenceRelationship'.
 	referenceRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	referenceRelationship position: 650 @ 112.
+	referenceRelationship position: 949.0 @ 432.
 	useRelationship := ClassBox named: 'UseRelationship'.
 	useRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	useRelationship position: 1061 @ 292.
+	useRelationship position: 996.0 @ 116.
 	useTraitRelationship := ClassBox named: 'UseTraitRelationship'.
 	useTraitRelationship instanceMethods: #('arrow' ).
 	"Positioning"
@@ -68,7 +68,7 @@ DiagramModelDocumentation >> inheritanceforRelationship [
 
 { #category : #diagrams }
 DiagramModelDocumentation >> structureofaDiagram [
-	| d diagramNode objectNode interfaceBox traitBox classBox diagram relationship |
+	| d diagramNode objectNode interfaceBox traitBox classBox diagram relationship classDiagram |
 	diagramNode := ClassBox named: 'DiagramNode'.
 	diagramNode instanceVariables: #('position' 'relations' 'name' ).
 	diagramNode instanceMethods: #('connectTo:using:' 'removeRelationship:' 'definitionCode' 'addRelationship:' 'removeRelationshipsWith:name' ).
@@ -110,6 +110,11 @@ DiagramModelDocumentation >> structureofaDiagram [
 	relationship classMethods: #('associationRelationshipFrom:to:labeledAs:' 'implementationRelationshipFrom:to:' 'inheritanceRelationshipFrom:to:' 'from:to:' 'useRelationshipFrom:to:labeledAs:' 'useTraitRelationshipFrom:to:' ).
 	"Positioning"
 	relationship position: 926 @ 58.
+	classDiagram := ClassBox named: 'ClassDiagram'.
+	classDiagram instanceMethods: #('notify:at:in:' 'copyNodesTo:' 'diagramListModelClass' 'addDiagramNode:' 'addNewClassDescriptionNamed:' ).
+	classDiagram classMethods: #('inheritanceFor:' ).
+	"Positioning"
+	classDiagram position: 12 @ 334.
 	"Relationships"
 	diagramNode hasLotsOf: relationship labeledAs: 'relations'.
 	"Relationships"
@@ -125,12 +130,15 @@ DiagramModelDocumentation >> structureofaDiagram [
 	"Relationships"
 	relationship hasA: diagramNode labeledAs: 'from'.
 	relationship hasA: diagramNode labeledAs: 'to'.
+	"Relationships"
+	classDiagram inheritsFrom: diagram.
 	d := (ClassDiagram new name: 'Structure of a Diagram') addDiagramNode: diagramNode;
 				 addDiagramNode: objectNode;
 				 addDiagramNode: interfaceBox;
 				 addDiagramNode: traitBox;
 				 addDiagramNode: classBox;
 				 addDiagramNode: diagram;
-				 addDiagramNode: relationship.
+				 addDiagramNode: relationship;
+				 addDiagramNode: classDiagram.
 	^ d
 ]

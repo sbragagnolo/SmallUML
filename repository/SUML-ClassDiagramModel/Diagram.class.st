@@ -116,6 +116,12 @@ Diagram >> printString [
 ]
 
 { #category : #'as yet unclassified' }
+Diagram >> relateDiagramNode: aDiagramNode [
+	self diagramNodes do:[:diagramNode |
+		diagramNode relateIfPossibleTo: aDiagramNode ]
+]
+
+{ #category : #'as yet unclassified' }
 Diagram >> relationships [
 	^self diagramNodes inject: Set new into:[:relations :node | relations union: node relations ]
 ]
