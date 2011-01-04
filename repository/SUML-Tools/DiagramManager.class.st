@@ -106,3 +106,8 @@ DiagramManager >> createTraitBoxFromTrait: aTrait [
 DiagramManager >> diagram [
 	^ self model
 ]
+
+{ #category : #'as yet unclassified' }
+DiagramManager >> updateDiagramFromModel [
+	self diagram updateFromModel 
+]
