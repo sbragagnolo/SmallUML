@@ -15,7 +15,7 @@ DiagramModelDocumentation >> inheritanceforRelationship [
 	implementationRelationship := ClassBox named: 'ImplementationRelationship'.
 	implementationRelationship instanceMethods: #('arrow' ).
 	"Positioning"
-	implementationRelationship position: 463 @ 393.
+	implementationRelationship position: 468.0 @ 406.
 	inheritanceRelationship := ClassBox named: 'InheritanceRelationship'.
 	inheritanceRelationship instanceMethods: #('arrow' ).
 	"Positioning"
