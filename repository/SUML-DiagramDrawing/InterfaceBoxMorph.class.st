@@ -226,7 +226,7 @@ InterfaceBoxMorph >> textMorphFor: aCollection withEmphasis: someEmphasis [
 	| aText newText |
 	aText:= (self listFrom: aCollection) .
 	someEmphasis do:[:emph | aText addAttribute: emph ].
-	newText := self newText text: aText ; fitToParagraph .
+	newText := self newText text: aText ; width: 1000; fitToParagraph .
 	newText extent: newText extent + (5@0).
 	^newText 
 ]
