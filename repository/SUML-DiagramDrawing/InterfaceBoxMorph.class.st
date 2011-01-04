@@ -194,32 +194,41 @@ InterfaceBoxMorph >> textMorphClass [
 
 { #category : #accessing }
 InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString [
-	^ (self newText)
+	|newText|
+	newText := (self newText)
 		text: (self listFrom: aCollection);
 		width: 1000; "an absurd initial width, it will adjust with the following message"
-		fitToParagraph;
+		fitToParagraph.
+	newText extent: newText extent + (5@0).
+	newText 
 		onAcceptSend: ('save',aString) asSymbol to: self;
-		onEscapeSend: #updateDescriptionText to: self 
+		onEscapeSend: #updateDescriptionText to: self .
+	^newText 
 ]
 
 { #category : #accessing }
 InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString withEmphasis: someEmphasis [
-	| aText |
+	| aText newText|
 	aText := self listFrom: aCollection.
 	someEmphasis do: [ :emph | aText addAttribute: emph ].
-	^ (self newText)
+	newText := (self newText)
 		text: aText;
-		fitToParagraph;
+		fitToParagraph.
+	newText extent: newText extent + (5@0).
+	newText 
 		onAcceptSend: ('save',aString) asSymbol to: self;
-		onEscapeSend: #changed to: self
+		onEscapeSend: #changed to: self.
+	^newText 
 ]
 
 { #category : #accessing }
 InterfaceBoxMorph >> textMorphFor: aCollection withEmphasis: someEmphasis [
-	| aText |
+	| aText newText |
 	aText:= (self listFrom: aCollection) .
 	someEmphasis do:[:emph | aText addAttribute: emph ].
-	^self newText text: aText ; fitToParagraph .
+	newText := self newText text: aText ; fitToParagraph .
+	newText extent: newText extent + (5@0).
+	^newText 
 ]
 
 { #category : #updating }
@@ -239,7 +248,6 @@ InterfaceBoxMorph >> update: aParameter [
 
 { #category : #'private - layout' }
 InterfaceBoxMorph >> updateBounds [
-	instanceMethods fitToParagraph.
 	self bounds: container fullBounds.
 	self extent: self extent + (7@0).
 	boundingBox ifNil: [self initializeBoundingBox. ].
