@@ -57,8 +57,8 @@ ClassDiagramNodeEventHandler >> showActionsMenu [
 	menu addStayUpItem.
 	menu target: (DiagramNodeManager for: self passenger).
 	menu add: 'Rename...' action: #rename.
-	Smalltalk at: self passenger diagramNode name asSymbol 
-		ifPresent:[:class | 
+	self passenger diagramNode mapsToModel
+		ifTrue:[
 			menu addLine.
 			menu add: 'Browse' action: #browse.
 			menu add: 'Update from model' action: #updateFromModel.

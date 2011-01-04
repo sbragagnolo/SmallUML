@@ -63,3 +63,9 @@ DiagramNodeManager >> rename [
 	self model changed: #descriptionCode.
 	self diagram update: #view.
 ]
+
+{ #category : #'as yet unclassified' }
+DiagramNodeManager >> updateFromModel [
+	self diagramNode updateFromModel.
+	self diagram relateDiagramNode: self diagramNode.
+]
