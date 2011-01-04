@@ -56,12 +56,16 @@ ClassDiagramNodeEventHandler >> showActionsMenu [
 	menu addTitle: self passenger diagramNode name.
 	menu addStayUpItem.
 	menu target: (DiagramNodeManager for: self passenger).
-	menu add: 'Delete' action: #delete.
-	menu add: 'Rename' action: #rename.
+	menu add: 'Rename...' action: #rename.
 	Smalltalk at: self passenger diagramNode name asSymbol 
-		ifPresent:[:class | menu add: 'Browse' action: #browse.].
+		ifPresent:[:class | 
+			menu addLine.
+			menu add: 'Browse' action: #browse.
+			menu add: 'Update from model' action: #updateFromModel.
+			].
 	menu addLine.
-	self passenger addBoxMenuTo: menu.
-	
+	menu add: 'Delete' action: #delete.	
+
+
 	menu popUpInWorld.
 ]

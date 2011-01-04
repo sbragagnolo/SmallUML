@@ -44,14 +44,17 @@ SUMLDiagramWhiteboard >> showActionsMenu [
 	menu addTitle: self diagram name.
 	menu addStayUpItem.
 	menu target: (DiagramManager for: self diagram).
-	menu add: 'New Class Box' action: #createClassBox.
-	menu add: 'New Interface / Type Box' action: #createInterfaceBox.
-	menu add: 'New Trait Box' action: #createTraitBox.
-	menu add: 'Import Class' action: #createClassBoxFromClass.
+	menu add: 'New Class Box...' action: #createClassBox.
+	menu add: 'New Interface / Type Box...' action: #createInterfaceBox.
+	menu add: 'New Trait Box...' action: #createTraitBox.
+	menu addLine.
+	menu add: 'Import Class...' action: #createClassBoxFromClass.
+	menu add: 'Import Class Hierarchy...' action: #createClassBoxHierarchyFromClass.
 	menu add: 'Import Class from ', self diagram category action: #createClassBoxFromCategory.
-	menu add: 'Import Trait' action: #createTraitBoxFromTrait.
+	menu add: 'Import Trait...' action: #createTraitBoxFromTrait.
 	menu add: 'Import Trait from ', self diagram category action: #createTraitBoxFromCategory.
-
+	menu addLine.
+	menu add: 'Update Diagram from Model' action: #updateDiagramFromModel.
 	menu popUpInWorld.
 ]
 

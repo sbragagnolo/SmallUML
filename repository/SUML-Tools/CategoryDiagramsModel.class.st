@@ -37,25 +37,26 @@ CategoryDiagramsModel >> changed: aParameter [
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> createDiagram [
 	|diagramName newDiagram |
-	diagramName := self request: 'Diagram Name' default: ''.
+	((diagramName := self request: 'Diagram Name' default: '')
+		isNil or: [diagramName isEmpty]) ifTrue: [^self].
 	newDiagram:= (ClassDiagram new name: diagramName).
 	self addDiagram: newDiagram .
 	self changed: #list.
 	self selectedIndex: self list size.
-	
-	
 ]
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> createInheritanceDiagram [
-	|className newDiagram |
-	className := self request: 'Root Class for the inheritance diagram' default: ''.
-	newDiagram := (ClassDiagram inheritanceFor: (Smalltalk at: className asSymbol) ).
+	|className rootClass newDiagram |
+	[className := self request: 'Root Class for the inheritance diagram' default: ''.
+	rootClass := Smalltalk at: className asSymbol]
+		on: Error
+		do: [^ UIManager default inform: className asString , ' not found'].
+	newDiagram := ClassDiagram inheritanceFor: rootClass.
 	self model addDiagram: newDiagram.
 	diagrams add: newDiagram.
 	self selectedIndex: self list size.
 	self changed: #list.
-	
 ]
 
 { #category : #'as yet unclassified' }

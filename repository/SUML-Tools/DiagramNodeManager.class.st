@@ -54,7 +54,8 @@ DiagramNodeManager >> diagramNode [
 { #category : #actions }
 DiagramNodeManager >> rename [
 	| newBoxName newVariableName binding |
-	newBoxName := self request: ('New name for ', self diagramNode name) default: ''.
+	((newBoxName := self request: ('New name for ', self diagramNode name) default: self diagramNode name asString)
+		isNil or: [newBoxName isEmpty]) ifTrue: [^self].
 	"binding := self bindingOf: self diagramNode variableNameForDescriptionCode."
 	self diagramNode name: newBoxName.
 	"binding key: self diagramNode variableNameForDescriptionCode. "

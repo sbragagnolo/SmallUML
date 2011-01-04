@@ -64,6 +64,14 @@ DiagramManager >> createClassBoxFromClass: aClass [
 ]
 
 { #category : #'as yet unclassified' }
+DiagramManager >> createClassBoxHierarchyFromClass [
+	|className aClass|
+	className := self request: 'Root class of the hierarchy?' default: nil.
+	aClass := (Smalltalk at: className asSymbol ifAbsent:[self error: 'There''s no class named ', className ]).
+	(ClassDiagram inheritanceFor: aClass) copyNodesTo: self diagram. 
+]
+
+{ #category : #'as yet unclassified' }
 DiagramManager >> createInterfaceBox [
 	| interfaceName |
 	interfaceName := self request: 'Interface / Type Name' default: ''.
