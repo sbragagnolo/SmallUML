@@ -12,7 +12,7 @@ DiagramManager >> category [
 { #category : #'as yet unclassified' }
 DiagramManager >> chooseClassFromCategory [
 	| dialog choice |
-	dialog := PopupChoiceOrRequestDialogWindow new filterInput: false;
+	dialog := PopupChoiceOrRequestDialogWindow new
 		title: 'Choose a class from the category ', self category;
 		labels: (SystemOrganization classesInCategory: self category);
 		lines: #();
