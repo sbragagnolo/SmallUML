@@ -45,7 +45,7 @@ InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph property
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> arrayFromText: aTextEditor [
-	^aTextEditor text asString subStrings: {Character cr. Character lf }
+	^aTextEditor ifNotNil:[aTextEditor editedText asString subStrings: {Character cr. Character lf }]
 ]
 
 { #category : #'as yet unclassified' }
@@ -200,9 +200,9 @@ InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString [
 		width: 1000; "an absurd initial width, it will adjust with the following message"
 		fitToParagraph.
 	newText extent: newText extent + (5@0).
-	newText 
-		onAcceptSend: ('save',aString) asSymbol to: self;
-		onEscapeSend: #updateDescriptionText to: self .
+	newText onAcceptDo:[self perform:( 'save',aString) asSymbol ].
+"		onAcceptSend: ('save',aString) asSymbol to: self;"
+	newText onEscapeSend: #updateDescriptionText to: self.
 	^newText 
 ]
 
@@ -215,9 +215,9 @@ InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString withEmphasis: 
 		text: aText;
 		fitToParagraph.
 	newText extent: newText extent + (5@0).
-	newText 
-		onAcceptSend: ('save',aString) asSymbol to: self;
-		onEscapeSend: #changed to: self.
+	newText onAcceptDo:[ self perform:( 'save',aString) asSymbol ].
+"		onAcceptSend: ('save',aString) asSymbol to: self;"
+	newText onEscapeSend: #changed to: self.
 	^newText 
 ]
 
