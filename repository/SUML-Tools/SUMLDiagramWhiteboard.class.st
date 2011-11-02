@@ -53,6 +53,7 @@ SUMLDiagramWhiteboard >> showActionsMenu [
 	menu add: 'Import Class from ', self diagram category action: #createClassBoxFromCategory.
 	menu add: 'Import Trait...' action: #createTraitBoxFromTrait.
 	menu add: 'Import Trait from ', self diagram category action: #createTraitBoxFromCategory.
+	menu add: 'Import all Classes and Traits from... ' action: #createEverythingFromACategory.
 	menu addLine.
 	menu add: 'Update Diagram from Model' action: #updateDiagramFromModel.
 	menu popUpInWorld.

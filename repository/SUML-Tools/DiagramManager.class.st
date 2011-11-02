@@ -55,7 +55,7 @@ DiagramManager >> createClassBoxFromCategory [
 DiagramManager >> createClassBoxFromClass [
 	|className|
 	className := self request: 'For which class would you like to create a new Class Box?' default: nil.
-	self createClassBoxFromClass: (Smalltalk at: className asSymbol ifAbsent:[nil]).
+	className ifNotNil:[self createClassBoxFromClass: (Smalltalk at: className asSymbol ifAbsent:[nil])].
 ]
 
 { #category : #'as yet unclassified' }
@@ -67,8 +67,34 @@ DiagramManager >> createClassBoxFromClass: aClass [
 DiagramManager >> createClassBoxHierarchyFromClass [
 	|className aClass|
 	className := self request: 'Root class of the hierarchy?' default: nil.
-	aClass := (Smalltalk at: className asSymbol ifAbsent:[self error: 'There''s no class named ', className ]).
-	(ClassDiagram inheritanceFor: aClass) copyNodesTo: self diagram. 
+	className ifNotNil:[
+		aClass := (Smalltalk at: className asSymbol ifAbsent:[self error: 'There''s no class named ', className ]).
+	(ClassDiagram inheritanceFor: aClass) copyNodesTo: self diagram]. 
+]
+
+{ #category : #'as yet unclassified' }
+DiagramManager >> createEverythingFromACategory [
+	| dialog choice |
+	dialog := PopupChoiceOrRequestDialogWindow new
+		title: 'Choose a category ';
+		labels: (SystemOrganization categories);
+		lines: #();
+		model: (SystemOrganization categories).
+	choice := (SystemWindow topWindow openModal: dialog) choice.
+	dialog cancelled ifTrue: [ ^nil ].
+
+	self createEverythingFromACategory: (choice 
+		ifNotNil: [ choice ]
+		ifNil: [ dialog filterValue ]).
+]
+
+{ #category : #'as yet unclassified' }
+DiagramManager >> createEverythingFromACategory: choice [
+
+	(SystemOrganization classesInCategory: choice)
+		do:[:class | self createClassBoxFromClass: class  ].
+	(SystemOrganization classesInCategory: choice)
+		do:[:class | self createClassBoxFromClass: class  ].  
 ]
 
 { #category : #'as yet unclassified' }
