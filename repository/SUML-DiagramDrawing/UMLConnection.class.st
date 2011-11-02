@@ -151,7 +151,7 @@ UMLConnection >> updateLabel [
     (labelOffset > Float pi) ifTrue: [labelOffset := (Float pi * 2) - labelOffset].
     labelOffset := (labelOffset \\ Float pi) - (Float halfPi).
     labelOffset > 0 ifTrue: [labelOffset := labelOffset - Float halfPi].
-    labelOffset := 10 + (((labelOffset sin + 1)* 30) roundTo:0.1).
+    labelOffset := 10 + (((labelOffset sin + 1)* 10) roundTo:0.1).
 
 label ifNotNil:[
     label angle: angle .
