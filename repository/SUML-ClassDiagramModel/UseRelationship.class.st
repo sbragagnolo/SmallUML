@@ -13,3 +13,8 @@ UseRelationship >> arrow [
 UseRelationship >> selector [
 	^self oneToMany ifTrue:['usesLotsOf:'] ifFalse:['usesA:']
 ]
+
+{ #category : #'as yet unclassified' }
+UseRelationship >> writeDescriptionOn: aStream [
+	aStream nextPutAll: self originDiagramNode variableNameForDescriptionCode , ' ', self selector , self destinationDiagramNode variableNameForDescriptionCode,'.'.
+]
