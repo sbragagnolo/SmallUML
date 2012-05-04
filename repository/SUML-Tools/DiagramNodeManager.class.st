@@ -33,7 +33,7 @@ DiagramNodeManager >> addInstanceVariables [
 DiagramNodeManager >> browse [
 	|aClass|
 	aClass := Smalltalk at: self diagramNode name asSymbol.
-	ToolSet browse: aClass selector: nil
+	Browser fullOnClass: aClass selector: nil
 ]
 
 { #category : #actions }
