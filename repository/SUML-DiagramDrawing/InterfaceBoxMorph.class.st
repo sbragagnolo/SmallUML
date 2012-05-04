@@ -44,8 +44,13 @@ InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph property
 ]
 
 { #category : #'as yet unclassified' }
-InterfaceBoxMorph >> arrayFromText: aTextEditor [
-	^aTextEditor ifNotNil:[aTextEditor editedText asString subStrings: {Character cr. Character lf }]
+InterfaceBoxMorph >> arrayFromText: aText [
+	^aText ifNotNil:[aText string subStrings: {Character cr. Character lf }]
+]
+
+{ #category : #accessing }
+InterfaceBoxMorph >> classMethods [ 
+	^self listFrom: diagramNode classMethods
 ]
 
 { #category : #'as yet unclassified' }
@@ -81,7 +86,7 @@ InterfaceBoxMorph >> descriptionCode [
 	^diagramNode descriptionCode 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 InterfaceBoxMorph >> diagramNode: aDiagramNode [
 	super diagramNode: aDiagramNode.
 	self updateTitle.
@@ -97,7 +102,7 @@ InterfaceBoxMorph >> doubleClick: evt [
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> fontSize [
-	^13
+	^16
 ]
 
 { #category : #'as yet unclassified' }
@@ -146,6 +151,11 @@ InterfaceBoxMorph >> insideBorderStyle [
 	^ borderStyle
 ]
 
+{ #category : #accessing }
+InterfaceBoxMorph >> instanceMethods [ 
+	^self listFrom: diagramNode instanceMethods
+]
+
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> listFrom: aCollection [
 	^self formattedText: (aCollection asOrderedCollection joinUsing: String crlf) asText 
@@ -169,40 +179,41 @@ InterfaceBoxMorph >> newRectangle [
 { #category : #private }
 InterfaceBoxMorph >> newText [
 	^ (self textMorphClass new)
-		borderWidth: 0;
 		borderColor: Color transparent;
 		color: Color transparent;
-		readOnly: true;
+		borderWidth: 0;
 		width: self width -10
 ]
 
 { #category : #'as yet unclassified' }
-InterfaceBoxMorph >> saveClassMethods [
-	self diagramNode classMethods: ( self arrayFromText: classMethods )
+InterfaceBoxMorph >> saveClassMethods: aText [
+	self diagramNode classMethods: ( self arrayFromText: aText )
 ]
 
 { #category : #'as yet unclassified' }
-InterfaceBoxMorph >> saveInstanceMethods [
-	self diagramNode instanceMethods: ( self arrayFromText: instanceMethods )
+InterfaceBoxMorph >> saveInstanceMethods: aText [
+	self diagramNode instanceMethods: ( self arrayFromText: aText )
 ]
 
 { #category : #private }
 InterfaceBoxMorph >> textMorphClass [ 
 "was UpdaterTextMorph "
-	^TransparentNewTextMorph    
+	^PluggableTextMorph 
 ]
 
 { #category : #accessing }
 InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString [
 	|newText|
-	newText := (self newText)
-		text: (self listFrom: aCollection);
-		width: 1000; "an absurd initial width, it will adjust with the following message"
-		fitToParagraph.
-	newText extent: newText extent + (5@0).
-	newText onAcceptDo:[self perform:( 'save',aString) asSymbol ].
-"		onAcceptSend: ('save',aString) asSymbol to: self;"
-	newText onEscapeSend: #updateDescriptionText to: self.
+	newText := self newText.
+	newText borderWidth: 0.
+	newText 		
+		on: self 
+		text: (aString withFirstCharacterDownshifted) asSymbol 
+		accept: ('save',aString,':') asSymbol 
+		readSelection: nil
+		menu: nil.
+	newText fit.
+"	newText onEscapeSend: #updateDescriptionText to: self."
 	^newText 
 ]
 
@@ -211,13 +222,8 @@ InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString withEmphasis: 
 	| aText newText|
 	aText := self listFrom: aCollection.
 	someEmphasis do: [ :emph | aText addAttribute: emph ].
-	newText := (self newText)
-		text: aText;
-		fitToParagraph.
-	newText extent: newText extent + (5@0).
-	newText onAcceptDo:[ self perform:( 'save',aString) asSymbol ].
-"		onAcceptSend: ('save',aString) asSymbol to: self;"
-	newText onEscapeSend: #changed to: self.
+	newText := self textMorphFor: aCollection  modifying: aString.
+	newText setText: aText.
 	^newText 
 ]
 
@@ -226,8 +232,7 @@ InterfaceBoxMorph >> textMorphFor: aCollection withEmphasis: someEmphasis [
 	| aText newText |
 	aText:= (self listFrom: aCollection) .
 	someEmphasis do:[:emph | aText addAttribute: emph ].
-	newText := self newText text: aText ; width: 1000; fitToParagraph .
-	newText extent: newText extent + (5@0).
+	newText := StringMorph new contents: aText.
 	^newText 
 ]
 
@@ -246,7 +251,7 @@ InterfaceBoxMorph >> update: aParameter [
 	 
 ]
 
-{ #category : #'private - layout' }
+{ #category : #updating }
 InterfaceBoxMorph >> updateBounds [
 	self bounds: container fullBounds.
 	self extent: self extent + (7@0).
@@ -257,12 +262,12 @@ InterfaceBoxMorph >> updateBounds [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 InterfaceBoxMorph >> updateDescriptionText [
 	self updateMethods 
 ]
 
-{ #category : #accessing }
+{ #category : #updating }
 InterfaceBoxMorph >> updateMethods [ 
 	methodsBox removeAllMorphs. 	
 	instanceMethods := self addTextMorphFor: diagramNode instanceMethods into: methodsBox property: 'InstanceMethods'.
@@ -270,7 +275,7 @@ InterfaceBoxMorph >> updateMethods [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 InterfaceBoxMorph >> updateRelationships [
 	self removeAllMorphsIn:  (self connections reject:[:subMorph | diagramNode relations includes: subMorph target ]).
 		
@@ -278,9 +283,9 @@ InterfaceBoxMorph >> updateRelationships [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 InterfaceBoxMorph >> updateTitle [  
 	titleBox removeAllMorphs.
-	titleBox addMorph: ((self textMorphFor:  {diagramNode boxTitle} withEmphasis:  {TextAlignment centered  . TextEmphasis bold })    ).
+	titleBox addMorph: ((self textMorphFor:  {diagramNode boxTitle} withEmphasis:  {TextAlignment centered  . TextEmphasis bold })  ).
 
 ]

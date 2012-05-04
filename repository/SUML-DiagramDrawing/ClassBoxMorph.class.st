@@ -26,6 +26,16 @@ ClassBoxMorph >> addBoxesToContainer [
 	container addMorph: methodsBox ; addMorph: variablesBox; addMorph: titleBox. 
 ]
 
+{ #category : #accessing }
+ClassBoxMorph >> classInstanceVariables [
+	^ self listFrom: diagramNode classInstanceVariables
+]
+
+{ #category : #accessing }
+ClassBoxMorph >> classVariables [
+	^self listFrom: diagramNode classVariables
+]
+
 { #category : #defaults }
 ClassBoxMorph >> defaultBorderStyle [ 
 	^BorderStyle thinGray
@@ -43,19 +53,29 @@ ClassBoxMorph >> initializeBoundingBox [
 	boundingBox fillStyle: Color veryLightGray  .
 ]
 
-{ #category : #updating }
-ClassBoxMorph >> saveClassInstanceVariables [
-	self diagramNode classInstanceVariables:( self arrayFromText: classInstanceVariables)
+{ #category : #accessing }
+ClassBoxMorph >> instanceVariables [
+	^self listFrom: diagramNode instanceVariables
+]
+
+{ #category : #creation }
+ClassBoxMorph >> newTextMorph [
+	^ self textMorphClass new
 ]
 
 { #category : #updating }
-ClassBoxMorph >> saveClassVariables [
-	self diagramNode classVariables:( self arrayFromText: classVariables)
+ClassBoxMorph >> saveClassInstanceVariables: aText [
+	self diagramNode classInstanceVariables:( self arrayFromText: aText )
 ]
 
 { #category : #updating }
-ClassBoxMorph >> saveInstanceVariables [
-	self diagramNode instanceVariables:( self arrayFromText: instanceVariables)
+ClassBoxMorph >> saveClassVariables: aText [
+	self diagramNode classVariables:( self arrayFromText: aText)
+]
+
+{ #category : #updating }
+ClassBoxMorph >> saveInstanceVariables: aText [
+	self diagramNode instanceVariables:( self arrayFromText: aText  )
 ]
 
 { #category : #accessing }

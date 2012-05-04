@@ -6,27 +6,21 @@ Class {
 
 { #category : #diagrams }
 DiagramDrawingDocumentation >> connectableshapes [
-	| d interfaceBoxMorph connectableShape blah lalala |
+	| d interfaceBoxMorph connectableShape |
 	interfaceBoxMorph := ClassBox named: 'InterfaceBoxMorph'.
-	interfaceBoxMorph instanceMethods: #('connectableBoundingBox' ).
-	"Positioning"
-	interfaceBoxMorph position: 143 @ 314.
+	interfaceBoxMorph instanceVariables: #('methodsBox' 'boundingBox' 'titleBox' 'instanceMethods' 'classMethods' ).
+	interfaceBoxMorph instanceMethods: #('connectableBounds' 'asdfasf' ).
+	interfaceBoxMorph classMethods: #('forBox:' ).
+	"forBox:"
+	interfaceBoxMorph position: 145.0 @ 89.0.
 	connectableShape := TraitBox named: 'ConnectableShape'.
 	connectableShape instanceMethods: #('connectableBoundingBox' 'connectTo:using:' 'connections' 'connectionBorderNear:' ).
-	"Positioning"
-	connectableShape position: 130 @ 65.
-	blah := ClassBox named: 'Blah'.
-	"Positioning"
-	blah position: 344 @ 78.
-	lalala := ClassBox named: 'Lalala'.
-	"Positioning"
-	lalala position: 8 @ 51.
-	"Relationships"
+	"connectionBorderNear:"
+	connectableShape position: 632.0 @ 138.0.
+	"position:"
 	interfaceBoxMorph usesTrait: connectableShape.
 	d := (ClassDiagram new name: 'Connectable shapes') addDiagramNode: interfaceBoxMorph;
-				 addDiagramNode: connectableShape;
-				 addDiagramNode: blah;
-				 addDiagramNode: lalala.
+				 addDiagramNode: connectableShape.
 	^ d
 ]
 
@@ -36,31 +30,31 @@ DiagramDrawingDocumentation >> inheritanceforConnection [
 	connection := ClassBox named: 'Connection'.
 	connection instanceVariables: #('lineWidth' 'smoothCurve' 'vertices' 'segments' 'contours' 'arrows' 'arrowForms' 'arrowScales' 'arrowJoints' 'connectionPoints' 'type' 'borderDashSpec' 'connectionFactory' ).
 	connection classVariables: #(#ArrowGlyphs ).
-	connection instanceMethods: #('fullLineWidth' 'curveSegmentAt:' 'closestPointTo:' 'arrowScales:' 'arrows:' 'drawSegmentedCurveOnAACanvas:canvas:isShadow:' 'curveInfoNearest:' 'outerBounds' 'drawDashedBorderOn:usingEnds:' 'initialize' 'lineWidth' 'intersectionsWith:' 'defaultBackgroundColor' 'lineSegmentsDo:' 'removeShortEndSegmentsStepping:' 'lastVertex' 'drawOn:' 'to:' 'heading:' 'privateMoveBy:' 'areasRemainingToFill:' 'arrowNames:' 'closestSegmentTo:' 'segments' 'oldBorderWidth:' 'lineSegments' 'rotationCenter' 'makeNoArrows' 'lineWidth:' 'curveVertexAt:put:' 'makeForwardArrow' 'beStraightSegments' 'arrowsContainPoint:' 'close' 'insertVertexAfterEndAt:' 'defaultBitmapFillForm' 'rotationCenter:' 'nextDuplicateVertexIndex' 'lineColor' 'scale' 'reduceVertices' 'hasMouseFocus' 'vertices' 'bezierSegmentsDo:' 'arrowJoints' 'segmentsDo:' 'doesBevels' 'curveBounds' 'arrowScales' 'updateHeadVertex' 'vertices:' 'arrows' 'headConnectionPoint' 'transformedBy:' 'iconsSpecsOnClick' 'bezierPoints' 'innerBounds' 'updateArrowContours' 'arrowVertices' 'connectionPoints:' 'outsideBezierPoints' 'setVertices:' 'interiorCurveSegmentAt:put:' 'lineColor:' 'rotationDegrees:' 'connectionFactory' 'isCurve' 'insertVertexBeforeStartAt:' 'connectionFactory:' 'beSmoothCurve:' 'arrowForms' 'firstVertex' 'makeBothArrows' 'toggleSmoothing' 'tailConnectionPointCenter' 'computeContours' 'curveSegmentAt:put:' 'hasArrows' 'headConnectionPointCenter' 'nextToFirstPoint' 'canDrawBorder:' 'makeBackArrow' 'vertexAt:' 'tailConnectionPoint' 'fullBounds' 'computeBounds' 'vertexPairsDo:' 'contours' 'computeSegments' 'midpoint' 'from:to:' 'straighten' 'totalLength' 'interiorCurveVertexAt:put:' 'verticesAt:put:' 'unrotatedWidth' 'nextToLastPoint' 'defaultArrow' 'lostMouseFocus' 'dashedBorder:' 'arrowContours' 'containsPoint:' 'outsidePoints' 'canHaveFillStyles' 'extent:' 'curveHandleClass' 'contourPoints' 'dashedLine:' 'updateTailVertex' 'updateView' 'beSmoothCurve' 'couldHaveRoundedCorners' 'drawSmoothCurveOnAACanvas:canvas:isShadow:' 'curveVertexAt:' 'referencePosition' 'scale:' 'removeVertex:' 'vertices:color:borderStyle:' 'rotationDegrees' 'vertices:lineWidth:lineColor:borderStyle:' ).
-	connection classMethods: #('newAssociation' 'nameForArrowGlyph:' 'clearArrowDictionary' 'newNoteConnector' 'from:to:' 'newWithArrow' 'initializeArrowDictionary' 'newStateTransition' 'initialize' 'basicArrow' 'noArrow' 'defaultArrow' 'newDirectionalAssociation' 'newImplementationRelationship' 'umlArrow' 'newHierarchyAssociation' 'openArrow' 'arrowDictionary' 'newGeneralizationRelationship' 'newCurvyConnector' 'newCurvyArrow' 'vertices:color:borderStyle:' 'showSamples' 'newInheritanceAssociation' 'vertices:lineWidth:lineColor:borderStyle:' ).
-	"Positioning"
-	connection position: 60 @ 9.
+	connection instanceMethods: #('canHaveFillStyles' 'closestPointTo:' 'bezierSegmentsDo:' 'outerBounds' 'drawDashedBorderOn:usingEnds:' 'initialize' 'insertVertexAfterEndAt:' 'lineWidth' 'intersectionsWith:' 'curveVertexAt:put:' 'defaultBackgroundColor' 'lineSegmentsDo:' 'lastVertex' 'drawOn:' 'to:' 'tailConnectionPointCenter' 'privateMoveBy:' 'areasRemainingToFill:' 'curveHandleClass' 'connectionFactory:' 'closestSegmentTo:' 'segments' 'lineSegments' 'rotationCenter' 'arrowNames:' 'updateHeadVertex' 'makeNoArrows' 'lineWidth:' 'makeForwardArrow' 'beStraightSegments' 'arrowsContainPoint:' 'close' 'removeShortEndSegmentsStepping:' 'defaultBitmapFillForm' 'interiorCurveSegmentAt:put:' 'rotationCenter:' 'dashedLine:' 'insertVertexBeforeStartAt:' 'nextDuplicateVertexIndex' 'lineColor' 'connectionPoints:' 'scale' 'beSmoothCurve:' 'vertexPairsDo:' 'curveInfoNearest:' 'reduceVertices' 'vertices' 'heading:' 'arrows:' 'vertices:color:borderStyle:' 'arrowVertices' 'vertices:lineWidth:lineColor:borderStyle:' 'hasMouseFocus' 'segmentsDo:' 'arrowScales' 'doesBevels' 'curveBounds' 'drawSmoothCurveOnAACanvas:canvas:isShadow:' 'headConnectionPointCenter' 'tailConnectionPoint' 'arrows' 'vertices:' 'transformedBy:' 'bezierPoints' 'connectionFactory' 'headConnectionPoint' 'innerBounds' 'setVertices:' 'updateTailVertex' 'lostMouseFocus' 'lineColor:' 'curveVertexAt:' 'rotationDegrees:' 'drawSegmentedCurveOnAACanvas:canvas:isShadow:' 'arrowJoints' 'defaultArrow' 'isCurve' 'makeBothArrows' 'oldBorderWidth:' 'iconsSpecsOnClick' 'arrowForms' 'curveSegmentAt:' 'firstVertex' 'outsideBezierPoints' 'toggleSmoothing' 'computeContours' 'updateArrowContours' 'hasArrows' 'nextToFirstPoint' 'canDrawBorder:' 'makeBackArrow' 'vertexAt:' 'fullBounds' 'arrowContours' 'computeBounds' 'outsidePoints' 'interiorCurveVertexAt:put:' 'computeSegments' 'contours' 'midpoint' 'from:to:' 'straighten' 'totalLength' 'verticesAt:put:' 'arrowScales:' 'nextToLastPoint' 'unrotatedWidth' 'curveSegmentAt:put:' 'contourPoints' 'dashedBorder:' 'containsPoint:' 'extent:' 'updateView' 'beSmoothCurve' 'couldHaveRoundedCorners' 'referencePosition' 'scale:' 'removeVertex:' 'fullLineWidth' 'rotationDegrees' ).
+	connection classMethods: #('nameForArrowGlyph:' 'newGeneralizationRelationship' 'initializeArrowDictionary' 'newCurvyConnector' 'newStateTransition' 'from:to:' 'newAssociation' 'newCurvyArrow' 'noArrow' 'initialize' 'openArrow' 'vertices:color:borderStyle:' 'defaultArrow' 'newDirectionalAssociation' 'umlArrow' 'vertices:lineWidth:lineColor:borderStyle:' 'newNoteConnector' 'newImplementationRelationship' 'arrowDictionary' 'basicArrow' 'clearArrowDictionary' 'newHierarchyAssociation' 'newInheritanceAssociation' 'showSamples' 'newWithArrow' ).
+	"newWithArrow"
+	connection position: 372.0 @ 3.0.
 	handledConnection := ClassBox named: 'HandledConnection'.
 	handledConnection instanceVariables: #('handles' ).
-	handledConnection instanceMethods: #('handleForEvent:' 'click:' 'addHandles' 'endPointHandles' 'endPointHandles:' 'interiorHandleForEvent:' 'initializeInteraction' 'removeHandles' 'initialize' 'handleForPosition:addAllowed:' 'dragHandleStarted:' 'interiorHandleForPosition:addAllowed:' 'handles' 'dragHandleStoped:' ).
-	"Positioning"
-	handledConnection position: 30 @ 785.
+	handledConnection instanceMethods: #('handleForPosition:addAllowed:' 'interiorHandleForPosition:addAllowed:' 'click:' 'addHandles' 'dragHandleStoped:' 'endPointHandles:' 'handleForEvent:' 'initializeInteraction' 'removeHandles' 'initialize' 'endPointHandles' 'interiorHandleForEvent:' 'handles' 'dragHandleStarted:' ).
+	"dragHandleStarted:"
+	handledConnection position: 6.0 @ 104.0.
 	uMLConnection := ClassBox named: 'UMLConnection'.
 	uMLConnection instanceVariables: #('label' 'cardinality' ).
-	uMLConnection instanceMethods: #('clipSubmorphs' 'fitIntoDiagram:' 'goesRight' 'dettachFromConnectionPoints' 'connectionPoints' 'isConnected' 'updateLabel' 'step' 'labelText:' 'stepTime' 'goesLeft' 'target:' ).
-	uMLConnection classMethods: #('newTraitsUse' 'fromRelation:forDiagram:' 'newInstanceUse' 'newImplementationAssociation' 'newInstanceAssociation' 'newInheritanceAssociation' ).
-	"Positioning"
-	uMLConnection position: 295 @ 784.
+	uMLConnection instanceMethods: #('clipSubmorphs' 'dettachFromConnectionPoints' 'destinationDiagramNodeMorphIn:' 'goesLeft' 'mouseUp:' 'connectionPoints' 'fitIntoDiagram:' 'isConnected' 'goesRight' 'handlesMouseDown:' 'step' 'originDiagramNodeMorphIn:' 'labelText:' 'mouseDown:' 'updateLabel' 'target:' ).
+	uMLConnection classMethods: #('newImplementationAssociation' 'fromRelation:forDiagram:' 'newTraitsUse' 'newInheritanceAssociation' 'newInstanceUse' 'newInstanceAssociation' ).
+	"newInstanceAssociation"
+	uMLConnection position: 711.0 @ 61.0.
 	referenceConnection := ClassBox named: 'ReferenceConnection'.
-	referenceConnection instanceMethods: #('updateLabel' 'connectionPoints:' 'initialize' ).
+	referenceConnection instanceMethods: #('center' 'mouseDown:' 'updateLabel' ).
 	referenceConnection classMethods: #('newReference' ).
-	"Positioning"
-	referenceConnection position: 583 @ 785.
-	"Relationships"
+	"newReference"
+	referenceConnection position: 456.0 @ 219.0.
+	"position:"
 	handledConnection inheritsFrom: connection.
-	"Relationships"
+	"connection"
 	uMLConnection inheritsFrom: connection.
-	"Relationships"
+	"connection"
 	referenceConnection inheritsFrom: uMLConnection.
 	d := (ClassDiagram new name: 'Inheritance for Connection') addDiagramNode: connection;
 				 addDiagramNode: handledConnection;
