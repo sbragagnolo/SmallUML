@@ -19,6 +19,18 @@ ClassBox class >> fromClass: aClass [
 			updateFromModel.
 ]
 
+{ #category : #'as yet unclassified' }
+ClassBox >> addClassMethod: aSelector [ 
+	classMethods ifNil:[classMethods := OrderedCollection new].
+	(classMethods includes: aSelector) ifFalse:[classMethods  add: aSelector]
+]
+
+{ #category : #'as yet unclassified' }
+ClassBox >> addMethod: aSelector [ 
+	instanceMethods ifNil:[instanceMethods := OrderedCollection new].
+	(instanceMethods includes: aSelector) ifFalse:[instanceMethods  add: aSelector]
+]
+
 { #category : #accessing }
 ClassBox >> classInstanceVariables [
 	^ classInstanceVariables  ifNil:[Array empty.]

@@ -105,11 +105,6 @@ Diagram >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #'user interface' }
-Diagram >> openDescriptionCodeinWorkspace [
-	SHWorkspace new contents: self descriptionCode; open
-]
-
 { #category : #accessing }
 Diagram >> printString [
 	^self displayString 
