@@ -26,6 +26,12 @@ ClassBox >> addClassMethod: aSelector [
 ]
 
 { #category : #'as yet unclassified' }
+ClassBox >> addInstVar: aVarName [ 
+	instanceVariables  ifNil:[instanceVariables := OrderedCollection new].
+	(instanceVariables includes: aVarName) ifFalse:[instanceVariables  add: aVarName]
+]
+
+{ #category : #'as yet unclassified' }
 ClassBox >> addMethod: aSelector [ 
 	instanceMethods ifNil:[instanceMethods := OrderedCollection new].
 	(instanceMethods includes: aSelector) ifFalse:[instanceMethods  add: aSelector]
