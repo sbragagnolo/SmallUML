@@ -137,14 +137,14 @@ ClassDiagramBuilder >> diagramNodeForClass: aClassName [
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> fromBlock: aBlock [
 	| block |
-	block := aBlock.
+	block := aBlock asContext .
 	thisContext
 		runSimulated: aBlock
 		contextAtEachStep: [ :context | 
-							(context sender notNil and:[(self ignoredSelectors includes: context method selector) not])
+							(block sender notNil and:[(self ignoredSelectors includes: block method selector) not])
 								ifTrue: [ 
-									self addMethodIfPossibleInContext: context.
-									self addAssociationIfPossibleFrom: context ]"].".
+									self addMethodIfPossibleInContext: block.
+									self addAssociationIfPossibleFrom: block ]"].".
 					block := context  ].	
 	^ self buildClassDiagram
 ]
@@ -177,7 +177,7 @@ ClassDiagramBuilder >> ignoresClass: aClass [
 
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> ignoresMessageIn: context [
-	^((self ignoresClass: (self desiredClassFrom: context receiver)) or:[self ignoresClass: (self desiredClassFrom: context contextClass)]) or:[self ignoresClass: (self desiredClassFrom: context sender receiver )]
+	^((self ignoresClass: (self desiredClassFrom: context receiver)) or:[self ignoresClass: (self desiredClassFrom: context contextClass)]) or:[context sender receiver notNil and:[self ignoresClass: (self desiredClassFrom: context sender receiver )]]
 					
 ]
 
