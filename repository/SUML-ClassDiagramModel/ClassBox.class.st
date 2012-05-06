@@ -96,7 +96,7 @@ ClassBox >> implements: anInterfaceBox [
 ]
 
 { #category : #relations }
-ClassBox >> inheritsFrom: anotherClassBox [
+ClassBox >> inheritsFromClass: anotherClassBox [
 	self addRelationship: (Relationship inheritanceRelationshipFrom: self to: anotherClassBox )
 ]
 
@@ -147,9 +147,9 @@ ClassBox >> relateIfPossibleTo: aDiagramNode [
 { #category : #'as yet unclassified' }
 ClassBox >> relateIfPossibleToClass: aClassBox [
 	(self model superclass = aClassBox model) ifTrue:[
-		self inheritsFrom: aClassBox].
+		self inheritsFromClass: aClassBox].
 	(aClassBox model superclass = self model) ifTrue:[
-		aClassBox inheritsFrom: self].
+		aClassBox inheritsFromClass: self].
 	
 ]
 

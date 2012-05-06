@@ -11,5 +11,5 @@ InheritanceRelationship >> arrow [
 
 { #category : #'as yet unclassified' }
 InheritanceRelationship >> selector [
-	^' inheritsFrom: '
+	^' inheritsFromClass: '
 ]

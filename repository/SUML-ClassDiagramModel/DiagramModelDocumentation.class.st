@@ -42,19 +42,19 @@ DiagramModelDocumentation >> inheritanceforRelationship [
 	"Positioning"
 	useTraitRelationship position: 251 @ 406.
 	"Relationships"
-	implementationRelationship inheritsFrom: relationship.
+	implementationRelationship inheritsFromClass: relationship.
 	"Relationships"
-	inheritanceRelationship inheritsFrom: relationship.
+	inheritanceRelationship inheritsFromClass: relationship.
 	"Relationships"
-	instanceRelationship inheritsFrom: relationship.
+	instanceRelationship inheritsFromClass: relationship.
 	"Relationships"
-	associationRelationship inheritsFrom: instanceRelationship.
+	associationRelationship inheritsFromClass: instanceRelationship.
 	"Relationships"
-	referenceRelationship inheritsFrom: associationRelationship.
+	referenceRelationship inheritsFromClass: associationRelationship.
 	"Relationships"
-	useRelationship inheritsFrom: instanceRelationship.
+	useRelationship inheritsFromClass: instanceRelationship.
 	"Relationships"
-	useTraitRelationship inheritsFrom: relationship.
+	useTraitRelationship inheritsFromClass: relationship.
 	d := (ClassDiagram new name: 'Inheritance for Relationship') addDiagramNode: relationship;
 				 addDiagramNode: implementationRelationship;
 				 addDiagramNode: inheritanceRelationship;

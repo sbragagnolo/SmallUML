@@ -40,7 +40,7 @@ InheritanceDiagramBuilder >> completeLevel: aLevel fromClass: aClass [
 
 { #category : #'as yet unclassified' }
 InheritanceDiagramBuilder >> completeRelationshipsFor: aClass [
-	aClass subclasses do:[:subclass | (diagram diagramNodeFor: subclass ) inheritsFrom: (diagram diagramNodeFor: aClass).
+	aClass subclasses do:[:subclass | (diagram diagramNodeFor: subclass ) inheritsFromClass: (diagram diagramNodeFor: aClass).
 		self completeRelationshipsFor: subclass]
 ]
 

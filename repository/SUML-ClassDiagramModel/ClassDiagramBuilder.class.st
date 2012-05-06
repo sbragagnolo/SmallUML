@@ -20,12 +20,13 @@ ClassDiagramBuilder >> addAssociationIfPossibleFrom: aProcess [
 	"If the sender has an instance variable that points to the receiver, this adds an association between the sender and receiver classes.
 	If not, and if there isn't already a relationship between them, it adds a use relationship."
 
-	| instVarForAssociation sender |
+	| instVarForAssociation sender anyElementClass |
 	sender := aProcess sender receiver.
 
-	(self namesOfIgnoredClasses includes: sender className) not 
+	"(self ignoresClass:  (self desiredClassFrom: sender)) not "
+	(self ignoresMessageIn: aProcess) not
 		ifTrue: [ 
-			instVarForAssociation :=sender class instVarNames
+			instVarForAssociation :=  sender class instVarNames
 				detect: [ :instVarName | (sender instVarNamed: instVarName )== aProcess receiver ]
 				ifNone: [  ].
 			instVarForAssociation
@@ -40,14 +41,28 @@ ClassDiagramBuilder >> addAssociationIfPossibleFrom: aProcess [
 									((UseRelationship from:  sender className to: aProcess receiver className) label: instVarForAssociation) ] ]"
 				ifNotNil: [ 
 					( aProcess receiver isCollection not) ifTrue:[
-					(self diagramNodeForClass: sender className) hasA: (self diagramNodeForClass: aProcess receiver className) labeledAs: instVarForAssociation 
+					(self diagramNodeForClass: (self desiredClassFrom: sender) name asString) hasA: (self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) labeledAs: instVarForAssociation 
 							 ]
 						ifFalse:[
 							aProcess receiver notEmpty ifTrue:[
 							self flag: #todo. "habría que fijarse si los elementos de la colección son de distinta clase, poner una superclase o extraer una interfaz"
-							(self diagramNodeForClass: sender className) hasLotsOf: (self diagramNodeForClass: aProcess receiver anyOne className) labeledAs: instVarForAssociation 
+							anyElementClass := (self diagramNodeForClass: (self desiredClassFrom: aProcess receiver anyOne)).
+							(self ignoresClass: (self desiredClassFrom: anyElementClass)) ifFalse:[
+							(self diagramNodeForClass: (self desiredClassFrom: sender)  name asString) hasLotsOf: anyElementClass  name asString labeledAs: instVarForAssociation ]
 						
 							] ]]]
+]
+
+{ #category : #adding }
+ClassDiagramBuilder >> addClassesBetween: aClass and: aSuperClass [
+
+aClass class ~= aSuperClass ifTrue:[									
+	(aClass class allSuperclasses copyUpTo: aSuperClass superclass) 
+		do:[:receiverSuperclass |
+			(self ignoresClass: (self desiredClassFrom: aClass)) 
+				ifTrue:["if this class is ignored, it doesn't make sense to add it's superclasses" ^self]
+				ifFalse:[
+					self addDiagramNodeForClass: (self desiredClassFrom: receiverSuperclass) ]]]
 ]
 
 { #category : #adding }
@@ -56,17 +71,23 @@ ClassDiagramBuilder >> addDiagramNodeForClass: aClass [
 ]
 
 { #category : #adding }
-ClassDiagramBuilder >> addMethod: aSelector toClass: anObject [
+ClassDiagramBuilder >> addMethod: aSelector toClass: aClass [
+	 (aClass class includesSelector: aSelector)
+				ifTrue: [(self diagramNodeForClass: aClass name) addClassMethod: aSelector ]
+				ifFalse: [ (self diagramNodeForClass: aClass name) addMethod: aSelector ]
+]
+
+{ #category : #adding }
+ClassDiagramBuilder >> addMethodIfPossibleInContext: context [
+	"Adds the method to the class box of the class where it's defined. If the method is defined in a superclass of the object that receives the message, and that superclass is ignored, it's not showed in the diagram. If that superclass is not ignored, every class between the receiver's and  that supeclass are included in the diagram, even if they don't have methods of interest to show"
 	| desiredClass |
-	desiredClass := anObject isBehavior
-		ifTrue: [ anObject ]
-		ifFalse: [ anObject class ].
-	(self classIsInDesiredScope: desiredClass)
-		ifTrue: [ 
+	desiredClass := (self desiredClassFrom: context contextClass  ).
+	"(self classIsInDesiredScope: desiredClass)
+		ifTrue: [ "
+	(self ignoresClass: desiredClass ) ifFalse:[
 			self addDiagramNodeForClass: desiredClass.
-			desiredClass := anObject isBehavior
-				ifTrue: [ (self diagramNodeForClass: desiredClass name) addClassMethod: aSelector ]
-				ifFalse: [ (self diagramNodeForClass: desiredClass name) addMethod: aSelector ] ]
+			self addMethod: context method selector toClass: desiredClass.
+			self addClassesBetween: context receiver and: context contextClass.]	
 ]
 
 { #category : #accessing }
@@ -86,11 +107,6 @@ ClassDiagramBuilder >> buildClassDiagram [
 	^diagram
 ]
 
-{ #category : #adding }
-ClassDiagramBuilder >> classIsInDesiredScope: aClass [
-	^ self scopeCategories anySatisfy: [:category | (SystemOrganization classesInCategory: category) includes: aClass]
-]
-
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> classMethodsOfClass: aClass [ 
 	self shouldBeImplemented.
@@ -108,9 +124,9 @@ ClassDiagramBuilder >> classes [
 
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> desiredClassFrom: aClass [ 
-	^aClass isBehavior
-										ifTrue: [ aClass ]
-										ifFalse: [aClass class ].
+	^(aClass isBehavior
+			ifTrue: [ aClass isMeta ifTrue:[aClass theNonMetaClass ] ifFalse:[aClass]]
+			ifFalse: [aClass class ]).
 ]
 
 { #category : #adding }
@@ -120,37 +136,28 @@ ClassDiagramBuilder >> diagramNodeForClass: aClassName [
 
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> fromBlock: aBlock [
-	| block desiredClass |
+	| block |
 	block := aBlock.
 	thisContext
 		runSimulated: aBlock
 		contextAtEachStep: [ :context | 
-			context == block
-				ifFalse: [ 
-					((self ignoresClass: (self desiredClassFrom: context receiver)) or:[(self ignoresClass: (self desiredClassFrom: context contextClass))])
-						ifFalse: [ 
-							
-							(block sender notNil and:[(self ignoredSelectors includes: context method selector) not])
+							(context sender notNil and:[(self ignoredSelectors includes: context method selector) not])
 								ifTrue: [ 
-									self addMethod: context method selector toClass: context contextClass.
-									( (context receiver class ~= context contextClass) ) ifTrue:[
-									
-										(context receiver class allSuperclasses copyUpTo: context contextClass superclass) do:[:receiverSuperclass |
-									
-									(self ignoresClass: (self desiredClassFrom: context receiver)) ifFalse:[
-									self addDiagramNodeForClass: (self desiredClassFrom: receiverSuperclass) ].
-									]].
-									self addAssociationIfPossibleFrom: block ].
-							]
-						ifTrue:[
-							"an object other than a collection is sending a message with arguments to a collection. It's a way to guess messages like do:, collect:, select:..."
-							"(context receiver ) isCollection & context sender receiver isCollection not ifTrue:[
-								context numArgs > 0 ifTrue:[
-									(context tempAt: 1) isBlock ifTrue: [self halt.]] ]."
-							block sender notNil ifTrue:[self addAssociationIfPossibleFrom: block]].
-					block := context  ] ].
-			
+									self addMethodIfPossibleInContext: context.
+									self addAssociationIfPossibleFrom: context ]"].".
+					block := context  ].	
 	^ self buildClassDiagram
+]
+
+{ #category : #testing }
+ClassDiagramBuilder >> ignoredCategories [
+	"This shoudn't be hardcoded"
+	^ Smalltalk kernelPackageNames , (SystemOrganization categoriesMatching: 'Kernel*')
+]
+
+{ #category : #testing }
+ClassDiagramBuilder >> ignoredCategoriesIncludeClass: aClass [
+	^self ignoredCategories anySatisfy:[:cat | aClass category = cat]
 ]
 
 { #category : #'as yet unclassified' }
@@ -160,11 +167,18 @@ ClassDiagramBuilder >> ignoredSelectors [
 
 { #category : #testing }
 ClassDiagramBuilder >> ignoresClass: aClass [
-	^( (((((self namesOfIgnoredClasses includes: aClass name asString) or: [ aClass isCollection ])
+	"^( (((((self namesOfIgnoredClasses includes: aClass name asString) or: [ aClass isCollection ])
 		or: [ aClass isBehavior and: [ aClass inheritsFrom: Collection ] ]) or: [ aClass isNumber ])
-		or: [ aClass = true or: [ aClass = false ] ])
+		or: [ aClass inheritsFrom: Boolean ])
 		or:[ aClass inheritsFrom: Number])
-		or:[aClass inheritsFrom:  Magnitude]
+		or:[aClass inheritsFrom:  Magnitude]"
+	^self ignoredCategoriesIncludeClass: aClass
+]
+
+{ #category : #'as yet unclassified' }
+ClassDiagramBuilder >> ignoresMessageIn: context [
+	^((self ignoresClass: (self desiredClassFrom: context receiver)) or:[self ignoresClass: (self desiredClassFrom: context contextClass)]) or:[self ignoresClass: (self desiredClassFrom: context sender receiver )]
+					
 ]
 
 { #category : #'as yet unclassified' }
@@ -173,11 +187,6 @@ ClassDiagramBuilder >> initialize [
 	methodsInClasses := Dictionary new.
 	diagram := ClassDiagram new.
 	diagramNodes := Dictionary new.
-]
-
-{ #category : #adding }
-ClassDiagramBuilder >> methodsOfClass: aClass [ 
-	^self methodsOfClassName: aClass name
 ]
 
 { #category : #'as yet unclassified' }
@@ -189,10 +198,4 @@ ClassDiagramBuilder >> methodsOfClassName: aString [
 { #category : #'as yet unclassified' }
 ClassDiagramBuilder >> namesOfIgnoredClasses [ 
 	^#('MethodContext' 'BlockClosure' 'UndefinedObject' 'HashTableSizes' 'Behavior' 'Metaclass' 'ClassDescription' 'Object' 'ProtoObject' 'Compiler')
-]
-
-{ #category : #'as yet unclassified' }
-ClassDiagramBuilder >> scopeCategories [
-	"esto es solo para una prueba, debería ser una variable de instancia"
-	^#('Sueldos-model' 'Sueldos-stack')
 ]

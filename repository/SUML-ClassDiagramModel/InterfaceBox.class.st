@@ -47,7 +47,7 @@ InterfaceBox >> height [
 ]
 
 { #category : #relations }
-InterfaceBox >> inheritsFrom: anotherClassBox [
+InterfaceBox >> inheritsFromClass: anotherClassBox [
 	self addRelationship: (Relationship inheritanceRelationshipFrom: self to: anotherClassBox )
 ]
 
