@@ -15,23 +15,53 @@ ClassDiagramBuilder >> addAssociation: aRelationship [
 	associations add: aRelationship 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 ClassDiagramBuilder >> addAssociationIfPossibleFrom: aProcess [
 	"If the sender has an instance variable that points to the receiver, this adds an association between the sender and receiver classes.
 	If not, and if there isn't already a relationship between them, it adds a use relationship."
-
-	| instVarForAssociation sender anyElementClass |
-	sender := aProcess sender receiver.
 
 	(self ignoresMessageIn: aProcess) not
 		ifTrue: [ 
 			
 			self addAssociationIfPossibleFromInstVarsUsedIn: aProcess.
-			
-			instVarForAssociation :=  sender class instVarNames
-				detect: [ :instVarName | (sender instVarNamed: instVarName )== aProcess receiver ]
-				ifNone: [  ].
-			instVarForAssociation
+			self addAssociationIfPossibleFromMessageSendIn: aProcess.
+			]
+]
+
+{ #category : #adding }
+ClassDiagramBuilder >> addAssociationIfPossibleFromInstVarsUsedIn: aProcess [
+	|receiverClass instVarClass senderClass|
+	receiverClass := self desiredClassFrom: aProcess receiver.
+	
+	aProcess  method referredInstVars do:[:instVarName | 
+		instVarClass  := self desiredClassFrom: (aProcess receiver instVarNamed: instVarName).
+		(self ignoresClass: instVarClass  ) 
+			ifTrue:[
+				(aProcess receiver instVarNamed: instVarName) isCollection 
+					ifTrue:[((aProcess receiver instVarNamed: instVarName) notEmpty)
+						ifTrue:[
+							instVarClass  := self desiredClassFrom: (aProcess receiver instVarNamed: instVarName) anyOne.
+							(self diagramNodeForClass: receiverClass name asString) 
+								hasLotsOf: (self diagramNodeForClass: instVarClass name asString) labeledAs: instVarName ]]
+					ifFalse:[
+						(aProcess receiver instVarNamed: instVarName) 
+							ifNotNil:[(self diagramNodeForClass: receiverClass name asString) addInstVar: instVarName ]]
+			]
+				ifFalse:[	
+					(self diagramNodeForClass: receiverClass name asString) 
+						hasA: (self diagramNodeForClass: instVarClass name asString)
+						labeledAs: instVarName ]] .
+]
+
+{ #category : #adding }
+ClassDiagramBuilder >> addAssociationIfPossibleFromMessageSendIn: aProcess [
+| instVarForAssociation sender anyElementClass |
+
+sender := aProcess sender receiver.
+instVarForAssociation :=  sender class instVarNames 
+	detect: [ :instVarName | (sender instVarNamed: instVarName )== aProcess receiver ] 
+	ifNone: [  ].
+instVarForAssociation
 				"ifNil: [ 
 					(self associations
 						noneSatisfy: [ :asoc | 
@@ -41,35 +71,8 @@ ClassDiagramBuilder >> addAssociationIfPossibleFrom: aProcess [
 							self
 								addAssociation:
 									((UseRelationship from:  sender className to: aProcess receiver className) label: instVarForAssociation) ] ]"
-				ifNotNil: [ 
-					( aProcess receiver isCollection not) ifTrue:[
-					(self diagramNodeForClass: (self desiredClassFrom: sender) name asString) hasA: (self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) labeledAs: instVarForAssociation 
-							 ]
-						ifFalse:[
-							aProcess receiver notEmpty ifTrue:[
-							self flag: #todo. "habría que fijarse si los elementos de la colección son de distinta clase, poner una superclase o extraer una interfaz"
-							anyElementClass := (self diagramNodeForClass: (self desiredClassFrom: aProcess receiver anyOne)).
-							(self ignoresClass: (self desiredClassFrom: anyElementClass)) ifFalse:[
-							(self diagramNodeForClass: (self desiredClassFrom: sender)  name asString) hasLotsOf: anyElementClass  name asString labeledAs: instVarForAssociation ]
-						
-							] ]]]
-]
-
-{ #category : #'as yet unclassified' }
-ClassDiagramBuilder >> addAssociationIfPossibleFromInstVarsUsedIn: aProcess [
-	aProcess  method referredInstVars do:[:instVarName | 
-		(self ignoresClass: (self desiredClassFrom: (aProcess receiver instVarNamed: instVarName))) 
-			ifTrue:[
-				(aProcess receiver instVarNamed: instVarName) isCollection 
-				ifTrue:[((aProcess receiver instVarNamed: instVarName) notEmpty)
-				ifTrue:[
-					(self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) 
-				hasLotsOf: (self diagramNodeForClass: (self desiredClassFrom:  (aProcess receiver instVarNamed: instVarName) anyOne) name asString) labeledAs: instVarName ]]
-				ifFalse:[(aProcess receiver instVarNamed: instVarName) ifNotNil:[(self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) addInstVar: instVarName ]]
-			]
-				ifFalse:[	
-			(self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) 
-				hasA: (self diagramNodeForClass: (self desiredClassFrom:  (aProcess receiver instVarNamed: instVarName)) name asString) labeledAs: instVarName ]] .
+	ifNotNil: [ 
+			(self diagramNodeForClass: (self desiredClassFrom: sender) name asString) hasA: (self diagramNodeForClass: (self desiredClassFrom: aProcess receiver) name asString) labeledAs: instVarForAssociation ]
 ]
 
 { #category : #adding }
