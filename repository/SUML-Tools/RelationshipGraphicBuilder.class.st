@@ -61,7 +61,7 @@ RelationshipGraphicBuilder >> newImplementation [
 
 { #category : #'as yet unclassified' }
 RelationshipGraphicBuilder >> newInheritance [
-	origin diagramNode inheritsFrom: destination diagramNode .
+	origin diagramNode inheritsFromClass: destination diagramNode .
 
 ]
 

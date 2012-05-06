@@ -26,7 +26,7 @@ SUMLDiagramWhiteboard >> model: anObject [
 		self diagram removeDependent: self.
 		model removeDependent: self].
 	anObject ifNotNil: [
-		.anObject addDependent: self.
+		anObject addDependent: self.
 		self diagram addDependent: self. ].
 	diagramNodes := Dictionary new.
 ]
