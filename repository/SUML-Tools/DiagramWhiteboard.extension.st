@@ -22,8 +22,30 @@ DiagramWhiteboard >> diagramName [
 ]
 
 { #category : #'*SUML-Tools' }
+DiagramWhiteboard >> handlesMouseDown: evt [
+	^true
+]
+
+{ #category : #'*SUML-Tools' }
+DiagramWhiteboard >> mouseDown: evt [
+	evt yellowButtonPressed ifTrue:[self showActionsMenu ]
+]
+
+{ #category : #'*SUML-Tools' }
 DiagramWhiteboard >> save [
 	self diagram name: self diagramName.
 	self diagram saveDescriptionInCategory: self categoryName.
 	DiagramsHolder openDiagramBrowserSelecting: self diagramName.
+]
+
+{ #category : #'*SUML-Tools' }
+DiagramWhiteboard >> showActionsMenu [
+	| menu |
+	menu := MenuMorph new.
+	menu addTitle: (self model name ifNil:['Class Diagram']).
+	menu addStayUpItem.
+	menu target: self.
+	menu add: 'Save for category...' action: #save.
+	menu add: 'Save as PNG' action: #exportAsPNG.
+	menu popUpInWorld.
 ]
