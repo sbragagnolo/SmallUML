@@ -139,6 +139,17 @@ Diagram >> saveDescriptionIn: aDiagramHolderClass [
 	
 ]
 
+{ #category : #saving }
+Diagram >> saveDescriptionInCategory: aCategoryString [
+	|descriptionCodeAsMethod|
+	descriptionCodeAsMethod := self class prettyPrinterClass new 
+		format: ((self name onlyLetters withFirstCharacterDownshifted), String cr, self descriptionCode) 
+		in: DiagramsHolder 
+		notifying: self.
+	DiagramsHolder compile: descriptionCodeAsMethod classified: '*',aCategoryString 
+	
+]
+
 { #category : #'as yet unclassified' }
 Diagram >> updateFromModel [
 	(self diagramNodes select: [ :diagramNode | diagramNode mapsToModel ])

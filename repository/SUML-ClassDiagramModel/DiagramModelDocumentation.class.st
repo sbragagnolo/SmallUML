@@ -1,6 +1,6 @@
 Class {
 	#name : #DiagramModelDocumentation,
-	#superclass : #CategoryDiagramsHolder,
+	#superclass : #DiagramsHolder,
 	#category : #'SUML-ClassDiagramModel'
 }
 
