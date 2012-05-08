@@ -137,6 +137,11 @@ CategoryDiagramsModel >> saveDiagramAsPNG [
 ]
 
 { #category : #'as yet unclassified' }
+CategoryDiagramsModel >> selectDiagramByName: aDiagramName [
+	self selectedIndex: ((self list collect:#name) indexOf: aDiagramName )
+]
+
+{ #category : #'as yet unclassified' }
 CategoryDiagramsModel >> selectedDiagram [
 	^ self list at: self selectedIndex ifAbsent:[NullDiagram new]
 ]
