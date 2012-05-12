@@ -142,7 +142,6 @@ UMLConnection >> target: aRelationship [
 { #category : #other }
 UMLConnection >> updateLabel [
 | angle newPosition normalizedDirection labelOffset xOffset |
-
     angle:= ((self headConnectionPoint center y - self tailConnectionPoint center y) arcTan: (self tailConnectionPoint  center x - self headConnectionPoint center x) ) .
     self goesRight ifTrue:[angle := angle + Float pi ].
 	
