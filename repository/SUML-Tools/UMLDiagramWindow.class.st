@@ -19,11 +19,11 @@ UMLDiagramWindow >> acceptContents: contents [
 
 { #category : #'as yet unclassified' }
 UMLDiagramWindow >> createView [ 
-	|  scrollPane|
+	|  scrollPane tree|
 
 scrollPane := ScrollPane new.
 diagram := SUMLDiagramWhiteboard new . 
-diagram extent: 1000@2000.
+diagram extent: 1500@2000.
 diagram clipSubmorphs: false.
 diagram model: model.
 diagram update.
@@ -36,29 +36,27 @@ self addMorph: scrollPane frame: (0.15@0 corner: 1@01).
 ]
 
 { #category : #'as yet unclassified' }
-UMLDiagramWindow >> descriptionCode [ 
-	^model ifNil: [''] ifNotNil: [model descriptionCode] 
-]
-
-{ #category : #'as yet unclassified' }
-UMLDiagramWindow >> descriptionsList [
-	^PluggableListMorph new
-		on: self model diagramListModel
-		list: #list
-		selected: #selectedIndex
-		changeSelected: #selectedIndex:
-		menu: #listMenu:shifted:
-		keystroke: #listKey:from:;
-		 borderWidth: 0;
-		 enableDragNDrop: false;
-		 autoDeselect: true;
-		 yourself
-]
-
-{ #category : #'as yet unclassified' }
 UMLDiagramWindow >> diagramsList [
-	^PluggableListMorph new
+|tree|
+tree := 
+ PluggableTreeMorph 
 		on: self model
+		list: #roots
+		selected: #selectedDiagram
+		changeSelected: #selectedDiagram:
+		menu: #listMenu:
+		keystroke: nil.
+		"menu: #menu."
+		
+"		PluggableTreeMorph new
+		model: self model;
+		setSelectedSelector: #;
+		getMenuSelector: #listMenu:shifted:.
+tree list: ((DiagramsHolder allMethodCategoriesIntegratedThrough: DiagramsHolder) collect:[:item| CategoryDiagramsTreeItemNode  with: item model: tree])."
+
+^tree
+
+	"	on: self model
 		list: #list
 		selected: #selectedIndex
 		changeSelected: #selectedIndex:
@@ -67,7 +65,7 @@ UMLDiagramWindow >> diagramsList [
 		 borderWidth: 0;
 		 enableDragNDrop: false;
 		 autoDeselect: true;
-		 yourself
+		 yourself"
 ]
 
 { #category : #'as yet unclassified' }

@@ -15,6 +15,37 @@ SUMLDiagramWhiteboard >> diagram [
 ]
 
 { #category : #'as yet unclassified' }
+SUMLDiagramWhiteboard >> diagramsList [
+|tree|
+tree := 
+ PluggableTreeMorph
+		on: self model
+		list: #roots
+		selected: #selectedDiagram
+		changeSelected: #selectedDiagram:.
+		"menu: #menu."
+		
+"		PluggableTreeMorph new
+		model: self model;
+		setSelectedSelector: #;
+		getMenuSelector: #listMenu:shifted:.
+tree list: ((DiagramsHolder allMethodCategoriesIntegratedThrough: DiagramsHolder) collect:[:item| CategoryDiagramsTreeItemNode  with: item model: tree])."
+
+^tree
+
+	"	on: self model
+		list: #list
+		selected: #selectedIndex
+		changeSelected: #selectedIndex:
+		menu: #listMenu:shifted:
+		keystroke: #listKey:from:;
+		 borderWidth: 0;
+		 enableDragNDrop: false;
+		 autoDeselect: true;
+		 yourself"
+]
+
+{ #category : #'as yet unclassified' }
 SUMLDiagramWhiteboard >> handlesMouseDown: evt [
 	^true
 ]

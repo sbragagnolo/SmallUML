@@ -36,6 +36,7 @@ DiagramWhiteboard >> save [
 	self diagram name: self diagramName.
 	self diagram saveDescriptionInCategory: self categoryName.
 	DiagramsHolder openDiagramBrowserSelecting: self diagramName.
+	self containingWindow delete.
 ]
 
 { #category : #'*SUML-Tools' }

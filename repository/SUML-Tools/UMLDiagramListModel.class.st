@@ -46,6 +46,7 @@ UMLDiagramListModel >> changed [
 
 { #category : #'as yet unclassified' }
 UMLDiagramListModel >> changed: aParameter [
+"Ugh, horrible code. Must be changed to use Announcements"
 	((aParameter = #position) or:[(aParameter = #descriptionCode)]) 
 		ifTrue: [
 				self selectedDiagram saveDescriptionIn: self diagramsHolder. 

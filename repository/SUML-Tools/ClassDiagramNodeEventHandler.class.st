@@ -64,6 +64,7 @@ ClassDiagramNodeEventHandler >> showActionsMenu [
 			menu add: 'Update from model' action: #updateFromModel.
 			].
 	menu addLine.
+	self passenger addBoxMenuTo: menu.
 	menu add: 'Delete' action: #delete.	
 
 

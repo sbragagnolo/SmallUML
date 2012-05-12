@@ -100,8 +100,9 @@ DiagramManager >> createEverythingFromACategory: choice [
 { #category : #'as yet unclassified' }
 DiagramManager >> createInterfaceBox [
 	| interfaceName |
-	interfaceName := self request: 'Interface / Type Name' default: ''.
-	self diagram addDiagramNode: (InterfaceBox newNamed: interfaceName).
+	
+	interfaceName := self request: 'Interface / Type Name' default: nil.
+	interfaceName ifNotNil:[self diagram addDiagramNode: (InterfaceBox newNamed: interfaceName)].
 ]
 
 { #category : #'as yet unclassified' }

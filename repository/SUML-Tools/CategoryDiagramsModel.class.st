@@ -3,7 +3,8 @@ Class {
 	#superclass : #UMLToolModel,
 	#instVars : [
 		'selectedDiagramModel',
-		'diagrams'
+		'diagrams',
+		'selectedDiagram'
 	],
 	#category : #'SUML-Tools'
 }
@@ -62,7 +63,7 @@ CategoryDiagramsModel >> createInheritanceDiagram [
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
-	diagrams remove: self selectedDiagram.
+"	diagrams remove: self selectedDiagram."
 	self changed: #list.
 	(self list notEmpty and:[ self selectedIndex > 1]) 
 		ifTrue: [self selectedIndex: self selectedIndex -1].
@@ -100,7 +101,7 @@ CategoryDiagramsModel >> list [
 ]
 
 { #category : #'as yet unclassified' }
-CategoryDiagramsModel >> listMenu: aMenu shifted: aBoolean [
+CategoryDiagramsModel >> listMenu: aMenu [
 	self list ifNotEmpty: [
 		aMenu addList: #(
 		('delete diagram'	deleteDiagram)
@@ -130,6 +131,11 @@ CategoryDiagramsModel >> renameDiagram [
 	
 ]
 
+{ #category : #accessing }
+CategoryDiagramsModel >> roots [
+	^((DiagramsHolder allMethodCategoriesIntegratedThrough: DiagramsHolder) collect:[:item| CategoryDiagramsTreeItemNode with: item model: self ]).
+]
+
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> saveDiagramAsPNG [
 	PNGReadWriter putForm: ((SUMLDiagramWhiteboard new model: self diagramListModel) update) imageForm onFileNamed: self selectedDiagram name, '.png'.
@@ -143,7 +149,15 @@ CategoryDiagramsModel >> selectDiagramByName: aDiagramName [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> selectedDiagram [
-	^ self list at: self selectedIndex ifAbsent:[NullDiagram new]
+	^ selectedDiagram ifNil:[NullDiagram new]
+]
+
+{ #category : #'as yet unclassified' }
+CategoryDiagramsModel >> selectedDiagram: aDiagram [
+(aDiagram isKindOf: Diagram) ifTrue:[
+	selectedDiagram := aDiagram.
+	self changed: #view.
+	self changed: #selectedIndex]
 ]
 
 { #category : #accessing }

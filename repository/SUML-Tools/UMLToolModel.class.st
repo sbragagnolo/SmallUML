@@ -53,11 +53,11 @@ UMLToolModel >> selectedIndex [
 
 { #category : #accessing }
 UMLToolModel >> selectedIndex: anIndex [
-	anIndex > 0
-		ifTrue: [ 
+	"anIndex > 0
+		ifTrue: [ "
 			selectedIndex := anIndex.
-			self changed: #selectedIndex.
-			]
+		"	self changed: #selectedIndex.
+			]"
 ]
 
 { #category : #accessing }
