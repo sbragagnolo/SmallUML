@@ -135,7 +135,7 @@ Diagram >> saveDescriptionIn: aDiagramHolderClass [
 		format: ((self name onlyLetters withFirstCharacterDownshifted), String cr, self descriptionCode) 
 		in: aDiagramHolderClass 
 		notifying: self.
-	aDiagramHolderClass compile: descriptionCodeAsMethod classified: 'diagrams'
+	aDiagramHolderClass compile: descriptionCodeAsMethod classified: '*',self category 
 	
 ]
 

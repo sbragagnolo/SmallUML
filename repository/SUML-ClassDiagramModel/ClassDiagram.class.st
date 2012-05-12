@@ -11,6 +11,7 @@ ClassDiagram class >> inheritanceFor: aClass [
 
 { #category : #'as yet unclassified' }
 ClassDiagram >> addDiagramNode: aDiagramNode [
+"	(self diagramNodes includes: aDiagramNode) ifFalse:[self halt]."
 	super addDiagramNode: aDiagramNode.
 	self relateDiagramNode: aDiagramNode.
 ]
