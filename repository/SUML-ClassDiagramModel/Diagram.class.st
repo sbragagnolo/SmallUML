@@ -34,7 +34,8 @@ Diagram >> changed [
 
 { #category : #saving }
 Diagram >> deleteDescriptionIn: aDiagramHolderClass [
-	aDiagramHolderClass removeSelector: self name onlyLetters withFirstCharacterDownshifted asSymbol 
+	aDiagramHolderClass removeSelector: self name onlyLetters withFirstCharacterDownshifted asSymbol.
+	aDiagramHolderClass organization removeEmptyCategories. 
 	
 ]
 
