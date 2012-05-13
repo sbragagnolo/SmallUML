@@ -63,8 +63,8 @@ CategoryDiagramsModel >> createInheritanceDiagram [
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
-"	diagrams remove: self selectedDiagram."
-	self changed: #list.
+	"diagrams remove: self selectedDiagram."
+	self changed: #roots.
 	(self list notEmpty and:[ self selectedIndex > 1]) 
 		ifTrue: [self selectedIndex: self selectedIndex -1].
 	(self list notEmpty and:[ self selectedIndex = 1]) 
