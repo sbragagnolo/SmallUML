@@ -12,7 +12,7 @@ Class {
 { #category : #'as yet unclassified' }
 CategoryDiagramsModel >> addDiagram: aDiagram [
 	self model addDiagram: aDiagram.
-	diagrams add: aDiagram.
+"	diagrams add: aDiagram."
 ]
 
 { #category : #'as yet unclassified' }
@@ -64,12 +64,10 @@ CategoryDiagramsModel >> createInheritanceDiagram [
 CategoryDiagramsModel >> deleteDiagram [
 	self model removeDiagram: self selectedDiagram .
 	"diagrams remove: self selectedDiagram."
+
+	(self list notEmpty) 
+		ifTrue: [self selectedDiagram: self list first ].
 	self changed: #roots.
-	(self list notEmpty and:[ self selectedIndex > 1]) 
-		ifTrue: [self selectedIndex: self selectedIndex -1].
-	(self list notEmpty and:[ self selectedIndex = 1]) 
-		ifTrue:[self selectedIndex: 1].
-	self changed: #selectedIndex.
 	
 
 
@@ -121,13 +119,15 @@ CategoryDiagramsModel >> listMenu: aMenu [
 CategoryDiagramsModel >> renameDiagram [
 	|diagramName currentDiagram|
 	diagramName := self request: 'New name for ', self selectedDiagram name default: nil.
-	diagramName ifNotNil: [currentDiagram := self selectedDiagram.
+	diagramName ifNotNil: [
+		currentDiagram := self selectedDiagram.
 	self deleteDiagram.
 	currentDiagram name: diagramName.
 	self addDiagram: currentDiagram.
-	self changed: #list.
-	self selectedIndex: (self list indexOf: currentDiagram).
-	self changed.]
+	self selectedDiagram: currentDiagram.
+	self changed: #selectedIndex.
+	self changed: #roots.
+]
 	
 ]
 
