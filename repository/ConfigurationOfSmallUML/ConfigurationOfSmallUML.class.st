@@ -247,7 +247,7 @@ ConfigurationOfSmallUML >> baseline700: spec [
 	spec for: #common do: [
 		spec blessing: #release.
 		
-		spec repository: 'http://www.squeaksource.com/smallUML'.	
+		spec repository: 'http://smalltalkhub.com/mc/Guille/SmallUml/main'.	
 		spec 
 			package: 'SUML-ClassDiagramModel';
 			package: 'SUML-ObjectDiagramModel';
@@ -257,7 +257,7 @@ ConfigurationOfSmallUML >> baseline700: spec [
 					versionString: '0.6';
 					loads: #('Core' );
 					file: 'ConfigurationOfMinimalConnectors';
-					repository: 'http://www.squeaksource.com/MinimalConnectors'. ];
+					repository: 'http://smalltalkhub.com/mc/Guille/MinimalConnectors/main'. ];
 			package: 'SUML-Tools' with: [ spec requires: 'MinimalConnectors'.  ];
 			package: 'SUML-DiagramDrawing' with: [ spec requires: 'MinimalConnectors'];
 			package: 'SUML-ModelExample';
