@@ -9,6 +9,12 @@ ObjectDiagram >> connectNodes [
 	self diagramNodes do:[:node | node connectToReferencesWithin: self]
 ]
 
+{ #category : #'as yet unclassified' }
+ObjectDiagram >> connectNodes: references [
+	"self diagramNodes do:[:node | node connectToReferencesWithin: self]"
+	references do:[ :aReference | (self diagramNodeFor:  aReference from) connectTo: (self diagramNodeFor:  aReference to) using: (ReferenceRelationship new label: aReference name )].
+]
+
 { #category : #drawing }
 ObjectDiagram >> objectNodesMorphs [
 	^self objectNodes collect:[:objectNode | ObjectNodeMorph for: objectNode ]
