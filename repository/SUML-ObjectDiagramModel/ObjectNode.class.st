@@ -19,12 +19,12 @@ ObjectNode >> = anotherObject [
 
 { #category : #'as yet unclassified' }
 ObjectNode >> connectToReferencesWithin: aDiagram [
-	self variableNames
-		do:[:variableName |
+	self allAttributeNames
+		do: [ :variableName | 
 			| newObjectNode |
-					self connectTo: (aDiagram diagramNodeFor:  (self variableNamed: variableName)) using: (ReferenceRelationship new label: variableName ).
-					"(aDiagram diagramNodeFor:  (self variableNamed: variableName)) position: self position + ((50 @ 50) * (self variableNames indexOf: variableName ))".
-					 ]
+			self
+				connectTo: (aDiagram diagramNodeFor: (self variableNamed: variableName))
+				using: (ReferenceRelationship new label: variableName) ]
 ]
 
 { #category : #'as yet unclassified' }
