@@ -14,7 +14,7 @@ CategoryDiagramsTreeItemNode >> asString [
 
 { #category : #'as yet unclassified' }
 CategoryDiagramsTreeItemNode >> contents [
-	^ diagrams ifNil:[diagrams := (DiagramsHolder allMethodsInCategory: item) collect:[:m |  DiagramTreeItemNode with: ((DiagramsHolder uniqueInstance perform: m) category: self asString) model: model]]
+	^ diagrams ifNil:[diagrams := (DiagramsHolder selectorsInProtocol: item) collect:[:m |  DiagramTreeItemNode with: ((DiagramsHolder uniqueInstance perform: m) category: self asString) model: model]]
 ]
 
 { #category : #'as yet unclassified' }

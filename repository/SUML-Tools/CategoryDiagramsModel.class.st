@@ -133,7 +133,7 @@ CategoryDiagramsModel >> renameDiagram [
 
 { #category : #accessing }
 CategoryDiagramsModel >> roots [
-	^((DiagramsHolder allMethodCategoriesIntegratedThrough: DiagramsHolder) collect:[:item| CategoryDiagramsTreeItemNode with: item model: self ]).
+	^((DiagramsHolder allProtocolsUpTo: DiagramsHolder) collect:[:item| CategoryDiagramsTreeItemNode with: item model: self ]).
 ]
 
 { #category : #'as yet unclassified' }
