@@ -665,10 +665,10 @@ ConfigurationOfSmallUML >> version12: spec [
 	
 spec 
 			package: 'SUML-ClassDiagramModel' with:'SUML-ClassDiagramModel-carlaGriggio.32';
-			package: 'SUML-DiagramDrawing' with: 'SUML-DiagramDrawing-carlaGriggio.34';
+			package: 'SUML-DiagramDrawing' with: 'SUML-DiagramDrawing-GuillermoPolito.35';
 			package: 'SUML-ObjectDiagramModel' with:'SUML-ObjectDiagramModel-GuillermoPolito.22';
 			package: 'SUML-SequenceDiagramModel' with:'SUML-SequenceDiagramModel-carlaGriggio.1'; 
-			package: 'SUML-Tools' with:'SUML-Tools-carlaGriggio.45';
+			package: 'SUML-Tools' with:'SUML-Tools-GuillermoPolito.46';
 			package: 'SUML-ModelExample' with:'SUML-ModelExample-carlaGriggio.2'.]
 			
 ]
