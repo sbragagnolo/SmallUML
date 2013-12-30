@@ -164,7 +164,7 @@ InterfaceBoxMorph >> listFrom: aCollection [
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> newRectangle [ 
-	^RectangleMorph new 
+	^BorderedMorph new 
 		color: Color white; 
 		borderColor: (Color r: 100 g: 100 b: 100);
 		"width: 250;"
