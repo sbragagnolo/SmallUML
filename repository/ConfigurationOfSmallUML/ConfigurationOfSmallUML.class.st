@@ -268,6 +268,34 @@ ConfigurationOfSmallUML >> baseline700: spec [
 		]
 ]
 
+{ #category : #baselines }
+ConfigurationOfSmallUML >> baseline800: spec [ 
+	<version: '0.8-baseline'>
+	
+	spec for: #common do: [
+		spec blessing: #release.
+		
+		spec repository: 'http://smalltalkhub.com/mc/Uqbar/SmallUml/main'.	
+		spec 
+			package: 'SUML-ClassDiagramModel';
+			package: 'SUML-ObjectDiagramModel';
+			package: 'SUML-SequenceDiagramModel';
+			project: 'MinimalConnectors' with:[spec
+					className: 'ConfigurationOfMinimalConnectors';
+					versionString: '0.9';
+					loads: #('Core' );
+					file: 'ConfigurationOfMinimalConnectors';
+					repository: 'http://smalltalkhub.com/mc/Uqbar/MinimalConnectors/main'. ];
+			package: 'SUML-Tools' with: [ spec requires: 'MinimalConnectors'.  ];
+			package: 'SUML-DiagramDrawing' with: [ spec requires: 'MinimalConnectors'];
+			package: 'SUML-ModelExample';
+
+			group: 'default' with: #('Model' 'Drawing');
+			group: 'Model' with: #('SUML-ClassDiagramModel' 'SUML-SequenceDiagramModel' 'SUML-ObjectDiagramModel' 'SUML-ModelExample');
+			group: 'Drawing' with: #('MinimalConnectors' 'SUML-DiagramDrawing' 'SUML-Tools' ).
+		]
+]
+
 { #category : #accessing }
 ConfigurationOfSmallUML >> project [
 
@@ -623,6 +651,26 @@ spec
 			package: 'SUML-ObjectDiagramModel' with:'SUML-ObjectDiagramModel-carlaGriggio.17';
 			package: 'SUML-SequenceDiagramModel' with:'SUML-SequenceDiagramModel-carlaGriggio.1'; 
 			package: 'SUML-Tools' with:'SUML-Tools-carlaGriggio.26'].
+]
+
+{ #category : #versions }
+ConfigurationOfSmallUML >> version12: spec [ 
+	<version: '1.2' imports: #('0.8-baseline') >
+	
+	spec for: #common do: [
+		spec blessing: #development.
+		spec author: 'Carla Griggio'.
+		spec
+			project: 'MinimalConnectors' with: '0.9'.
+	
+spec 
+			package: 'SUML-ClassDiagramModel' with:'SUML-ClassDiagramModel-carlaGriggio.32';
+			package: 'SUML-DiagramDrawing' with: 'SUML-DiagramDrawing-carlaGriggio.34';
+			package: 'SUML-ObjectDiagramModel' with:'SUML-ObjectDiagramModel-GuillermoPolito.22';
+			package: 'SUML-SequenceDiagramModel' with:'SUML-SequenceDiagramModel-carlaGriggio.1'; 
+			package: 'SUML-Tools' with:'SUML-Tools-carlaGriggio.45';
+			package: 'SUML-ModelExample' with:'SUML-ModelExample-carlaGriggio.2'.]
+			
 ]
 
 { #category : #versions }
