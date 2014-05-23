@@ -316,6 +316,7 @@ ConfigurationOfSmallUML >> stable: spec [
 	spec for: #'pharo1.2.x' version: '1.1.3'.
 	spec for: #'pharo1.3.x' version: '1.1.4'.
 	spec for: #'pharo1.4.x' version: '1.1.5'.
+	spec for: #'pharo3.0.x' version: '1.2'.
 ]
 
 { #category : #versions }
@@ -664,12 +665,12 @@ ConfigurationOfSmallUML >> version12: spec [
 			project: 'MinimalConnectors' with: '0.9'.
 	
 spec 
-			package: 'SUML-ClassDiagramModel' with:'SUML-ClassDiagramModel-carlaGriggio.32';
-			package: 'SUML-DiagramDrawing' with: 'SUML-DiagramDrawing-GuillermoPolito.35';
+			package: 'SUML-ClassDiagramModel' with:'SUML-ClassDiagramModel-ClaraAllende.33';
+			package: 'SUML-DiagramDrawing' with: 'SUML-DiagramDrawing-ClaraAllende.36';
 			package: 'SUML-ObjectDiagramModel' with:'SUML-ObjectDiagramModel-GuillermoPolito.22';
 			package: 'SUML-SequenceDiagramModel' with:'SUML-SequenceDiagramModel-carlaGriggio.1'; 
 			package: 'SUML-Tools' with:'SUML-Tools-GuillermoPolito.46';
-			package: 'SUML-ModelExample' with:'SUML-ModelExample-carlaGriggio.2'.]
+			package: 'SUML-ModelExample' with:'SUML-ModelExample-ClaraAllende.3'.]
 			
 ]
 
