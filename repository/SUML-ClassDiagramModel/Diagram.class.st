@@ -132,7 +132,7 @@ Diagram >> removeDiagramNode: aDiagramNode [
 { #category : #saving }
 Diagram >> saveDescriptionIn: aDiagramHolderClass [
 	|descriptionCodeAsMethod|
-	descriptionCodeAsMethod := aDiagramHolderClass prettyPrinterClass new 
+	descriptionCodeAsMethod := aDiagramHolderClass prettyPrinterClass new
 		format: ((self name onlyLetters withFirstCharacterDownshifted), String cr, self descriptionCode) 
 		in: aDiagramHolderClass 
 		notifying: self.
