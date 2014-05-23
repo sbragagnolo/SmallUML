@@ -18,6 +18,23 @@ DiagramNodeMorph >> adjustPosition [
 		ifTrue:[self position: owner position + diagramNode position]
 ]
 
+{ #category : #'as yet unclassified' }
+DiagramNodeMorph >> connectTo: anotherBox using: aConnection [
+	| origin destination |
+	origin := SingleConnectionPoint new.
+	destination := SingleConnectionPoint new.
+	self connectableBounds addConnectionPoint: origin thatConnectsTo: anotherBox.
+	anotherBox connectableBounds addConnectionPoint: destination thatConnectsTo:  self.
+	self connectableBounds changed.
+	anotherBox connectableBounds changed.
+
+	self connectableBounds addMorph: aConnection  .
+	anotherBox connectableBounds addMorph: aConnection.
+	aConnection from: origin to: destination.
+	self connectableBounds  updateView  .
+	anotherBox connectableBounds  updateView.
+]
+
 { #category : #accessing }
 DiagramNodeMorph >> connections [ 
 	^self connectableBounds connections 

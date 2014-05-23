@@ -71,7 +71,7 @@ UMLConnection >> fitIntoDiagram: aDiagram [
 	self isConnected ifTrue:[self dettachFromConnectionPoints].
 
 	(self originDiagramNodeMorphIn: aDiagram ) connectTo: (self destinationDiagramNodeMorphIn: aDiagram ) using: self.
-	"self updateView."
+	self updateView.
 ]
 
 { #category : #'as yet unclassified' }
