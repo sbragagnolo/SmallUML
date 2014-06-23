@@ -48,7 +48,7 @@ TimelineMorph >> initialize [
 
 { #category : #'as yet unclassified' }
 TimelineMorph >> newRectangle [ 
-	^RectangleMorph new 
+	^BorderedMorph new 
 		color: Color transparent; 
 		borderColor: Color transparent;
 		layoutPolicy: TableLayout new;

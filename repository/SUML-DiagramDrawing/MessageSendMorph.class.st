@@ -101,7 +101,7 @@ MessageSendMorph >> message: aSequenceMessage toObject: anObjectTimeline [
 
 { #category : #'as yet unclassified' }
 MessageSendMorph >> newRectangle [
-	^ (RectangleMorph new)
+	^ (BorderedMorph new)
 		color: Color white;
 		borderColor: (Color r: 100 g: 100 b: 100);
 		borderWidth: 2;
