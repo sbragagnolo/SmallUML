@@ -208,7 +208,7 @@ InterfaceBoxMorph >> textMorphFor: aCollection modifying: aString [
 	newText borderWidth: 0.
 	newText 		
 		on: self 
-		text: (aString withFirstCharacterDownshifted) asSymbol 
+		text: (aString uncapitalized) asSymbol 
 		accept: ('save',aString,':') asSymbol 
 		readSelection: nil
 		menu: nil.
