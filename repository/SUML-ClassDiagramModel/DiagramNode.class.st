@@ -122,7 +122,7 @@ DiagramNode >> removeRelationshipsWith: aBox [
 
 { #category : #'description code' }
 DiagramNode >> variableNameForDescriptionCode [
-	^self name withFirstCharacterDownshifted.
+	^self name uncapitalized .
 ]
 
 { #category : #'as yet unclassified' }
