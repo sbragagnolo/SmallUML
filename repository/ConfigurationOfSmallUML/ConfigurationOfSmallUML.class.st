@@ -317,6 +317,7 @@ ConfigurationOfSmallUML >> stable: spec [
 	spec for: #'pharo1.3.x' version: '1.1.4'.
 	spec for: #'pharo1.4.x' version: '1.1.5'.
 	spec for: #'pharo3.0.x' version: '1.2'.
+	spec for: #'pharo4.0.x' version: '1.2'.
 ]
 
 { #category : #versions }
