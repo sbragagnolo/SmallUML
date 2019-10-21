@@ -1,11 +1,11 @@
 Class {
-	#name : #BaselineOfSmallUML,
+	#name : #BaselineOfSmallUml,
 	#superclass : #BaselineOf,
-	#category : #BaselineOfSmallUML
+	#category : #BaselineOfSmallUml
 }
 
 { #category : #baselines }
-BaselineOfSmallUML >> baseline: spec [ 
+BaselineOfSmallUml >> baseline: spec [ 
 	<baseline>
 	
 	spec for: #common do: [
@@ -25,7 +25,7 @@ BaselineOfSmallUML >> baseline: spec [
 ]
 
 { #category : #baselines }
-BaselineOfSmallUML >> minimalConnectors: spec [
+BaselineOfSmallUml >> minimalConnectors: spec [
 	spec
     	baseline: 'MinimalConnectors'
     	with: [ spec repository: 'github://sbragagnolo/MinimalConnectors/repository' ]

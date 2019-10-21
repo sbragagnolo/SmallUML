@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfSmallUML }
+Package { #name : #BaselineOfSmallUml }
