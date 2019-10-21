@@ -36,8 +36,15 @@ ObjectDiagram >> resetConnections [
 ]
 
 { #category : #'as yet unclassified' }
-ObjectDiagram >> updateDiagramNodesFrom: aCollection [
-	(aCollection copyWithoutAll: self objects) do:[:anObject | self addDiagramNode: (ObjectNode for: anObject  )].
-	(self objects copyWithoutAll: aCollection) do:[:anObject | self removeDiagramNode: (self diagramNodeFor: anObject)].
+ObjectDiagram >> updateDiagramNodesFrom: aDictionaryOfNamedObjects [
+	
+	(aDictionaryOfNamedObjects keys copyWithoutAll: self objects) do:[:anObject |
+		| objectName |
+		"This is really ugly. I should get a better strategy for naming objects. But yet i have no clue what is this naming for :)  "
+		objectName := '_' join: (aDictionaryOfNamedObjects at: anObject).
+		 self addDiagramNode: (ObjectNode for: anObject named:  objectName   ).
+	].
+	
+	(self objects copyWithoutAll: aDictionaryOfNamedObjects keys ) do:[:anObject | self removeDiagramNode: (self diagramNodeFor: anObject)].
 	
 ]

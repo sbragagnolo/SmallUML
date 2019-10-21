@@ -44,7 +44,7 @@ DiagramWhiteboard >> showActionsMenu [
 	| menu |
 	menu := MenuMorph new.
 	menu addTitle: (self model name ifNil:['Class Diagram']).
-	menu addStayUpItem.
+
 	menu target: self.
 	menu add: 'Save for category...' action: #save.
 	menu add: 'Save as PNG' action: #exportAsPNG.

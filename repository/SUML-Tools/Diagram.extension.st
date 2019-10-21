@@ -2,7 +2,7 @@ Extension { #name : #Diagram }
 
 { #category : #'*SUML-Tools' }
 Diagram >> diagramListModelClass [ 
-	self subclassResponsibility 
+	^ObjectDiagramModel 
 ]
 
 { #category : #'*SUML-Tools' }

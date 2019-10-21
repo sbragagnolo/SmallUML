@@ -107,7 +107,6 @@ UMLConnection >> mouseDown: evt [
 	evt yellowButtonPressed
 		ifTrue:[ menu := MenuMorph new.
 	menu addTitle: 'Relationship'.
-	menu addStayUpItem.
 	menu target: (RelationshipManager for: target).
 	menu add: 'Delete' action: #delete.
 	self target label ifNotNil:[menu add: 'Rename label' action: #rename].

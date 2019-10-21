@@ -44,7 +44,7 @@ DiagramsHolder class >> openDiagramBrowserSelecting: aDiagramName [
 
 { #category : #nil }
 DiagramsHolder class >> prettyPrinterClass [
-  	^OpalCompiler
+  	^ OpalCompiler
 ]
 
 { #category : #'as yet unclassified' }

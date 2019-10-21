@@ -45,7 +45,7 @@ InterfaceBoxMorph >> addTextMorphFor: aCollectionOfStrings into: aMorph property
 
 { #category : #'as yet unclassified' }
 InterfaceBoxMorph >> arrayFromText: aText [
-	^aText ifNotNil:[aText string subStrings: {Character cr. Character lf }]
+	^aText ifNotNil:[aText string substrings: {Character cr. Character lf }]
 ]
 
 { #category : #accessing }

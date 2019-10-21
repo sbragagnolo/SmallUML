@@ -143,8 +143,8 @@ Diagram >> saveDescriptionIn: aDiagramHolderClass [
 { #category : #saving }
 Diagram >> saveDescriptionInCategory: aCategoryString [
 	|descriptionCodeAsMethod|
-	descriptionCodeAsMethod := self class prettyPrinterClass new 
-		format: ((self name onlyLetters withFirstCharacterDownshifted), String cr, self descriptionCode) 
+	descriptionCodeAsMethod := DiagramsHolder prettyPrinterClass new 
+		format: ((OBUtils legalSelectorFor:self name onlyLetters), String cr, self descriptionCode) 
 		in: DiagramsHolder 
 		notifying: self.
 	DiagramsHolder compile: descriptionCodeAsMethod classified: '*',aCategoryString 

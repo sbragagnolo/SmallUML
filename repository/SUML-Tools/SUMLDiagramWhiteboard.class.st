@@ -73,7 +73,6 @@ SUMLDiagramWhiteboard >> showActionsMenu [
 	| menu |
 	menu := MenuMorph new.
 	menu addTitle: self diagram name.
-	menu addStayUpItem.
 	menu target: (DiagramManager for: self diagram).
 	menu add: 'New Class Box...' action: #createClassBox.
 	menu add: 'New Interface / Type Box...' action: #createInterfaceBox.

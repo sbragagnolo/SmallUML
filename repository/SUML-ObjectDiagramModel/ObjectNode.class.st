@@ -13,6 +13,13 @@ ObjectNode class >> for: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+ObjectNode class >> for: anObject named: objectName [
+	^ (self named: objectName)
+		object: anObject;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 ObjectNode >> = anotherObject [
 	^(self class = anotherObject class) and:[ self object = anotherObject object]
 ]

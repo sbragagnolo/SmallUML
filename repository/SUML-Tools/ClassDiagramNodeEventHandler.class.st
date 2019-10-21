@@ -54,7 +54,6 @@ ClassDiagramNodeEventHandler >> showActionsMenu [
 	| menu |
 	menu := MenuMorph new.
 	menu addTitle: self passenger diagramNode name.
-	menu addStayUpItem.
 	menu target: (DiagramNodeManager for: self passenger).
 	menu add: 'Rename...' action: #rename.
 	self passenger diagramNode mapsToModel
